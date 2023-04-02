@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 //using System.Windows.Controls;
 using System.Windows.Forms;
@@ -126,37 +125,38 @@ namespace DocumentTools
                             case ConvertFileType.Excel2Pdf:
                                 Util.ConvertExcel2Pdf(ListViewFirstColumnText, ConvertedFileName);
                                 break;
-                            default:break;
+                            default: break;
                         }
                     }
                     StatusLabelControl.Text = "处理完毕";
 
                     //处理完毕后需要做的事情
-                    switch(ConverType)
+                    switch (ConverType)
                     {
                         case ConvertFileType.Word2Pdf:
-                            if(BodyForm.MainForm.OpenPdfOptions.Checked)
+                            if (BodyForm.MainForm.OpenPdfOptions.Checked)
                             {
-                               Task<List<string>> TempPdfFileNames =  GetListViewLastItemContent(BodyForm.MainForm.WordFileListView);
+                                Task<List<string>> TempPdfFileNames = GetListViewLastItemContent(BodyForm.MainForm.WordFileListView);
                                 TempPdfFileNames.Result.ForEach((pdfFileName) =>
                                 {
                                     Process.Start(pdfFileName);
                                 });
                             }
 
-                            if(BodyForm.MainForm.RemoveTempDocx.Checked)
+                            if (BodyForm.MainForm.RemoveTempDocx.Checked)
                             {
-                                if(TempSaveDocxPathString!=string.Empty)
+                                if (TempSaveDocxPathString != string.Empty)
                                 {
                                     Directory.Delete(TempSaveDocxPathString, true);
                                 }
                             }
                             break;
-                        default:break;
+                        default: break;
                     }
 
 
-                    BodyForm.MainForm.BeginInvoke(new Action(() => {
+                    BodyForm.MainForm.BeginInvoke(new Action(() =>
+                    {
                         DialogResult MessageBoxResult = MessageBox.Show("处理完毕，是否需要打开转换后目录？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (MessageBoxResult == DialogResult.Yes)
                         {

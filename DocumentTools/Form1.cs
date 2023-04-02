@@ -1,14 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Shell.Interop;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -30,7 +21,7 @@ namespace DocumentTools
             InitListView();
             this.MergePdfButton.Enabled = true;
         }
-       
+
         private void InitListView()
         {
             // WordFileListView
@@ -59,7 +50,7 @@ namespace DocumentTools
         private void ChooseDocButton_Click(object sender, EventArgs e)
         {
             Task<int> FileCount = UI.AddWordFiles();
-           this.StatusText.Text = $"{FileCount.Result}个待转换文档";
+            this.StatusText.Text = $"{FileCount.Result}个待转换文档";
         }
 
         private void ConvertButton_Click(object sender, EventArgs e)
@@ -68,7 +59,7 @@ namespace DocumentTools
             {
                 try
                 {
-                    UI.ConvertStart(this.WordFileListView,this.StatusText,ConvertFileType.Word2Pdf,".pdf");
+                    UI.ConvertStart(this.WordFileListView, this.StatusText, ConvertFileType.Word2Pdf, ".pdf");
                 }
                 catch (Exception ex)
                 {
@@ -91,16 +82,16 @@ namespace DocumentTools
             {
                 try
                 {
-                    UI.ConvertStart(this.PdfFileListView,this.PdfStatusText,ConvertFileType.Pdf2Word,".docx");
+                    UI.ConvertStart(this.PdfFileListView, this.PdfStatusText, ConvertFileType.Pdf2Word, ".docx");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-               
+
             });
 
-            
+
         }
 
         private void SelectExcelFileButton_Click(object sender, EventArgs e)
@@ -110,7 +101,7 @@ namespace DocumentTools
 
         private void MergePdfButton_Click(object sender, EventArgs e)
         {
-            
+
             Task<List<string>> WaitMergePdfFileNames = UI.GetListViewLastItemContent(this.WordFileListView);
             if (WaitMergePdfFileNames.Result.Count > 0)
             {
@@ -129,7 +120,7 @@ namespace DocumentTools
             {
                 try
                 {
-                    UI.ConvertStart(this.ExcelFileListView,this.Excel2PdfStatusText,ConvertFileType.Excel2Pdf,".pdf");
+                    UI.ConvertStart(this.ExcelFileListView, this.Excel2PdfStatusText, ConvertFileType.Excel2Pdf, ".pdf");
                 }
                 catch (Exception ex)
                 {
