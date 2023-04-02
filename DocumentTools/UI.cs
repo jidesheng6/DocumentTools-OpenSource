@@ -56,12 +56,21 @@ namespace DocumentTools
             return Task.Run(() =>
             {
                 List<string> FileNames = new List<string>();
-                if (ListViewControl.Items.Count > 0)
+                try
                 {
-                    for (int Index = 0; Index < ListViewControl.Items.Count; Index++)
+
+                    if (ListViewControl.Items.Count > 0)
                     {
-                        FileNames.Add(ListViewControl.Items[Index].SubItems[2].Text);
+                        for (int Index = 0; Index < ListViewControl.Items.Count; Index++)
+                        {
+                            FileNames.Add(ListViewControl.Items[Index].SubItems[2].Text);
+                        }
                     }
+
+                }
+                catch
+                {
+
                 }
                 return FileNames;
             });
@@ -123,7 +132,7 @@ namespace DocumentTools
                                 break;
                             //excel转pdf
                             case ConvertFileType.Excel2Pdf:
-                                Util.ConvertExcel2Pdf(ListViewFirstColumnText, ConvertedFileName);
+                                Util.ConvertExcel2Pdf(ListViewFirstColumnText, ConvertedFileName,BodyForm.MainForm.ExportEachSheet.Checked);
                                 break;
                             default: break;
                         }

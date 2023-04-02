@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Aspose.Cells;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -77,7 +78,7 @@ namespace DocumentTools
         /// 将word文档转换为pdf文件
         /// </summary>
         /// <param name="documentFileName">doc/docx文档路径</param>
-        /// <param name="savePdfTargetPath">导出pdf的路径</param>
+        /// <param name="SavePdfName">导出pdf的路径</param>
         /// <param name="tempSaveDocxPath">临时存放转换的docx目录</param>
         public static void ConvertWord2Pdf(string documentFileName, string SavePdfName, string tempSaveDocxPath)
         {
@@ -153,7 +154,7 @@ namespace DocumentTools
         /// 将PDF文档转为DOCX文件
         /// </summary>
         /// <param name="pdfFileName">pdf文件名</param>
-        /// <param name="saveDocumentTargetPath">导出docx的路径</param>
+        /// <param name="SavePdfName">导出docx</param>
         public static void ConvertPdf2Word(string pdfFileName, string SavePdfName)
         {
             Aspose.Hook.Manager.StartHook();
@@ -189,16 +190,41 @@ namespace DocumentTools
         /// 将Excel转为PDF文件
         /// </summary>
         /// <param name="ExcelFileName">Excel文件名称</param>
-        /// <param name="SavePdfTargetPath">导出pdf的路径</param>
-        public static void ConvertExcel2Pdf(string ExcelFileName, string SavePdfFileName)
+        /// <param name="SavePdfFileName">导出pdf的路径</param>
+        public static void ConvertExcel2Pdf(string ExcelFileName, string SavePdfFileName,bool ExportEachSheet)
         {
             Aspose.Hook.Manager.StartHook();
 
 
             Aspose.Cells.Workbook TempExcelDocument = new Aspose.Cells.Workbook(ExcelFileName);
 
-            TempExcelDocument.Save(SavePdfFileName, Aspose.Cells.SaveFormat.Pdf);
+            if (ExportEachSheet)
+            {
+                PdfSaveOptions SavePdfOptions = new PdfSaveOptions()
+                {
+                    OnePagePerSheet = true,
+                    CalculateFormula = true,
+                };
 
+                //将Excel中的每一个Sheet保存为单个PDF文件
+                for (int i = 0; i < TempExcelDocument.Worksheets.Count; i++)
+                {
+                    TempExcelDocument.Worksheets[i].IsVisible = true;
+                    for(int j=0;j<TempExcelDocument.Worksheets.Count;j++)
+                    {
+                        if(j!=i)
+                        {
+                            TempExcelDocument.Worksheets[j].IsVisible = false;
+                        }
+                    }
+                    string TempSavedPdfileWithSheetName = SavePdfFileName.Replace(".pdf", $"_{TempExcelDocument.Worksheets[i].Name}.pdf");
+                    TempExcelDocument.Save(TempSavedPdfileWithSheetName, SavePdfOptions);
+                }
+            }
+            else
+            {
+                TempExcelDocument.Save(SavePdfFileName, Aspose.Cells.SaveFormat.Pdf);
+            }
         }
 
     }

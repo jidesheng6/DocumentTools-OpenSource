@@ -45,11 +45,12 @@
             this.SelectPdfButton = new System.Windows.Forms.Button();
             this.PdfFileListView = new System.Windows.Forms.ListView();
             this.TabPage_03 = new System.Windows.Forms.TabPage();
+            this.Excel2PdfStatusText = new System.Windows.Forms.Label();
             this.ConvertExcel2PdfButton = new System.Windows.Forms.Button();
             this.SelectExcelFileButton = new System.Windows.Forms.Button();
             this.ExcelFileListView = new System.Windows.Forms.ListView();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.Excel2PdfStatusText = new System.Windows.Forms.Label();
+            this.ExportEachSheet = new System.Windows.Forms.CheckBox();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
@@ -219,6 +220,7 @@
             // 
             // TabPage_03
             // 
+            this.TabPage_03.Controls.Add(this.ExportEachSheet);
             this.TabPage_03.Controls.Add(this.Excel2PdfStatusText);
             this.TabPage_03.Controls.Add(this.ConvertExcel2PdfButton);
             this.TabPage_03.Controls.Add(this.SelectExcelFileButton);
@@ -229,6 +231,16 @@
             this.TabPage_03.TabIndex = 2;
             this.TabPage_03.Text = "EXCEL转PDF";
             this.TabPage_03.UseVisualStyleBackColor = true;
+            // 
+            // Excel2PdfStatusText
+            // 
+            this.Excel2PdfStatusText.AutoSize = true;
+            this.Excel2PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.Excel2PdfStatusText.Location = new System.Drawing.Point(293, 424);
+            this.Excel2PdfStatusText.Name = "Excel2PdfStatusText";
+            this.Excel2PdfStatusText.Size = new System.Drawing.Size(161, 18);
+            this.Excel2PdfStatusText.TabIndex = 4;
+            this.Excel2PdfStatusText.Text = "正在等待处理中...";
             // 
             // ConvertExcel2PdfButton
             // 
@@ -259,15 +271,15 @@
             this.ExcelFileListView.TabIndex = 1;
             this.ExcelFileListView.UseCompatibleStateImageBehavior = false;
             // 
-            // Excel2PdfStatusText
+            // ExportEachSheet
             // 
-            this.Excel2PdfStatusText.AutoSize = true;
-            this.Excel2PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.Excel2PdfStatusText.Location = new System.Drawing.Point(293, 424);
-            this.Excel2PdfStatusText.Name = "Excel2PdfStatusText";
-            this.Excel2PdfStatusText.Size = new System.Drawing.Size(161, 18);
-            this.Excel2PdfStatusText.TabIndex = 4;
-            this.Excel2PdfStatusText.Text = "正在等待处理中...";
+            this.ExportEachSheet.AutoSize = true;
+            this.ExportEachSheet.Location = new System.Drawing.Point(6, 347);
+            this.ExportEachSheet.Name = "ExportEachSheet";
+            this.ExportEachSheet.Size = new System.Drawing.Size(286, 22);
+            this.ExportEachSheet.TabIndex = 5;
+            this.ExportEachSheet.Text = "导出每个Sheet到单独的PDF文件";
+            this.ExportEachSheet.UseVisualStyleBackColor = true;
             // 
             // BodyForm
             // 
@@ -316,6 +328,7 @@
         internal System.Windows.Forms.CheckBox OpenPdfOptions;
         internal System.Windows.Forms.CheckBox RemoveTempDocx;
         private System.Windows.Forms.Label Excel2PdfStatusText;
+        internal System.Windows.Forms.CheckBox ExportEachSheet;
     }
 }
 

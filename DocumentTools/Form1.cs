@@ -109,6 +109,7 @@ namespace DocumentTools
                 if (SaveMergePdfFileName != string.Empty)
                 {
                     Util.MergrePdfFIle(WaitMergePdfFileNames.Result, SaveMergePdfFileName);
+                    MessageBox.Show("合并完毕","提示",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
                 }
             }
         }
