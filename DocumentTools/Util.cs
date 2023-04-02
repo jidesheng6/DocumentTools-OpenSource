@@ -83,10 +83,10 @@ namespace DocumentTools
         /// <param name="documentFileName">doc/docx文档路径</param>
         /// <param name="savePdfTargetPath">导出pdf的路径</param>
         /// <param name="tempSaveDocxPath">临时存放转换的docx目录</param>
-        public static void ConvertWord2Pdf(string documentFileName, string savePdfTargetPath, string tempSaveDocxPath)
+        public static void ConvertWord2Pdf(string documentFileName, string SavePdfName, string tempSaveDocxPath)
         {
             Aspose.Hook.Manager.StartHook();
-            string DocumentName, SaveDocxName, SavePdfName;
+            string DocumentName, SaveDocxName;
 
             //设置加载word文档的时候参数
             Aspose.Words.Loading.LoadOptions TempDocuemntLoadOption = new Aspose.Words.Loading.LoadOptions()
@@ -130,7 +130,6 @@ namespace DocumentTools
 
             SaveDocxName = System.IO.Path.Combine(tempSaveDocxPath, DocumentName + ".docx");
 
-            SavePdfName = System.IO.Path.Combine(savePdfTargetPath, DocumentName + ".pdf");
 
             //TempDocument.CompatibilityOptions.AutoSpaceLikeWord95 = true;
             //TempDocument.CompatibilityOptions.WrapTrailSpaces = true;
@@ -159,12 +158,9 @@ namespace DocumentTools
         /// </summary>
         /// <param name="pdfFileName">pdf文件名</param>
         /// <param name="saveDocumentTargetPath">导出docx的路径</param>
-        public static void ConvertPdf2Word(string pdfFileName, string saveDocumentTargetPath)
+        public static void ConvertPdf2Word(string pdfFileName, string SavePdfName)
         {
             Aspose.Hook.Manager.StartHook();
-
-            string PdfFileNameOnly = Path.GetFileNameWithoutExtension(pdfFileName);
-            string SavePdfName = Path.Combine(saveDocumentTargetPath, PdfFileNameOnly + ".docx");
 
             Aspose.Pdf.DocSaveOptions TempDocxSaveOption = new Aspose.Pdf.DocSaveOptions()
             {
@@ -198,12 +194,10 @@ namespace DocumentTools
         /// </summary>
         /// <param name="ExcelFileName">Excel文件名称</param>
         /// <param name="SavePdfTargetPath">导出pdf的路径</param>
-        public static void ConvertExcel2Pdf(string ExcelFileName, string SavePdfTargetPath)
+        public static void ConvertExcel2Pdf(string ExcelFileName, string SavePdfFileName)
         {
             Aspose.Hook.Manager.StartHook();
 
-            string ExcelFileNameWithoutExtension = Path.GetFileNameWithoutExtension(ExcelFileName);
-            string SavePdfFileName = Path.Combine(SavePdfTargetPath, ExcelFileNameWithoutExtension + ".pdf");
 
             Aspose.Cells.Workbook TempExcelDocument = new Aspose.Cells.Workbook(ExcelFileName);
 

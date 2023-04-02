@@ -10,8 +10,16 @@ using System.Windows.Forms;
 
 namespace DocumentTools
 {
+    internal enum ConvertFileType
+    {
+        Word2Pdf,
+        Pdf2Word,
+        Excel2Pdf
+    }
     internal class UI
     {
+
+
         /// <summary>
         /// 添加文件列表到Listview中，并返回项目数量
         /// </summary>
@@ -75,27 +83,89 @@ namespace DocumentTools
             AddFilesToListView("EXCEL文档", "*.xls;*.xlsx", BodyForm.MainForm.ExcelFileListView);
         }
 
-        //public static void ConvertStart(ListView ListViewControl, Label StatusLabelControl, CheckBox StatusCheckBox, ProgressBar ProgeressBarControl, string ConvertType, string ExtensionString)
-        //{
-        //    if (ListViewControl.Items.Count > 0)
-        //    {
-        //        IEnumerable<string> ISelectSavePathstring = Util.ShwoSelectDialog(false, true, "", "");
-        //        string SelectSavePathstring = ISelectSavePathstring.FirstOrDefault();
-        //        if (SelectSavePathstring != default)
-        //        {
-        //            for (int TempIndex = 0; TempIndex < ListViewControl.Items.Count; TempIndex++)
-        //            {
-        //                string ListViewFirstColumnText = ListViewControl.Items[TempIndex].Text;
-        //                string FileNameWithOutExtension = Path.GetFileNameWithoutExtension(ListViewFirstColumnText);
-        //                string ConvertedFileName = Path.Combine(SelectSavePathstring, FileNameWithOutExtension + ExtensionString);
-        //                ListViewControl.Items[TempIndex].SubItems.Add(ConvertedFileName);
-        //                ListViewControl.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-        //                StatusLabelControl.Text = $"正在处理{TempIndex + 1}个文件...";
-        //            }
-        //            StatusLabelControl.Text = "处理完毕";
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// 转换文件通用方法
+        /// </summary>
+        /// <param name="ListViewControl">转换文件所在的listview控件名称</param>
+        /// <param name="StatusLabelControl">用于表示进度状态的标签控件</param>
+        /// <param name="ConverType">转换的目标类型</param>
+        /// <param name="ExtensionString">保存文件的后缀名称</param>
+        public static void ConvertStart(ListView ListViewControl, Label StatusLabelControl, ConvertFileType ConverType, string ExtensionString)
+        {
+            if (ListViewControl.Items.Count > 0)
+            {
+                string TempSaveDocxPathString = string.Empty;
+                IEnumerable<string> ISelectSavePathstring = Util.ShwoSelectDialog(false, true, "", "");
+                string SelectSavePathstring = ISelectSavePathstring.FirstOrDefault();
+
+                if (SelectSavePathstring != default)
+                {
+                    for (int TempIndex = 0; TempIndex < ListViewControl.Items.Count; TempIndex++)
+                    {
+                        string ListViewFirstColumnText = ListViewControl.Items[TempIndex].Text;
+                        string FileNameWithOutExtension = Path.GetFileNameWithoutExtension(ListViewFirstColumnText);
+                        string ConvertedFileName = Path.Combine(SelectSavePathstring, FileNameWithOutExtension + ExtensionString);
+                        ListViewControl.Items[TempIndex].SubItems.Add(ConvertedFileName);
+                        ListViewControl.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        StatusLabelControl.Text = $"正在处理{TempIndex + 1}个文件...";
+
+                        //根据不同类型调用不同的函数
+                        switch (ConverType)
+                        {
+                            //word转pdf
+                            case ConvertFileType.Word2Pdf:
+                                TempSaveDocxPathString = Path.Combine(SelectSavePathstring, "TempDocx");
+                                Directory.CreateDirectory(TempSaveDocxPathString);
+                                Util.ConvertWord2Pdf(ListViewFirstColumnText, ConvertedFileName, TempSaveDocxPathString);
+                                break;
+                            //pdf转word
+                            case ConvertFileType.Pdf2Word:
+                                Util.ConvertPdf2Word(ListViewFirstColumnText, ConvertedFileName);
+                                break;
+                            //excel转pdf
+                            case ConvertFileType.Excel2Pdf:
+                                Util.ConvertExcel2Pdf(ListViewFirstColumnText, ConvertedFileName);
+                                break;
+                            default:break;
+                        }
+                    }
+                    StatusLabelControl.Text = "处理完毕";
+
+                    //处理完毕后需要做的事情
+                    switch(ConverType)
+                    {
+                        case ConvertFileType.Word2Pdf:
+                            if(BodyForm.MainForm.OpenPdfOptions.Checked)
+                            {
+                               Task<List<string>> TempPdfFileNames =  GetListViewLastItemContent(BodyForm.MainForm.WordFileListView);
+                                TempPdfFileNames.Result.ForEach((pdfFileName) =>
+                                {
+                                    Process.Start(pdfFileName);
+                                });
+                            }
+
+                            if(BodyForm.MainForm.RemoveTempDocx.Checked)
+                            {
+                                if(TempSaveDocxPathString!=string.Empty)
+                                {
+                                    Directory.Delete(TempSaveDocxPathString, true);
+                                }
+                            }
+                            break;
+                        default:break;
+                    }
+
+
+                    BodyForm.MainForm.BeginInvoke(new Action(() => {
+                        DialogResult MessageBoxResult = MessageBox.Show("处理完毕，是否需要打开转换后目录？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (MessageBoxResult == DialogResult.Yes)
+                        {
+                            Process.Start(SelectSavePathstring);
+                        }
+                    }));
+                }
+            }
+        }
 
 
         public static Task<List<string>> GetPdfFileNames()

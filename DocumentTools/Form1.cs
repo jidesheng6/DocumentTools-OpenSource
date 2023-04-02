@@ -18,19 +18,19 @@ namespace DocumentTools
     public partial class BodyForm : Form
     {
         public static BodyForm MainForm;
+
         public BodyForm()
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             MainForm = this;
         }
-
         private void BodyForm_Load(object sender, EventArgs e)
         {
             InitListView();
             this.MergePdfButton.Enabled = true;
         }
-
+       
         private void InitListView()
         {
             // WordFileListView
@@ -68,65 +68,7 @@ namespace DocumentTools
             {
                 try
                 {
-                    if (this.WordFileListView.Items.Count > 0)
-                    {
-                        IEnumerable<string> ISelectSavePathstring = Util.ShwoSelectDialog(false, true, "", "");
-                        string SelectSavePathstring = ISelectSavePathstring.FirstOrDefault();
-                        if (SelectSavePathstring != default)
-                        {
-                            string TempSaveDocxPathString = Path.Combine(SelectSavePathstring, "TempDocx");
-                            Directory.CreateDirectory(TempSaveDocxPathString);
-
-                            this.SaveProgressBar.Maximum = WordFileListView.Items.Count;
-
-
-                            for (int ItemIndex = 0; ItemIndex < WordFileListView.Items.Count; ItemIndex++)
-                            {
-                                this.SaveProgressBar.PerformStep();
-                                this.StatusText.Text = $"正在转换第{ItemIndex + 1}个文档...";
-                                string ListViewDispalyFileName = WordFileListView.Items[ItemIndex].Text;
-                                Util.ConvertWord2Pdf(ListViewDispalyFileName, SelectSavePathstring, TempSaveDocxPathString);
-
-                                //将PDF完整路径添加到ListView中
-
-                                string DocumentNameWithNotExtsions = Path.GetFileNameWithoutExtension(ListViewDispalyFileName);
-                                string PdfFileName = Path.Combine(SelectSavePathstring, DocumentNameWithNotExtsions + ".pdf");
-
-                                WordFileListView.Items[ItemIndex].SubItems.Add(PdfFileName);
-                                WordFileListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-
-                            }
-                            this.BeginInvoke(new Action(() =>
-                            {
-                                this.SaveProgressBar.Value = 0;
-                                this.StatusText.Text = "处理完毕";
-
-                                DialogResult MessageBoxResult = MessageBox.Show("处理完毕，是否需要打开PDF目录？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                if (MessageBoxResult == DialogResult.Yes)
-                                {
-                                    Process.Start(SelectSavePathstring);
-                                }
-                            }));
-
-
-                            //转换完毕以后要做的事情
-
-                            if (this.OpenPdfOptions.Checked)
-                            {
-                                Task<List<string>> PdfFileList = UI.GetPdfFileNames();
-
-                                foreach (string PdfFile in PdfFileList.Result)
-                                {
-                                    Process.Start(PdfFile);
-                                }
-                            }
-
-                            if (this.RemoveTempDocx.Checked)
-                            {
-                                Directory.Delete(TempSaveDocxPathString, true);
-                            }
-                        }
-                    }
+                    UI.ConvertStart(this.WordFileListView,this.StatusText,ConvertFileType.Word2Pdf,".pdf");
                 }
                 catch (Exception ex)
                 {
@@ -149,38 +91,7 @@ namespace DocumentTools
             {
                 try
                 {
-                    if (this.PdfFileListView.Items.Count > 0)
-                    {
-                        IEnumerable<string> ISelectPathString = Util.ShwoSelectDialog(false, true, "", "");
-                        string SelectPathString = ISelectPathString.FirstOrDefault();
-                        if (SelectPathString != default)
-                        {
-                            for (int Index = 0; Index < this.PdfFileListView.Items.Count; Index++)
-                            {
-                                string TempFileName = this.PdfFileListView.Items[Index].Text;
-
-                                this.PdfStatusText.Text = $"正在处理第{Index + 1}个文档...";
-                                Util.ConvertPdf2Word(TempFileName, SelectPathString);
-
-                                //添加转后的docx文件路径
-                                string PdfFileNameWithNotExt = Path.GetFileNameWithoutExtension(TempFileName);
-                                string SavedDocxFileName = Path.Combine(SelectPathString, PdfFileNameWithNotExt + ".docx");
-                                PdfFileListView.Items[Index].SubItems.Add(SavedDocxFileName);
-                                PdfFileListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                            }
-
-                            this.PdfStatusText.Text = $"处理完毕";
-
-                            this.BeginInvoke(new Action(() =>
-                            {
-                                DialogResult MessageBoxResult = MessageBox.Show("处理完毕，是否需要打开WORD目录？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                if (MessageBoxResult == DialogResult.Yes)
-                                {
-                                    Process.Start(SelectPathString);
-                                }
-                            }));
-                        }
-                    }
+                    UI.ConvertStart(this.PdfFileListView,this.PdfStatusText,ConvertFileType.Pdf2Word,".docx");
                 }
                 catch (Exception ex)
                 {
@@ -218,36 +129,7 @@ namespace DocumentTools
             {
                 try
                 {
-                    if (this.ExcelFileListView.Items.Count > 0)
-                    {
-                        IEnumerable<string> ISelectPathString = Util.ShwoSelectDialog(false, true, "", "");
-                        string SelectPathString = ISelectPathString.FirstOrDefault();
-                        if (SelectPathString != default)
-                        {
-                            for (int Index = 0; Index < this.ExcelFileListView.Items.Count; Index++)
-                            {
-                                string TempFileName = this.ExcelFileListView.Items[Index].Text;
-
-                                Util.ConvertExcel2Pdf(TempFileName, SelectPathString);
-
-                                //添加转后的pdf文件路径
-                                string PdfFileNameWithNotExt = Path.GetFileNameWithoutExtension(TempFileName);
-                                string SavedPdfFileName = Path.Combine(SelectPathString, PdfFileNameWithNotExt + ".pdf");
-                                ExcelFileListView.Items[Index].SubItems.Add(SavedPdfFileName);
-                                ExcelFileListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                            }
-
-
-                            this.BeginInvoke(new Action(() =>
-                            {
-                                DialogResult MessageBoxResult = MessageBox.Show("处理完毕，是否需要打开PDF目录？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                if (MessageBoxResult == DialogResult.Yes)
-                                {
-                                    Process.Start(SelectPathString);
-                                }
-                            }));
-                        }
-                    }
+                    UI.ConvertStart(this.ExcelFileListView,this.Excel2PdfStatusText,ConvertFileType.Excel2Pdf,".pdf");
                 }
                 catch (Exception ex)
                 {

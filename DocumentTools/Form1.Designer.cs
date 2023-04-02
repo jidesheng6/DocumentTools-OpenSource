@@ -32,7 +32,6 @@
             this.MainTabPage = new System.Windows.Forms.TabControl();
             this.TabPage_01 = new System.Windows.Forms.TabPage();
             this.MergePdfButton = new System.Windows.Forms.Button();
-            this.SaveProgressBar = new System.Windows.Forms.ProgressBar();
             this.RemoveTempDocx = new System.Windows.Forms.CheckBox();
             this.OpenPdfOptions = new System.Windows.Forms.CheckBox();
             this.StatusText = new System.Windows.Forms.Label();
@@ -50,6 +49,7 @@
             this.SelectExcelFileButton = new System.Windows.Forms.Button();
             this.ExcelFileListView = new System.Windows.Forms.ListView();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.Excel2PdfStatusText = new System.Windows.Forms.Label();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
@@ -70,7 +70,6 @@
             // TabPage_01
             // 
             this.TabPage_01.Controls.Add(this.MergePdfButton);
-            this.TabPage_01.Controls.Add(this.SaveProgressBar);
             this.TabPage_01.Controls.Add(this.RemoveTempDocx);
             this.TabPage_01.Controls.Add(this.OpenPdfOptions);
             this.TabPage_01.Controls.Add(this.StatusText);
@@ -94,13 +93,6 @@
             this.MergePdfButton.Text = "合并列表中的PDF文件";
             this.MergePdfButton.UseVisualStyleBackColor = true;
             this.MergePdfButton.Click += new System.EventHandler(this.MergePdfButton_Click);
-            // 
-            // SaveProgressBar
-            // 
-            this.SaveProgressBar.Location = new System.Drawing.Point(233, 406);
-            this.SaveProgressBar.Name = "SaveProgressBar";
-            this.SaveProgressBar.Size = new System.Drawing.Size(311, 55);
-            this.SaveProgressBar.TabIndex = 7;
             // 
             // RemoveTempDocx
             // 
@@ -126,7 +118,7 @@
             // 
             this.StatusText.AutoSize = true;
             this.StatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.StatusText.Location = new System.Drawing.Point(6, 379);
+            this.StatusText.Location = new System.Drawing.Point(293, 424);
             this.StatusText.Name = "StatusText";
             this.StatusText.Size = new System.Drawing.Size(161, 18);
             this.StatusText.TabIndex = 4;
@@ -180,11 +172,11 @@
             // 
             this.PdfStatusText.AutoSize = true;
             this.PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.PdfStatusText.Location = new System.Drawing.Point(315, 413);
+            this.PdfStatusText.Location = new System.Drawing.Point(293, 424);
             this.PdfStatusText.Name = "PdfStatusText";
-            this.PdfStatusText.Size = new System.Drawing.Size(125, 18);
+            this.PdfStatusText.Size = new System.Drawing.Size(161, 18);
             this.PdfStatusText.TabIndex = 4;
-            this.PdfStatusText.Text = "等待处理中...";
+            this.PdfStatusText.Text = "正在等待处理中...";
             // 
             // label1
             // 
@@ -198,7 +190,7 @@
             // 
             // Convert2DocButton
             // 
-            this.Convert2DocButton.Location = new System.Drawing.Point(548, 395);
+            this.Convert2DocButton.Location = new System.Drawing.Point(550, 406);
             this.Convert2DocButton.Name = "Convert2DocButton";
             this.Convert2DocButton.Size = new System.Drawing.Size(221, 55);
             this.Convert2DocButton.TabIndex = 2;
@@ -208,7 +200,7 @@
             // 
             // SelectPdfButton
             // 
-            this.SelectPdfButton.Location = new System.Drawing.Point(8, 395);
+            this.SelectPdfButton.Location = new System.Drawing.Point(6, 406);
             this.SelectPdfButton.Name = "SelectPdfButton";
             this.SelectPdfButton.Size = new System.Drawing.Size(221, 55);
             this.SelectPdfButton.TabIndex = 1;
@@ -219,14 +211,15 @@
             // PdfFileListView
             // 
             this.PdfFileListView.HideSelection = false;
-            this.PdfFileListView.Location = new System.Drawing.Point(8, 3);
+            this.PdfFileListView.Location = new System.Drawing.Point(6, 6);
             this.PdfFileListView.Name = "PdfFileListView";
-            this.PdfFileListView.Size = new System.Drawing.Size(765, 335);
+            this.PdfFileListView.Size = new System.Drawing.Size(765, 326);
             this.PdfFileListView.TabIndex = 0;
             this.PdfFileListView.UseCompatibleStateImageBehavior = false;
             // 
             // TabPage_03
             // 
+            this.TabPage_03.Controls.Add(this.Excel2PdfStatusText);
             this.TabPage_03.Controls.Add(this.ConvertExcel2PdfButton);
             this.TabPage_03.Controls.Add(this.SelectExcelFileButton);
             this.TabPage_03.Controls.Add(this.ExcelFileListView);
@@ -239,7 +232,7 @@
             // 
             // ConvertExcel2PdfButton
             // 
-            this.ConvertExcel2PdfButton.Location = new System.Drawing.Point(553, 413);
+            this.ConvertExcel2PdfButton.Location = new System.Drawing.Point(550, 406);
             this.ConvertExcel2PdfButton.Name = "ConvertExcel2PdfButton";
             this.ConvertExcel2PdfButton.Size = new System.Drawing.Size(221, 55);
             this.ConvertExcel2PdfButton.TabIndex = 3;
@@ -249,7 +242,7 @@
             // 
             // SelectExcelFileButton
             // 
-            this.SelectExcelFileButton.Location = new System.Drawing.Point(5, 413);
+            this.SelectExcelFileButton.Location = new System.Drawing.Point(6, 406);
             this.SelectExcelFileButton.Name = "SelectExcelFileButton";
             this.SelectExcelFileButton.Size = new System.Drawing.Size(221, 55);
             this.SelectExcelFileButton.TabIndex = 2;
@@ -260,11 +253,21 @@
             // ExcelFileListView
             // 
             this.ExcelFileListView.HideSelection = false;
-            this.ExcelFileListView.Location = new System.Drawing.Point(10, 0);
+            this.ExcelFileListView.Location = new System.Drawing.Point(6, 6);
             this.ExcelFileListView.Name = "ExcelFileListView";
-            this.ExcelFileListView.Size = new System.Drawing.Size(764, 407);
+            this.ExcelFileListView.Size = new System.Drawing.Size(765, 326);
             this.ExcelFileListView.TabIndex = 1;
             this.ExcelFileListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // Excel2PdfStatusText
+            // 
+            this.Excel2PdfStatusText.AutoSize = true;
+            this.Excel2PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.Excel2PdfStatusText.Location = new System.Drawing.Point(293, 424);
+            this.Excel2PdfStatusText.Name = "Excel2PdfStatusText";
+            this.Excel2PdfStatusText.Size = new System.Drawing.Size(161, 18);
+            this.Excel2PdfStatusText.TabIndex = 4;
+            this.Excel2PdfStatusText.Text = "正在等待处理中...";
             // 
             // BodyForm
             // 
@@ -285,6 +288,7 @@
             this.TabPage_02.ResumeLayout(false);
             this.TabPage_02.PerformLayout();
             this.TabPage_03.ResumeLayout(false);
+            this.TabPage_03.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -298,20 +302,20 @@
         internal System.Windows.Forms.ListView WordFileListView;
         private System.Windows.Forms.Button ConvertButton;
         private System.Windows.Forms.Label StatusText;
-        private System.Windows.Forms.CheckBox OpenPdfOptions;
-        private System.Windows.Forms.CheckBox RemoveTempDocx;
         private System.Windows.Forms.Button SelectPdfButton;
         private System.Windows.Forms.Button Convert2DocButton;
         internal System.Windows.Forms.ListView PdfFileListView;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label PdfStatusText;
         private System.Windows.Forms.TabPage TabPage_03;
-        internal System.Windows.Forms.ProgressBar SaveProgressBar;
         internal System.Windows.Forms.ListView ExcelFileListView;
         private System.Windows.Forms.Button ConvertExcel2PdfButton;
         private System.Windows.Forms.Button SelectExcelFileButton;
         private System.Windows.Forms.Button MergePdfButton;
         internal System.Windows.Forms.SaveFileDialog SaveFileDialog;
+        internal System.Windows.Forms.CheckBox OpenPdfOptions;
+        internal System.Windows.Forms.CheckBox RemoveTempDocx;
+        private System.Windows.Forms.Label Excel2PdfStatusText;
     }
 }
 
