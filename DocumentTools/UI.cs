@@ -13,7 +13,8 @@ namespace DocumentTools
     {
         Word2Pdf,
         Pdf2Word,
-        Excel2Pdf
+        Excel2Pdf,
+        Word2Image
     }
     internal class UI
     {
@@ -91,6 +92,11 @@ namespace DocumentTools
             AddFilesToListView("EXCEL文档", "*.xls;*.xlsx", BodyForm.MainForm.ExcelFileListView);
         }
 
+        public static void AddWord2ImageFiles()
+        {
+            AddFilesToListView("WORD文档","*.docx;*.doc",BodyForm.MainForm.DocumentsListView);
+        }
+
         /// <summary>
         /// 转换文件通用方法
         /// </summary>
@@ -133,6 +139,10 @@ namespace DocumentTools
                             //excel转pdf
                             case ConvertFileType.Excel2Pdf:
                                 Util.ConvertExcel2Pdf(ListViewFirstColumnText, ConvertedFileName,BodyForm.MainForm.ExportEachSheet.Checked);
+                                break;
+                            //word转图片
+                            case ConvertFileType.Word2Image:
+                                Util.ConvertWord2Image(ListViewFirstColumnText, ConvertedFileName, ExtensionString,BodyForm.MainForm.SetGrayCheckBox.Checked,BodyForm.MainForm.PageExportCheck.Checked,Convert.ToInt32(BodyForm.MainForm.DpiItemList.SelectedValue));
                                 break;
                             default: break;
                         }

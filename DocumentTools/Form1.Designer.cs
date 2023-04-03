@@ -45,16 +45,28 @@
             this.SelectPdfButton = new System.Windows.Forms.Button();
             this.PdfFileListView = new System.Windows.Forms.ListView();
             this.TabPage_03 = new System.Windows.Forms.TabPage();
+            this.ExportEachSheet = new System.Windows.Forms.CheckBox();
             this.Excel2PdfStatusText = new System.Windows.Forms.Label();
             this.ConvertExcel2PdfButton = new System.Windows.Forms.Button();
             this.SelectExcelFileButton = new System.Windows.Forms.Button();
             this.ExcelFileListView = new System.Windows.Forms.ListView();
+            this.TabPage_04 = new System.Windows.Forms.TabPage();
+            this.SelectWord2ImageFileButton = new System.Windows.Forms.Button();
+            this.ConvertWord2ImageStatus = new System.Windows.Forms.Label();
+            this.SetGrayCheckBox = new System.Windows.Forms.CheckBox();
+            this.ConvertWord2ImageButton = new System.Windows.Forms.Button();
+            this.ConvertImageList = new System.Windows.Forms.ComboBox();
+            this.DocumentsListView = new System.Windows.Forms.ListView();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.ExportEachSheet = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.DpiItemList = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.PageExportCheck = new System.Windows.Forms.CheckBox();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
             this.TabPage_03.SuspendLayout();
+            this.TabPage_04.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTabPage
@@ -62,6 +74,7 @@
             this.MainTabPage.Controls.Add(this.TabPage_01);
             this.MainTabPage.Controls.Add(this.TabPage_02);
             this.MainTabPage.Controls.Add(this.TabPage_03);
+            this.MainTabPage.Controls.Add(this.TabPage_04);
             this.MainTabPage.Location = new System.Drawing.Point(3, 12);
             this.MainTabPage.Name = "MainTabPage";
             this.MainTabPage.SelectedIndex = 0;
@@ -153,6 +166,7 @@
             this.WordFileListView.Size = new System.Drawing.Size(765, 326);
             this.WordFileListView.TabIndex = 0;
             this.WordFileListView.UseCompatibleStateImageBehavior = false;
+            this.WordFileListView.View = System.Windows.Forms.View.List;
             // 
             // TabPage_02
             // 
@@ -232,6 +246,16 @@
             this.TabPage_03.Text = "EXCEL转PDF";
             this.TabPage_03.UseVisualStyleBackColor = true;
             // 
+            // ExportEachSheet
+            // 
+            this.ExportEachSheet.AutoSize = true;
+            this.ExportEachSheet.Location = new System.Drawing.Point(6, 347);
+            this.ExportEachSheet.Name = "ExportEachSheet";
+            this.ExportEachSheet.Size = new System.Drawing.Size(286, 22);
+            this.ExportEachSheet.TabIndex = 5;
+            this.ExportEachSheet.Text = "导出每个Sheet到单独的PDF文件";
+            this.ExportEachSheet.UseVisualStyleBackColor = true;
+            // 
             // Excel2PdfStatusText
             // 
             this.Excel2PdfStatusText.AutoSize = true;
@@ -271,15 +295,119 @@
             this.ExcelFileListView.TabIndex = 1;
             this.ExcelFileListView.UseCompatibleStateImageBehavior = false;
             // 
-            // ExportEachSheet
+            // TabPage_04
             // 
-            this.ExportEachSheet.AutoSize = true;
-            this.ExportEachSheet.Location = new System.Drawing.Point(6, 347);
-            this.ExportEachSheet.Name = "ExportEachSheet";
-            this.ExportEachSheet.Size = new System.Drawing.Size(286, 22);
-            this.ExportEachSheet.TabIndex = 5;
-            this.ExportEachSheet.Text = "导出每个Sheet到单独的PDF文件";
-            this.ExportEachSheet.UseVisualStyleBackColor = true;
+            this.TabPage_04.Controls.Add(this.PageExportCheck);
+            this.TabPage_04.Controls.Add(this.label3);
+            this.TabPage_04.Controls.Add(this.DpiItemList);
+            this.TabPage_04.Controls.Add(this.label2);
+            this.TabPage_04.Controls.Add(this.SelectWord2ImageFileButton);
+            this.TabPage_04.Controls.Add(this.ConvertWord2ImageStatus);
+            this.TabPage_04.Controls.Add(this.SetGrayCheckBox);
+            this.TabPage_04.Controls.Add(this.ConvertWord2ImageButton);
+            this.TabPage_04.Controls.Add(this.ConvertImageList);
+            this.TabPage_04.Controls.Add(this.DocumentsListView);
+            this.TabPage_04.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_04.Name = "TabPage_04";
+            this.TabPage_04.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_04.TabIndex = 3;
+            this.TabPage_04.Text = "WORD转图片";
+            this.TabPage_04.UseVisualStyleBackColor = true;
+            // 
+            // SelectWord2ImageFileButton
+            // 
+            this.SelectWord2ImageFileButton.Location = new System.Drawing.Point(6, 406);
+            this.SelectWord2ImageFileButton.Name = "SelectWord2ImageFileButton";
+            this.SelectWord2ImageFileButton.Size = new System.Drawing.Size(221, 55);
+            this.SelectWord2ImageFileButton.TabIndex = 5;
+            this.SelectWord2ImageFileButton.Text = "选择文件";
+            this.SelectWord2ImageFileButton.UseVisualStyleBackColor = true;
+            this.SelectWord2ImageFileButton.Click += new System.EventHandler(this.SelectWord2ImageFileButton_Click);
+            // 
+            // ConvertWord2ImageStatus
+            // 
+            this.ConvertWord2ImageStatus.AutoSize = true;
+            this.ConvertWord2ImageStatus.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ConvertWord2ImageStatus.Location = new System.Drawing.Point(293, 424);
+            this.ConvertWord2ImageStatus.Name = "ConvertWord2ImageStatus";
+            this.ConvertWord2ImageStatus.Size = new System.Drawing.Size(161, 18);
+            this.ConvertWord2ImageStatus.TabIndex = 4;
+            this.ConvertWord2ImageStatus.Text = "正在等待处理中...";
+            // 
+            // SetGrayCheckBox
+            // 
+            this.SetGrayCheckBox.AutoSize = true;
+            this.SetGrayCheckBox.Location = new System.Drawing.Point(6, 347);
+            this.SetGrayCheckBox.Name = "SetGrayCheckBox";
+            this.SetGrayCheckBox.Size = new System.Drawing.Size(160, 22);
+            this.SetGrayCheckBox.TabIndex = 3;
+            this.SetGrayCheckBox.Text = "转换为灰度图片";
+            this.SetGrayCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ConvertWord2ImageButton
+            // 
+            this.ConvertWord2ImageButton.Location = new System.Drawing.Point(550, 406);
+            this.ConvertWord2ImageButton.Name = "ConvertWord2ImageButton";
+            this.ConvertWord2ImageButton.Size = new System.Drawing.Size(221, 55);
+            this.ConvertWord2ImageButton.TabIndex = 2;
+            this.ConvertWord2ImageButton.Text = "开始处理";
+            this.ConvertWord2ImageButton.UseVisualStyleBackColor = true;
+            this.ConvertWord2ImageButton.Click += new System.EventHandler(this.ConvertWord2ImageButton_Click);
+            // 
+            // ConvertImageList
+            // 
+            this.ConvertImageList.FormattingEnabled = true;
+            this.ConvertImageList.Location = new System.Drawing.Point(648, 343);
+            this.ConvertImageList.Name = "ConvertImageList";
+            this.ConvertImageList.Size = new System.Drawing.Size(121, 26);
+            this.ConvertImageList.TabIndex = 1;
+            this.ConvertImageList.SelectedIndexChanged += new System.EventHandler(this.ConvertImageList_SelectedIndexChanged);
+            // 
+            // DocumentsListView
+            // 
+            this.DocumentsListView.HideSelection = false;
+            this.DocumentsListView.Location = new System.Drawing.Point(6, 6);
+            this.DocumentsListView.Name = "DocumentsListView";
+            this.DocumentsListView.Size = new System.Drawing.Size(765, 326);
+            this.DocumentsListView.TabIndex = 0;
+            this.DocumentsListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(562, 347);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "转换格式";
+            // 
+            // DpiItemList
+            // 
+            this.DpiItemList.FormattingEnabled = true;
+            this.DpiItemList.Location = new System.Drawing.Point(424, 343);
+            this.DpiItemList.Name = "DpiItemList";
+            this.DpiItemList.Size = new System.Drawing.Size(121, 26);
+            this.DpiItemList.TabIndex = 7;
+            this.DpiItemList.SelectedIndexChanged += new System.EventHandler(this.DpiItemList_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(284, 347);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(134, 18);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "图像输出分辨率";
+            // 
+            // PageExportCheck
+            // 
+            this.PageExportCheck.AutoSize = true;
+            this.PageExportCheck.Location = new System.Drawing.Point(172, 347);
+            this.PageExportCheck.Name = "PageExportCheck";
+            this.PageExportCheck.Size = new System.Drawing.Size(106, 22);
+            this.PageExportCheck.TabIndex = 9;
+            this.PageExportCheck.Text = "逐页导出";
+            this.PageExportCheck.UseVisualStyleBackColor = true;
             // 
             // BodyForm
             // 
@@ -301,6 +429,8 @@
             this.TabPage_02.PerformLayout();
             this.TabPage_03.ResumeLayout(false);
             this.TabPage_03.PerformLayout();
+            this.TabPage_04.ResumeLayout(false);
+            this.TabPage_04.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -329,6 +459,17 @@
         internal System.Windows.Forms.CheckBox RemoveTempDocx;
         private System.Windows.Forms.Label Excel2PdfStatusText;
         internal System.Windows.Forms.CheckBox ExportEachSheet;
+        private System.Windows.Forms.TabPage TabPage_04;
+        private System.Windows.Forms.ComboBox ConvertImageList;
+        private System.Windows.Forms.Button ConvertWord2ImageButton;
+        internal System.Windows.Forms.ListView DocumentsListView;
+        internal System.Windows.Forms.CheckBox SetGrayCheckBox;
+        private System.Windows.Forms.Label ConvertWord2ImageStatus;
+        private System.Windows.Forms.Button SelectWord2ImageFileButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        internal System.Windows.Forms.CheckBox PageExportCheck;
+        internal System.Windows.Forms.ComboBox DpiItemList;
     }
 }
 

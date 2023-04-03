@@ -1,8 +1,15 @@
 ﻿using Aspose.Cells;
+using Aspose.Pdf.Drawing;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
+using System.Reflection;
+using System.Resources;
+using System.IO;
+using NAudio;
+using NAudio.Wave;
 
 namespace DocumentTools
 {
@@ -72,6 +79,32 @@ namespace DocumentTools
             DateTime NowDateTime = DateTime.Now;
 
             return NowDateTime.ToString("yyyy年/MM月/dd日 HH:mm:ss");
+        }
+
+        /// <summary>
+        /// 获取内嵌的资源对象
+        /// </summary>
+        /// <param name="ResourceName">资源名称，不需要带后缀</param>
+        /// <returns></returns>
+        private static object GetEmbedResourceObj(string ResourceName)
+        {
+            Assembly SelfAssmbly = Assembly.GetExecutingAssembly();
+            ResourceManager TempManager = new ResourceManager("DocumentTools.Properties.Resources",SelfAssmbly);
+            return  TempManager.GetObject(ResourceName);
+        }
+
+        /// <summary>
+        /// 播放MP3流
+        /// </summary>
+        public static void PlayMp3WithStream()
+        {
+            //这里必须这样写，不要用using语句来自动执行dispose，否则声音还没播放的时候就已经被dispose了
+            MemoryStream EmbedResouceObj =  new MemoryStream((byte[])GetEmbedResourceObj("zdsny"));
+            StreamMediaFoundationReader TempStream = new StreamMediaFoundationReader(EmbedResouceObj);
+            IWavePlayer Player = new WaveOut();
+            Player.Init(TempStream);
+            Player.Play();
+
         }
 
         /// <summary>
@@ -225,6 +258,77 @@ namespace DocumentTools
             {
                 TempExcelDocument.Save(SavePdfFileName, Aspose.Cells.SaveFormat.Pdf);
             }
+        }
+
+        /// <summary>
+        /// 将word文档转换为图片文件
+        /// </summary>
+        /// <param name="DocumentsFileName">文档名称</param>
+        /// <param name="SavedImageFileName">保存后图片的名称</param>
+        /// <param name="ConvertImageType">转换的目标图片类型</param>
+        /// <param name="SetGrayMode">是否需要进行灰度处理</param>
+        /// <param name="PageExport">是否需要逐页导出</param>
+        /// <param name="DpiValue">导出的图像DPI分辨率</param>
+        public static void ConvertWord2Image(string DocumentsFileName,string SavedImageFileName,string ConvertImageType,bool SetGrayMode,bool PageExport,int DpiValue=150)
+        {
+            Aspose.Hook.Manager.StartHook();
+
+            Aspose.Words.Document TempWordDocument = new Aspose.Words.Document(DocumentsFileName);
+            //初始化一个临时参数，到时候重新初始化
+            Aspose.Words.Saving.ImageSaveOptions TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Jpeg);
+
+
+            //根据不同导出类型进行预初始化处理
+            switch (ConvertImageType)
+            {
+                case ".jpg":
+                    TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Jpeg);
+                    TempWordImageSaveOption.JpegQuality = 100;
+                    break;
+                case ".png":
+                    TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Png);
+                    break;
+                case ".bmp":
+                    TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Bmp);
+                    break;
+                case ".tif":
+                    TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Tiff);
+                    break;
+                default:break;
+            }
+
+            
+            TempWordImageSaveOption.UseHighQualityRendering = true;
+            TempWordImageSaveOption.Resolution = DpiValue;
+            TempWordImageSaveOption.ColorMode = Aspose.Words.Saving.ColorMode.Normal;
+            TempWordImageSaveOption.PixelFormat = Aspose.Words.Saving.ImagePixelFormat.Format24BppRgb;
+            TempWordImageSaveOption.UseAntiAliasing = true;
+
+            if (SetGrayMode)
+            {
+                //对图像进行灰度处理
+                TempWordImageSaveOption.ImageColorMode = Aspose.Words.Saving.ImageColorMode.Grayscale;
+                TempWordImageSaveOption.ColorMode = Aspose.Words.Saving.ColorMode.Grayscale;
+            }
+
+            if (PageExport)
+            {
+                //逐页导出图片
+                for (int pageIndex = 0; pageIndex < TempWordDocument.PageCount; pageIndex++)
+                {
+                    string MutilPageFileName = SavedImageFileName.Replace(ConvertImageType, $"_第{pageIndex + 1}页{ConvertImageType}");
+                    TempWordImageSaveOption.PageSet = new Aspose.Words.Saving.PageSet(pageIndex);
+                    TempWordDocument.Save(MutilPageFileName, TempWordImageSaveOption);
+
+                }
+            }
+            else
+            {
+                TempWordDocument.Save(SavedImageFileName, TempWordImageSaveOption);
+            }
+
+
+
         }
 
     }
