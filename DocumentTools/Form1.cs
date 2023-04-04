@@ -25,7 +25,7 @@ namespace DocumentTools
             this.PageExportCheck.Checked = true;
             this.PageExportCheck.Enabled = false;
 
-            Util.PlayMp3WithStream();
+            //Util.PlayMp3WithStream();
         }
 
         private void InitListView()
@@ -214,6 +214,32 @@ namespace DocumentTools
         private void DpiItemList_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void ConvertTextButton_Click(object sender, EventArgs e)
+        {
+            TargetTextBox.Lines =  Util.AddText2List(SourceTextBox.Text,DoubleTextAlignCheck.Checked,RemoveNumberCheck.Checked,RemoveSquareCheck.Checked,NameStorkeChcek.Checked);
+
+            
+        }
+
+        private void SourceTextBox_TextChanged(object sender, EventArgs e)
+        {
+            //如果启用多行模式，则每次添加文本后，都在末尾添加\t控制字符
+            if(MutilLineMode.Checked)
+            {
+                SourceTextBox.AppendText("\t");
+            }
+        }
+
+        private void TargetTextBox_TextChanged(object sender, EventArgs e)
+        {
+            TargetTextNumberText.Text = $"处理后姓名有{TargetTextBox.Lines.Length}个";
+
+        }
+
+        private void MutilLineMode_CheckedChanged(object sender, EventArgs e)
+        {
         }
     }
 

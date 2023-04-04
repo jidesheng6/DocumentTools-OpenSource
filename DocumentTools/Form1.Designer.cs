@@ -51,22 +51,37 @@
             this.SelectExcelFileButton = new System.Windows.Forms.Button();
             this.ExcelFileListView = new System.Windows.Forms.ListView();
             this.TabPage_04 = new System.Windows.Forms.TabPage();
+            this.PageExportCheck = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.DpiItemList = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SelectWord2ImageFileButton = new System.Windows.Forms.Button();
             this.ConvertWord2ImageStatus = new System.Windows.Forms.Label();
             this.SetGrayCheckBox = new System.Windows.Forms.CheckBox();
             this.ConvertWord2ImageButton = new System.Windows.Forms.Button();
             this.ConvertImageList = new System.Windows.Forms.ComboBox();
             this.DocumentsListView = new System.Windows.Forms.ListView();
+            this.TabPage_05 = new System.Windows.Forms.TabPage();
+            this.MutilLineMode = new System.Windows.Forms.CheckBox();
+            this.DoubleTextAlignCheck = new System.Windows.Forms.CheckBox();
+            this.RemoveNumberCheck = new System.Windows.Forms.CheckBox();
+            this.RemoveSquareCheck = new System.Windows.Forms.CheckBox();
+            this.TargetTextNumberText = new System.Windows.Forms.Label();
+            this.ConvertTextButton = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.TargetTextBox = new System.Windows.Forms.RichTextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SourceTextBox = new System.Windows.Forms.RichTextBox();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.label2 = new System.Windows.Forms.Label();
-            this.DpiItemList = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.PageExportCheck = new System.Windows.Forms.CheckBox();
+            this.NameStorkeChcek = new System.Windows.Forms.CheckBox();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
             this.TabPage_03.SuspendLayout();
             this.TabPage_04.SuspendLayout();
+            this.TabPage_05.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTabPage
@@ -75,6 +90,7 @@
             this.MainTabPage.Controls.Add(this.TabPage_02);
             this.MainTabPage.Controls.Add(this.TabPage_03);
             this.MainTabPage.Controls.Add(this.TabPage_04);
+            this.MainTabPage.Controls.Add(this.TabPage_05);
             this.MainTabPage.Location = new System.Drawing.Point(3, 12);
             this.MainTabPage.Name = "MainTabPage";
             this.MainTabPage.SelectedIndex = 0;
@@ -314,6 +330,43 @@
             this.TabPage_04.Text = "WORD转图片";
             this.TabPage_04.UseVisualStyleBackColor = true;
             // 
+            // PageExportCheck
+            // 
+            this.PageExportCheck.AutoSize = true;
+            this.PageExportCheck.Location = new System.Drawing.Point(172, 347);
+            this.PageExportCheck.Name = "PageExportCheck";
+            this.PageExportCheck.Size = new System.Drawing.Size(106, 22);
+            this.PageExportCheck.TabIndex = 9;
+            this.PageExportCheck.Text = "逐页导出";
+            this.PageExportCheck.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(284, 347);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(134, 18);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "图像输出分辨率";
+            // 
+            // DpiItemList
+            // 
+            this.DpiItemList.FormattingEnabled = true;
+            this.DpiItemList.Location = new System.Drawing.Point(424, 343);
+            this.DpiItemList.Name = "DpiItemList";
+            this.DpiItemList.Size = new System.Drawing.Size(121, 26);
+            this.DpiItemList.TabIndex = 7;
+            this.DpiItemList.SelectedIndexChanged += new System.EventHandler(this.DpiItemList_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(562, 347);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "转换格式";
+            // 
             // SelectWord2ImageFileButton
             // 
             this.SelectWord2ImageFileButton.Location = new System.Drawing.Point(6, 406);
@@ -372,42 +425,132 @@
             this.DocumentsListView.TabIndex = 0;
             this.DocumentsListView.UseCompatibleStateImageBehavior = false;
             // 
-            // label2
+            // TabPage_05
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(562, 347);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 18);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "转换格式";
+            this.TabPage_05.Controls.Add(this.NameStorkeChcek);
+            this.TabPage_05.Controls.Add(this.MutilLineMode);
+            this.TabPage_05.Controls.Add(this.DoubleTextAlignCheck);
+            this.TabPage_05.Controls.Add(this.RemoveNumberCheck);
+            this.TabPage_05.Controls.Add(this.RemoveSquareCheck);
+            this.TabPage_05.Controls.Add(this.TargetTextNumberText);
+            this.TabPage_05.Controls.Add(this.ConvertTextButton);
+            this.TabPage_05.Controls.Add(this.groupBox2);
+            this.TabPage_05.Controls.Add(this.groupBox1);
+            this.TabPage_05.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_05.Name = "TabPage_05";
+            this.TabPage_05.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_05.TabIndex = 4;
+            this.TabPage_05.Text = "姓名横转竖列";
+            this.TabPage_05.UseVisualStyleBackColor = true;
             // 
-            // DpiItemList
+            // MutilLineMode
             // 
-            this.DpiItemList.FormattingEnabled = true;
-            this.DpiItemList.Location = new System.Drawing.Point(424, 343);
-            this.DpiItemList.Name = "DpiItemList";
-            this.DpiItemList.Size = new System.Drawing.Size(121, 26);
-            this.DpiItemList.TabIndex = 7;
-            this.DpiItemList.SelectedIndexChanged += new System.EventHandler(this.DpiItemList_SelectedIndexChanged);
+            this.MutilLineMode.AutoSize = true;
+            this.MutilLineMode.Location = new System.Drawing.Point(309, 264);
+            this.MutilLineMode.Name = "MutilLineMode";
+            this.MutilLineMode.Size = new System.Drawing.Size(106, 22);
+            this.MutilLineMode.TabIndex = 7;
+            this.MutilLineMode.Text = "多行模式";
+            this.MutilLineMode.UseVisualStyleBackColor = true;
+            this.MutilLineMode.CheckedChanged += new System.EventHandler(this.MutilLineMode_CheckedChanged);
             // 
-            // label3
+            // DoubleTextAlignCheck
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(284, 347);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(134, 18);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "图像输出分辨率";
+            this.DoubleTextAlignCheck.AutoSize = true;
+            this.DoubleTextAlignCheck.Location = new System.Drawing.Point(309, 292);
+            this.DoubleTextAlignCheck.Name = "DoubleTextAlignCheck";
+            this.DoubleTextAlignCheck.Size = new System.Drawing.Size(106, 22);
+            this.DoubleTextAlignCheck.TabIndex = 6;
+            this.DoubleTextAlignCheck.Text = "双字对齐";
+            this.DoubleTextAlignCheck.UseVisualStyleBackColor = true;
             // 
-            // PageExportCheck
+            // RemoveNumberCheck
             // 
-            this.PageExportCheck.AutoSize = true;
-            this.PageExportCheck.Location = new System.Drawing.Point(172, 347);
-            this.PageExportCheck.Name = "PageExportCheck";
-            this.PageExportCheck.Size = new System.Drawing.Size(106, 22);
-            this.PageExportCheck.TabIndex = 9;
-            this.PageExportCheck.Text = "逐页导出";
-            this.PageExportCheck.UseVisualStyleBackColor = true;
+            this.RemoveNumberCheck.AutoSize = true;
+            this.RemoveNumberCheck.Location = new System.Drawing.Point(309, 320);
+            this.RemoveNumberCheck.Name = "RemoveNumberCheck";
+            this.RemoveNumberCheck.Size = new System.Drawing.Size(106, 22);
+            this.RemoveNumberCheck.TabIndex = 5;
+            this.RemoveNumberCheck.Text = "移除数字";
+            this.RemoveNumberCheck.UseVisualStyleBackColor = true;
+            // 
+            // RemoveSquareCheck
+            // 
+            this.RemoveSquareCheck.AutoSize = true;
+            this.RemoveSquareCheck.Location = new System.Drawing.Point(309, 348);
+            this.RemoveSquareCheck.Name = "RemoveSquareCheck";
+            this.RemoveSquareCheck.Size = new System.Drawing.Size(106, 22);
+            this.RemoveSquareCheck.TabIndex = 4;
+            this.RemoveSquareCheck.Text = "移除括号";
+            this.RemoveSquareCheck.UseVisualStyleBackColor = true;
+            // 
+            // TargetTextNumberText
+            // 
+            this.TargetTextNumberText.AutoSize = true;
+            this.TargetTextNumberText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.TargetTextNumberText.Location = new System.Drawing.Point(306, 384);
+            this.TargetTextNumberText.Name = "TargetTextNumberText";
+            this.TargetTextNumberText.Size = new System.Drawing.Size(143, 18);
+            this.TargetTextNumberText.TabIndex = 3;
+            this.TargetTextNumberText.Text = "处理后姓名有0个";
+            // 
+            // ConvertTextButton
+            // 
+            this.ConvertTextButton.Location = new System.Drawing.Point(292, 419);
+            this.ConvertTextButton.Name = "ConvertTextButton";
+            this.ConvertTextButton.Size = new System.Drawing.Size(190, 43);
+            this.ConvertTextButton.TabIndex = 2;
+            this.ConvertTextButton.Text = "开始处理";
+            this.ConvertTextButton.UseVisualStyleBackColor = true;
+            this.ConvertTextButton.Click += new System.EventHandler(this.ConvertTextButton_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.TargetTextBox);
+            this.groupBox2.Location = new System.Drawing.Point(488, 7);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(281, 465);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "处理后姓名";
+            // 
+            // TargetTextBox
+            // 
+            this.TargetTextBox.Location = new System.Drawing.Point(6, 23);
+            this.TargetTextBox.Name = "TargetTextBox";
+            this.TargetTextBox.Size = new System.Drawing.Size(269, 432);
+            this.TargetTextBox.TabIndex = 3;
+            this.TargetTextBox.Text = "";
+            this.TargetTextBox.TextChanged += new System.EventHandler(this.TargetTextBox_TextChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.SourceTextBox);
+            this.groupBox1.Location = new System.Drawing.Point(5, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(281, 465);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "处理前姓名";
+            // 
+            // SourceTextBox
+            // 
+            this.SourceTextBox.Location = new System.Drawing.Point(4, 24);
+            this.SourceTextBox.Name = "SourceTextBox";
+            this.SourceTextBox.Size = new System.Drawing.Size(269, 432);
+            this.SourceTextBox.TabIndex = 2;
+            this.SourceTextBox.Text = "";
+            this.SourceTextBox.TextChanged += new System.EventHandler(this.SourceTextBox_TextChanged);
+            // 
+            // NameStorkeChcek
+            // 
+            this.NameStorkeChcek.AutoSize = true;
+            this.NameStorkeChcek.Location = new System.Drawing.Point(309, 236);
+            this.NameStorkeChcek.Name = "NameStorkeChcek";
+            this.NameStorkeChcek.Size = new System.Drawing.Size(106, 22);
+            this.NameStorkeChcek.TabIndex = 8;
+            this.NameStorkeChcek.Text = "姓氏排序";
+            this.NameStorkeChcek.UseVisualStyleBackColor = true;
             // 
             // BodyForm
             // 
@@ -431,6 +574,10 @@
             this.TabPage_03.PerformLayout();
             this.TabPage_04.ResumeLayout(false);
             this.TabPage_04.PerformLayout();
+            this.TabPage_05.ResumeLayout(false);
+            this.TabPage_05.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -470,6 +617,18 @@
         private System.Windows.Forms.Label label3;
         internal System.Windows.Forms.CheckBox PageExportCheck;
         internal System.Windows.Forms.ComboBox DpiItemList;
+        private System.Windows.Forms.TabPage TabPage_05;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RichTextBox TargetTextBox;
+        private System.Windows.Forms.RichTextBox SourceTextBox;
+        private System.Windows.Forms.Button ConvertTextButton;
+        private System.Windows.Forms.Label TargetTextNumberText;
+        private System.Windows.Forms.CheckBox RemoveSquareCheck;
+        private System.Windows.Forms.CheckBox RemoveNumberCheck;
+        private System.Windows.Forms.CheckBox DoubleTextAlignCheck;
+        private System.Windows.Forms.CheckBox MutilLineMode;
+        private System.Windows.Forms.CheckBox NameStorkeChcek;
     }
 }
 

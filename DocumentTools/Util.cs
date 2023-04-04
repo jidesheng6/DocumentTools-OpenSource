@@ -1,15 +1,17 @@
 ﻿using Aspose.Cells;
-using Aspose.Pdf.Drawing;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Forms;
+using System.IO;
 using System.Reflection;
 using System.Resources;
-using System.IO;
-using NAudio;
-using NAudio.Wave;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Globalization;
+using System.Threading;
+using System.Linq;
 
 namespace DocumentTools
 {
@@ -89,8 +91,8 @@ namespace DocumentTools
         private static object GetEmbedResourceObj(string ResourceName)
         {
             Assembly SelfAssmbly = Assembly.GetExecutingAssembly();
-            ResourceManager TempManager = new ResourceManager("DocumentTools.Properties.Resources",SelfAssmbly);
-            return  TempManager.GetObject(ResourceName);
+            ResourceManager TempManager = new ResourceManager("DocumentTools.Properties.Resources", SelfAssmbly);
+            return TempManager.GetObject(ResourceName);
         }
 
         /// <summary>
@@ -99,7 +101,7 @@ namespace DocumentTools
         public static void PlayMp3WithStream()
         {
             //这里必须这样写，不要用using语句来自动执行dispose，否则声音还没播放的时候就已经被dispose了
-            MemoryStream EmbedResouceObj =  new MemoryStream((byte[])GetEmbedResourceObj("zdsny"));
+            MemoryStream EmbedResouceObj = new MemoryStream((byte[])GetEmbedResourceObj("zdsny"));
             StreamMediaFoundationReader TempStream = new StreamMediaFoundationReader(EmbedResouceObj);
             IWavePlayer Player = new WaveOut();
             Player.Init(TempStream);
@@ -148,6 +150,7 @@ namespace DocumentTools
             //设置Docx保存参数
             Aspose.Words.Saving.OoxmlSaveOptions TempDocxSaveOption = new Aspose.Words.Saving.OoxmlSaveOptions()
             {
+                //Compliance = Aspose.Words.Saving.OoxmlCompliance.Iso29500_2008_Strict,
                 SaveFormat = Aspose.Words.SaveFormat.Docx,
 
             };
@@ -224,7 +227,7 @@ namespace DocumentTools
         /// </summary>
         /// <param name="ExcelFileName">Excel文件名称</param>
         /// <param name="SavePdfFileName">导出pdf的路径</param>
-        public static void ConvertExcel2Pdf(string ExcelFileName, string SavePdfFileName,bool ExportEachSheet)
+        public static void ConvertExcel2Pdf(string ExcelFileName, string SavePdfFileName, bool ExportEachSheet)
         {
             Aspose.Hook.Manager.StartHook();
 
@@ -243,9 +246,9 @@ namespace DocumentTools
                 for (int i = 0; i < TempExcelDocument.Worksheets.Count; i++)
                 {
                     TempExcelDocument.Worksheets[i].IsVisible = true;
-                    for(int j=0;j<TempExcelDocument.Worksheets.Count;j++)
+                    for (int j = 0; j < TempExcelDocument.Worksheets.Count; j++)
                     {
-                        if(j!=i)
+                        if (j != i)
                         {
                             TempExcelDocument.Worksheets[j].IsVisible = false;
                         }
@@ -269,7 +272,7 @@ namespace DocumentTools
         /// <param name="SetGrayMode">是否需要进行灰度处理</param>
         /// <param name="PageExport">是否需要逐页导出</param>
         /// <param name="DpiValue">导出的图像DPI分辨率</param>
-        public static void ConvertWord2Image(string DocumentsFileName,string SavedImageFileName,string ConvertImageType,bool SetGrayMode,bool PageExport,int DpiValue=150)
+        public static void ConvertWord2Image(string DocumentsFileName, string SavedImageFileName, string ConvertImageType, bool SetGrayMode, bool PageExport, int DpiValue = 150)
         {
             Aspose.Hook.Manager.StartHook();
 
@@ -294,10 +297,10 @@ namespace DocumentTools
                 case ".tif":
                     TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Tiff);
                     break;
-                default:break;
+                default: break;
             }
 
-            
+
             TempWordImageSaveOption.UseHighQualityRendering = true;
             TempWordImageSaveOption.Resolution = DpiValue;
             TempWordImageSaveOption.ColorMode = Aspose.Words.Saving.ColorMode.Normal;
@@ -328,6 +331,148 @@ namespace DocumentTools
             }
 
 
+
+        }
+
+        /// <summary>
+        /// 通过正则表达式移除指定的字符
+        /// </summary>
+        /// <param name="SpecialCharacters"></param>
+        /// <param name="InputText"></param>
+        /// <returns></returns>
+        private static string RemoveSpeciCharacter(string[] SpecialCharacters, string InputText)
+        {
+            foreach (string SpecialCharacter in SpecialCharacters)
+            {
+                bool MatchStatus = Regex.Match(InputText, SpecialCharacter, RegexOptions.Multiline).Success;
+                if (MatchStatus)
+                {
+                    InputText = Regex.Replace(InputText, SpecialCharacter, "",RegexOptions.Multiline);
+                }
+            }
+            return InputText;
+        }
+
+        /// <summary>
+        /// 双字对齐，文本为2个字的文本则自动在中间插入空格
+        /// </summary>
+        /// <param name="InputText">待处理文本</param>
+        /// <returns></returns>
+        private static string DoubleTextAlign(string InputText)
+        {
+            if (InputText.Length == 2 && InputText!=string.Empty)
+            {
+                InputText = InputText.Insert(1, "  ");
+            }
+            return InputText;
+        }
+        /// <summary>
+        /// 正则匹配结果，如果匹配到了就返回true
+        /// </summary>
+        /// <param name="MachMode">表达式</param>
+        /// <param name="InputText">输入的文本</param>
+        /// <returns></returns>
+        private static bool MatchRegexStatus(string MachMode, string InputText)
+        {
+            return Regex.Match(InputText, MachMode).Success;
+        }
+
+        /// <summary>
+        /// 添加处理后的姓名到列表中
+        /// </summary>
+        /// <param name="InputText">源文本</param>
+        /// <param name="DoubleTextAligin">是否双字对齐</param>
+        /// <param name="RemoveNumber">是否移除数字</param>
+        /// <param name="RemoveSquare">是否移除括号</param>
+        /// <returns></returns>
+        public static string[] AddText2List(string InputText, bool DoubleTextAligin, bool RemoveNumber, bool RemoveSquare,bool NameStorke)
+        {
+            List<string> TextList = new List<string>();
+
+            string[] ReturnTextList;
+
+            if (MatchRegexStatus("\\t", InputText))//表示匹配到的是传统word表格中直接复制的内容
+            {
+                InputText =  Regex.Replace(InputText,"\t","\n",RegexOptions.Multiline);//将\t全部换成\n换行符
+
+                string[] TempInputTextByTap = InputText.Split(new char[] { '\n' });//使用\n来分割数组，确保每个文字都独立存储
+
+                string[] AllSpaceChar = new string[] { "\\s", "○", "□", "£"};//设置基础特殊字符列表
+                
+                foreach (string TempText in TempInputTextByTap)//遍历分割数组，得到每个文字
+                {
+                    string TempInputTextNoSpace = RemoveSpeciCharacter(AllSpaceChar, TempText);//对每个文字进行删除特殊字符处理
+
+                    if (RemoveNumber)
+                    {
+                        TempInputTextNoSpace = RemoveSpeciCharacter(new string[] { "[0-9]" }, TempInputTextNoSpace);//移除数字
+                    }
+
+                    if (DoubleTextAligin)
+                    {
+                        TempInputTextNoSpace = DoubleTextAlign(TempInputTextNoSpace);//双字对齐
+                    }
+
+                    if (RemoveSquare)
+                    {
+                        //删除括号
+                        TempInputTextNoSpace = RemoveSpeciCharacter(new string[] { "\\(.+?\\)|\\（.+?\\）|\\(\\)|\\（\\）" }, TempInputTextNoSpace);
+                    }
+
+                    if(TempInputTextNoSpace!=string.Empty)
+                    {
+                        //只有非空白文本才添加到数组中
+                        TextList.Add(TempInputTextNoSpace);
+                    }
+                }
+            }
+            else
+            {
+                //以下是对常规列文本进行普通处理
+                string[] TempNewLineText = InputText.Split(new char[] { '\n' });
+                foreach (string TempText in TempNewLineText)
+                {
+
+                    if (TempText != string.Empty)
+                    {
+                        string AddListText = TempText;
+                        if (RemoveNumber)
+                        {
+                            AddListText = RemoveSpeciCharacter(new string[] { "[0-9]" }, AddListText);//移除数字
+                        }
+
+                        if (DoubleTextAligin)
+                        {
+                            AddListText = DoubleTextAlign(AddListText);//双字对齐
+                        }
+
+                        if (RemoveSquare)
+                        {
+                            //删除括号
+                            AddListText = RemoveSpeciCharacter(new string[] { "\\(.+?\\)|\\（.+?\\）|\\(\\)|\\（\\）" }, AddListText);
+                        }
+
+                        if (AddListText != string.Empty)
+                        {
+                            //只有非空白文本才添加到数组中
+                            TextList.Add(AddListText);
+                        }
+                    }
+                }
+            }
+
+            ReturnTextList = TextList.ToArray();
+
+            if (NameStorke)
+            {
+                //按照姓氏笔画排序
+                CultureInfo cultureInfo = new CultureInfo(133124);
+                Thread.CurrentThread.CurrentCulture = cultureInfo;
+                Array.Sort(ReturnTextList);
+            }
+
+
+            return ReturnTextList;
 
         }
 

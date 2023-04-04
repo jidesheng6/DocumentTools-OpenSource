@@ -39,7 +39,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>6.ico</ApplicationIcon>
+    <ApplicationIcon>转换.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells, Version=22.1.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
@@ -299,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="6.ico" />
+    <Content Include="转换.ico" />
     <None Include="Resources\zdsny.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
