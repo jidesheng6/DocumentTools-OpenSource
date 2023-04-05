@@ -14,7 +14,8 @@ namespace DocumentTools
         Word2Pdf,
         Pdf2Word,
         Excel2Pdf,
-        Word2Image
+        Word2Image,
+        Pdf2Excel,
     }
     internal class UI
     {
@@ -77,6 +78,36 @@ namespace DocumentTools
             });
         }
 
+        /// <summary>
+        /// 获取list view控件第一列的文本项目内容
+        /// </summary>
+        /// <param name="ListViewControl"></param>
+        /// <returns></returns>
+        public static Task<List<string>> GetListViewFirstItemContent(ListView ListViewControl)
+        {
+            return Task.Run(() => {
+                List<string> FileNames = new List<string>();
+                try
+                {
+
+                    if (ListViewControl.Items.Count > 0)
+                    {
+                        for (int Index = 0; Index < ListViewControl.Items.Count; Index++)
+                        {
+                            FileNames.Add(ListViewControl.Items[Index].Text);
+                        }
+                    }
+
+                }
+                catch
+                {
+
+                }
+                return FileNames;
+            });
+
+
+        }
         public static Task<int> AddWordFiles()
         {
             return AddFilesToListView("WORD文档", "*.doc;*.docx", BodyForm.MainForm.WordFileListView);
@@ -94,7 +125,17 @@ namespace DocumentTools
 
         public static void AddWord2ImageFiles()
         {
-            AddFilesToListView("WORD文档","*.docx;*.doc",BodyForm.MainForm.DocumentsListView);
+            AddFilesToListView("支持的文档","*.docx;*.doc;*.xls;*.xlsx;*.pdf",BodyForm.MainForm.DocumentsListView);
+        }
+
+        public static void AddMeregePdfFiles()
+        {
+            AddFilesToListView("PDF文档", "*.pdf", BodyForm.MainForm.MergePdfFileView);
+        }
+
+        public static void AddPdf2ExcelFiles()
+        {
+            AddFilesToListView("PDF文档","*.pdf",BodyForm.MainForm.PDF2ExcelFileView);
         }
 
         /// <summary>
@@ -143,6 +184,10 @@ namespace DocumentTools
                             //word转图片
                             case ConvertFileType.Word2Image:
                                 Util.ConvertWord2Image(ListViewFirstColumnText, ConvertedFileName, ExtensionString,BodyForm.MainForm.SetGrayCheckBox.Checked,BodyForm.MainForm.PageExportCheck.Checked,Convert.ToInt32(BodyForm.MainForm.DpiItemList.SelectedValue));
+                                break;
+                            //pdf转excel
+                            case ConvertFileType.Pdf2Excel:
+                                Util.ConvertPdf2Excel(ListViewFirstColumnText, ConvertedFileName,BodyForm.MainForm.ExcelSheelMode.Checked);
                                 break;
                             default: break;
                         }

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
 using System.Linq;
+using Aspose.Cells.Rendering;
 
 namespace DocumentTools
 {
@@ -264,6 +265,33 @@ namespace DocumentTools
         }
 
         /// <summary>
+        /// 将PDF转为Excel文件
+        /// </summary>
+        /// <param name="PdfFileName">PDF文件名称</param>
+        /// <param name="SaveExcelFileName">导出excel的路径</param>
+        public static void ConvertPdf2Excel(string PdfFileName,string SaveExcelFileName,bool MergeAllPages)
+        {
+            Aspose.Hook.Manager.StartHook();
+
+            Aspose.Pdf.Document TempPdfDocuemnt = new Aspose.Pdf.Document(PdfFileName);
+            Aspose.Pdf.ExcelSaveOptions TempExcelSaveOption = new Aspose.Pdf.ExcelSaveOptions() { 
+            Format = Aspose.Pdf.ExcelSaveOptions.ExcelFormat.XLSX,
+            ExtractOcrSublayerOnly = true,
+            };
+            if(MergeAllPages)
+            {
+                TempExcelSaveOption.MinimizeTheNumberOfWorksheets = true;
+            }
+            else
+            {
+                TempExcelSaveOption.MinimizeTheNumberOfWorksheets=false;
+            }
+
+            TempPdfDocuemnt.Save(SaveExcelFileName, TempExcelSaveOption);
+        }
+
+
+        /// <summary>
         /// 将word文档转换为图片文件
         /// </summary>
         /// <param name="DocumentsFileName">文档名称</param>
@@ -276,56 +304,133 @@ namespace DocumentTools
         {
             Aspose.Hook.Manager.StartHook();
 
-            Aspose.Words.Document TempWordDocument = new Aspose.Words.Document(DocumentsFileName);
+            string FileType = Path.GetExtension(DocumentsFileName);
+            
             //初始化一个临时参数，到时候重新初始化
             Aspose.Words.Saving.ImageSaveOptions TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Jpeg);
+            
+            Aspose.Words.Document TempWordDocument = null;
+            Aspose.Cells.Workbook TempExcelDocument  = null;
+            Aspose.Cells.Rendering.ImageOrPrintOptions TempExcelImageOPtion = new Aspose.Cells.Rendering.ImageOrPrintOptions();
+            Aspose.Pdf.Document TempPdfDocument = null;
+            Aspose.Pdf.Devices.ImageDevice TempPdfImageDevice = null;
+            Aspose.Pdf.Devices.TiffDevice TempPdfTifDevice = null;
+            Aspose.Pdf.Devices.Resolution TempPdfImageResolution = new Aspose.Pdf.Devices.Resolution(DpiValue);
 
-
+            switch (FileType)
+            {
+                case ".doc":
+                    TempWordDocument = new Aspose.Words.Document(DocumentsFileName);
+                    break;
+                case ".docx":
+                    TempWordDocument = new Aspose.Words.Document(DocumentsFileName);
+                    break;
+                case ".pdf":
+                    TempPdfDocument = new Aspose.Pdf.Document(DocumentsFileName);
+                    break;
+                case ".xls":
+                    TempExcelDocument = new Aspose.Cells.Workbook(DocumentsFileName);
+                    break;
+                case ".xlsx":
+                    TempExcelDocument = new Aspose.Cells.Workbook(DocumentsFileName);
+                    break;
+               default: break;
+            }
+            
             //根据不同导出类型进行预初始化处理
             switch (ConvertImageType)
             {
                 case ".jpg":
                     TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Jpeg);
                     TempWordImageSaveOption.JpegQuality = 100;
+                    TempPdfImageDevice = new Aspose.Pdf.Devices.JpegDevice(TempPdfImageResolution,100);
+                    TempExcelImageOPtion.ImageType = Aspose.Cells.Drawing.ImageType.Jpeg;
+                    TempExcelImageOPtion.Quality = 100;
                     break;
                 case ".png":
                     TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Png);
+                    TempPdfImageDevice = new Aspose.Pdf.Devices.PngDevice(TempPdfImageResolution);
+                    TempExcelImageOPtion.ImageType = Aspose.Cells.Drawing.ImageType.Png;
                     break;
                 case ".bmp":
                     TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Bmp);
+                    TempPdfImageDevice = new Aspose.Pdf.Devices.BmpDevice(TempPdfImageResolution);
+                    TempExcelImageOPtion.ImageType = Aspose.Cells.Drawing.ImageType.Bmp;
                     break;
                 case ".tif":
                     TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Tiff);
+                    //单独处理tif的转换
+                    TempPdfTifDevice = new Aspose.Pdf.Devices.TiffDevice(TempPdfImageResolution);
+                    TempExcelImageOPtion.ImageType = Aspose.Cells.Drawing.ImageType.Tiff;
                     break;
                 default: break;
             }
 
-
+            //word转图片的设置
             TempWordImageSaveOption.UseHighQualityRendering = true;
             TempWordImageSaveOption.Resolution = DpiValue;
             TempWordImageSaveOption.ColorMode = Aspose.Words.Saving.ColorMode.Normal;
             TempWordImageSaveOption.PixelFormat = Aspose.Words.Saving.ImagePixelFormat.Format24BppRgb;
             TempWordImageSaveOption.UseAntiAliasing = true;
 
+            //excel转图片的设置
+            TempExcelImageOPtion.CheckWorkbookDefaultFont = true;
+            TempExcelImageOPtion.HorizontalResolution = DpiValue;
+            TempExcelImageOPtion.VerticalResolution = DpiValue;
+            TempExcelImageOPtion.PixelFormat = System.Drawing.Imaging.PixelFormat.Format24bppRgb;
+            TempWordImageSaveOption.UseAntiAliasing = true;
+
+
+
             if (SetGrayMode)
             {
-                //对图像进行灰度处理
+                //对图像进行灰度处理（只有word转图片才可以设置）
                 TempWordImageSaveOption.ImageColorMode = Aspose.Words.Saving.ImageColorMode.Grayscale;
                 TempWordImageSaveOption.ColorMode = Aspose.Words.Saving.ColorMode.Grayscale;
             }
 
             if (PageExport)
             {
-                //逐页导出图片
-                for (int pageIndex = 0; pageIndex < TempWordDocument.PageCount; pageIndex++)
+                if(FileType == ".doc" || FileType == ".docx")
                 {
-                    string MutilPageFileName = SavedImageFileName.Replace(ConvertImageType, $"_第{pageIndex + 1}页{ConvertImageType}");
-                    TempWordImageSaveOption.PageSet = new Aspose.Words.Saving.PageSet(pageIndex);
-                    TempWordDocument.Save(MutilPageFileName, TempWordImageSaveOption);
-
+                    //逐页导出WORD图片
+                    for (int pageIndex = 0; pageIndex < TempWordDocument.PageCount; pageIndex++)
+                    {
+                        string MutilPageFileName = SavedImageFileName.Replace(ConvertImageType, $"_第{pageIndex + 1}页{ConvertImageType}");
+                        TempWordImageSaveOption.PageSet = new Aspose.Words.Saving.PageSet(pageIndex);
+                        TempWordDocument.Save(MutilPageFileName, TempWordImageSaveOption);
+                    }
+                }
+                else if(FileType == ".pdf")
+                {
+                    //逐页导出PDF的图片，tif图片需要单独处理，他不是imagedeivice类型
+                    for (int PdfPageIndex = 0; PdfPageIndex < TempPdfDocument.Pages.Count;PdfPageIndex++)
+                    {
+                        string MutilPageFileName = SavedImageFileName.Replace(ConvertImageType, $"_第{PdfPageIndex + 1}页{ConvertImageType}");
+                        if(ConvertImageType != ".tif")
+                        {
+                            TempPdfImageDevice.Process(TempPdfDocument.Pages[PdfPageIndex + 1], MutilPageFileName);
+                        }
+                        else
+                        {
+                            TempPdfTifDevice.Process(TempPdfDocument, PdfPageIndex+1, PdfPageIndex+1, MutilPageFileName);
+                        }
+                    }
+                }
+                else
+                {
+                    //对excel文件进行sheet表逐个导出
+                    for(int ExcelSheetIndex= 0;ExcelSheetIndex<TempExcelDocument.Worksheets.Count;ExcelSheetIndex++)
+                    {
+                        Worksheet TempWorkSheet = TempExcelDocument.Worksheets[ExcelSheetIndex];
+                        string TempSavedImageileWithSheetName = SavedImageFileName.Replace(ConvertImageType,$"_{TempWorkSheet.Name}{ConvertImageType}");
+                        Debug.WriteLine(TempSavedImageileWithSheetName);
+                        SheetRender TempSheetRender = new SheetRender(TempWorkSheet,TempExcelImageOPtion);
+                        TempSheetRender.ToImage(0, TempSavedImageileWithSheetName);
+                    }
                 }
             }
-            else
+            else//合并一页导出，暂时不做
             {
                 TempWordDocument.Save(SavedImageFileName, TempWordImageSaveOption);
             }

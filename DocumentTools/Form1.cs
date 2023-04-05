@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Aspose.Pdf.Drawing;
+using Aspose.Pdf.Operators;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -24,6 +26,8 @@ namespace DocumentTools
             InitComboxValue();
             this.PageExportCheck.Checked = true;
             this.PageExportCheck.Enabled = false;
+
+            this.MergePdfButton.Enabled = false;
 
             //Util.PlayMp3WithStream();
         }
@@ -57,6 +61,20 @@ namespace DocumentTools
             this.DocumentsListView.Columns.Add("文件名称", 300);
             this.DocumentsListView.Columns.Add("添加时间", 300);
             this.DocumentsListView.Columns.Add("转换后文件名称", 300);
+
+            //PDF2ExcelFileView
+            this.PDF2ExcelFileView.View = View.Details;
+            this.PDF2ExcelFileView.FullRowSelect = true;
+            this.PDF2ExcelFileView.Columns.Add("文件名称", 300);
+            this.PDF2ExcelFileView.Columns.Add("添加时间", 300);
+            this.PDF2ExcelFileView.Columns.Add("转换后文件名称", 300);
+
+            //MergePdfFileView
+            this.MergePdfFileView.View = View.Details;
+            this.MergePdfFileView.FullRowSelect = true;
+            this.MergePdfFileView.Columns.Add("文件名称", 300);
+            this.MergePdfFileView.Columns.Add("添加时间", 300);
+            this.MergePdfFileView.Columns.Add("转换后文件名称", 300);
 
 
         }
@@ -240,6 +258,73 @@ namespace DocumentTools
 
         private void MutilLineMode_CheckedChanged(object sender, EventArgs e)
         {
+        }
+
+        private void SelectPDF2ExcelButton_Click(object sender, EventArgs e)
+        {
+            UI.AddPdf2ExcelFiles();
+        }
+
+        private void ConvertPDF2Excel_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    UI.ConvertStart(this.PDF2ExcelFileView, this.ConvertPDF2ExcelStatusText, ConvertFileType.Pdf2Excel, ".xlsx");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            });
+
+        }
+
+        private void MeregePdfFileButtonConvert_Click(object sender, EventArgs e)
+        {
+            Task<List<string>> MeregePdfFiles = UI.GetListViewFirstItemContent(this.MergePdfFileView);
+            if (MeregePdfFiles.Result.Count > 0)
+            {
+                string MeregePdfFileName = Util.ShowSaveFileDialog("PDF文档|.pdf", "设置文件名称");
+                if (MeregePdfFileName != string.Empty)
+                {
+                    Task.Run(() => {
+                        try
+                        {
+                            string MeregeDirectory = System.IO.Path.GetDirectoryName(MeregePdfFileName);
+                            this.MeregePdfFileStatusText.Text = "正在合并中...";
+                            Util.MergrePdfFIle(MeregePdfFiles.Result, MeregePdfFileName);
+                            this.MeregePdfFileStatusText.Text = "合并完毕";
+                            if (OpenMeregePdfFile.Checked)
+                            {
+                                Process.Start(MeregePdfFileName);
+                            }
+                            this.BeginInvoke(new Action(() => {
+                                DialogResult OpenResult = MessageBox.Show("合并完毕，是否需要打开合并文件所在目录？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                                if (OpenResult == DialogResult.Yes)
+                                {
+                                    Process.Start(MeregeDirectory);
+                                }
+                            }));
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        }
+
+                    });
+
+
+                }
+            }
+        }
+
+        private void MergePdfFileSelectButton_Click(object sender, EventArgs e)
+        {
+            UI.AddMeregePdfFiles();
         }
     }
 
