@@ -1,18 +1,17 @@
 ﻿using Aspose.Cells;
+using Aspose.Cells.Rendering;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using System.Globalization;
 using System.Threading;
-using System.Linq;
-using Aspose.Cells.Rendering;
+using System.Windows.Forms;
 
 namespace DocumentTools
 {
@@ -269,22 +268,23 @@ namespace DocumentTools
         /// </summary>
         /// <param name="PdfFileName">PDF文件名称</param>
         /// <param name="SaveExcelFileName">导出excel的路径</param>
-        public static void ConvertPdf2Excel(string PdfFileName,string SaveExcelFileName,bool MergeAllPages)
+        public static void ConvertPdf2Excel(string PdfFileName, string SaveExcelFileName, bool MergeAllPages)
         {
             Aspose.Hook.Manager.StartHook();
 
             Aspose.Pdf.Document TempPdfDocuemnt = new Aspose.Pdf.Document(PdfFileName);
-            Aspose.Pdf.ExcelSaveOptions TempExcelSaveOption = new Aspose.Pdf.ExcelSaveOptions() { 
-            Format = Aspose.Pdf.ExcelSaveOptions.ExcelFormat.XLSX,
-            ExtractOcrSublayerOnly = true,
+            Aspose.Pdf.ExcelSaveOptions TempExcelSaveOption = new Aspose.Pdf.ExcelSaveOptions()
+            {
+                Format = Aspose.Pdf.ExcelSaveOptions.ExcelFormat.XLSX,
+                ExtractOcrSublayerOnly = true,
             };
-            if(MergeAllPages)
+            if (MergeAllPages)
             {
                 TempExcelSaveOption.MinimizeTheNumberOfWorksheets = true;
             }
             else
             {
-                TempExcelSaveOption.MinimizeTheNumberOfWorksheets=false;
+                TempExcelSaveOption.MinimizeTheNumberOfWorksheets = false;
             }
 
             TempPdfDocuemnt.Save(SaveExcelFileName, TempExcelSaveOption);
@@ -305,12 +305,12 @@ namespace DocumentTools
             Aspose.Hook.Manager.StartHook();
 
             string FileType = Path.GetExtension(DocumentsFileName);
-            
+
             //初始化一个临时参数，到时候重新初始化
             Aspose.Words.Saving.ImageSaveOptions TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Jpeg);
-            
+
             Aspose.Words.Document TempWordDocument = null;
-            Aspose.Cells.Workbook TempExcelDocument  = null;
+            Aspose.Cells.Workbook TempExcelDocument = null;
             Aspose.Cells.Rendering.ImageOrPrintOptions TempExcelImageOPtion = new Aspose.Cells.Rendering.ImageOrPrintOptions();
             Aspose.Pdf.Document TempPdfDocument = null;
             Aspose.Pdf.Devices.ImageDevice TempPdfImageDevice = null;
@@ -334,16 +334,16 @@ namespace DocumentTools
                 case ".xlsx":
                     TempExcelDocument = new Aspose.Cells.Workbook(DocumentsFileName);
                     break;
-               default: break;
+                default: break;
             }
-            
+
             //根据不同导出类型进行预初始化处理
             switch (ConvertImageType)
             {
                 case ".jpg":
                     TempWordImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Jpeg);
                     TempWordImageSaveOption.JpegQuality = 100;
-                    TempPdfImageDevice = new Aspose.Pdf.Devices.JpegDevice(TempPdfImageResolution,100);
+                    TempPdfImageDevice = new Aspose.Pdf.Devices.JpegDevice(TempPdfImageResolution, 100);
                     TempExcelImageOPtion.ImageType = Aspose.Cells.Drawing.ImageType.Jpeg;
                     TempExcelImageOPtion.Quality = 100;
                     break;
@@ -391,7 +391,7 @@ namespace DocumentTools
 
             if (PageExport)
             {
-                if(FileType == ".doc" || FileType == ".docx")
+                if (FileType == ".doc" || FileType == ".docx")
                 {
                     //逐页导出WORD图片
                     for (int pageIndex = 0; pageIndex < TempWordDocument.PageCount; pageIndex++)
@@ -401,31 +401,31 @@ namespace DocumentTools
                         TempWordDocument.Save(MutilPageFileName, TempWordImageSaveOption);
                     }
                 }
-                else if(FileType == ".pdf")
+                else if (FileType == ".pdf")
                 {
                     //逐页导出PDF的图片，tif图片需要单独处理，他不是imagedeivice类型
-                    for (int PdfPageIndex = 0; PdfPageIndex < TempPdfDocument.Pages.Count;PdfPageIndex++)
+                    for (int PdfPageIndex = 0; PdfPageIndex < TempPdfDocument.Pages.Count; PdfPageIndex++)
                     {
                         string MutilPageFileName = SavedImageFileName.Replace(ConvertImageType, $"_第{PdfPageIndex + 1}页{ConvertImageType}");
-                        if(ConvertImageType != ".tif")
+                        if (ConvertImageType != ".tif")
                         {
                             TempPdfImageDevice.Process(TempPdfDocument.Pages[PdfPageIndex + 1], MutilPageFileName);
                         }
                         else
                         {
-                            TempPdfTifDevice.Process(TempPdfDocument, PdfPageIndex+1, PdfPageIndex+1, MutilPageFileName);
+                            TempPdfTifDevice.Process(TempPdfDocument, PdfPageIndex + 1, PdfPageIndex + 1, MutilPageFileName);
                         }
                     }
                 }
                 else
                 {
                     //对excel文件进行sheet表逐个导出
-                    for(int ExcelSheetIndex= 0;ExcelSheetIndex<TempExcelDocument.Worksheets.Count;ExcelSheetIndex++)
+                    for (int ExcelSheetIndex = 0; ExcelSheetIndex < TempExcelDocument.Worksheets.Count; ExcelSheetIndex++)
                     {
                         Worksheet TempWorkSheet = TempExcelDocument.Worksheets[ExcelSheetIndex];
-                        string TempSavedImageileWithSheetName = SavedImageFileName.Replace(ConvertImageType,$"_{TempWorkSheet.Name}{ConvertImageType}");
+                        string TempSavedImageileWithSheetName = SavedImageFileName.Replace(ConvertImageType, $"_{TempWorkSheet.Name}{ConvertImageType}");
                         Debug.WriteLine(TempSavedImageileWithSheetName);
-                        SheetRender TempSheetRender = new SheetRender(TempWorkSheet,TempExcelImageOPtion);
+                        SheetRender TempSheetRender = new SheetRender(TempWorkSheet, TempExcelImageOPtion);
                         TempSheetRender.ToImage(0, TempSavedImageileWithSheetName);
                     }
                 }
@@ -452,7 +452,7 @@ namespace DocumentTools
                 bool MatchStatus = Regex.Match(InputText, SpecialCharacter, RegexOptions.Multiline).Success;
                 if (MatchStatus)
                 {
-                    InputText = Regex.Replace(InputText, SpecialCharacter, "",RegexOptions.Multiline);
+                    InputText = Regex.Replace(InputText, SpecialCharacter, "", RegexOptions.Multiline);
                 }
             }
             return InputText;
@@ -465,7 +465,7 @@ namespace DocumentTools
         /// <returns></returns>
         private static string DoubleTextAlign(string InputText)
         {
-            if (InputText.Length == 2 && InputText!=string.Empty)
+            if (InputText.Length == 2 && InputText != string.Empty)
             {
                 InputText = InputText.Insert(1, "  ");
             }
@@ -490,7 +490,7 @@ namespace DocumentTools
         /// <param name="RemoveNumber">是否移除数字</param>
         /// <param name="RemoveSquare">是否移除括号</param>
         /// <returns></returns>
-        public static string[] AddText2List(string InputText, bool DoubleTextAligin, bool RemoveNumber, bool RemoveSquare,bool NameStorke)
+        public static string[] AddText2List(string InputText, bool DoubleTextAligin, bool RemoveNumber, bool RemoveSquare, bool NameStorke)
         {
             List<string> TextList = new List<string>();
 
@@ -498,12 +498,12 @@ namespace DocumentTools
 
             if (MatchRegexStatus("\\t", InputText))//表示匹配到的是传统word表格中直接复制的内容
             {
-                InputText =  Regex.Replace(InputText,"\t","\n",RegexOptions.Multiline);//将\t全部换成\n换行符
+                InputText = Regex.Replace(InputText, "\t", "\n", RegexOptions.Multiline);//将\t全部换成\n换行符
 
                 string[] TempInputTextByTap = InputText.Split(new char[] { '\n' });//使用\n来分割数组，确保每个文字都独立存储
 
-                string[] AllSpaceChar = new string[] { "\\s", "○", "□", "£"};//设置基础特殊字符列表
-                
+                string[] AllSpaceChar = new string[] { "\\s", "○", "□", "£" };//设置基础特殊字符列表
+
                 foreach (string TempText in TempInputTextByTap)//遍历分割数组，得到每个文字
                 {
                     string TempInputTextNoSpace = RemoveSpeciCharacter(AllSpaceChar, TempText);//对每个文字进行删除特殊字符处理
@@ -524,7 +524,7 @@ namespace DocumentTools
                         TempInputTextNoSpace = RemoveSpeciCharacter(new string[] { "\\(.+?\\)|\\（.+?\\）|\\(\\)|\\（\\）" }, TempInputTextNoSpace);
                     }
 
-                    if(TempInputTextNoSpace!=string.Empty)
+                    if (TempInputTextNoSpace != string.Empty)
                     {
                         //只有非空白文本才添加到数组中
                         TextList.Add(TempInputTextNoSpace);
@@ -580,6 +580,8 @@ namespace DocumentTools
             return ReturnTextList;
 
         }
+
+
 
     }
 

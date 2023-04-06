@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BodyForm));
             this.MainTabPage = new System.Windows.Forms.TabControl();
             this.TabPage_01 = new System.Windows.Forms.TabPage();
@@ -50,7 +51,20 @@
             this.ConvertExcel2PdfButton = new System.Windows.Forms.Button();
             this.SelectExcelFileButton = new System.Windows.Forms.Button();
             this.ExcelFileListView = new System.Windows.Forms.ListView();
+            this.TabPage_07 = new System.Windows.Forms.TabPage();
+            this.ExcelSheelMode = new System.Windows.Forms.CheckBox();
+            this.ConvertPDF2ExcelStatusText = new System.Windows.Forms.Label();
+            this.ConvertPDF2Excel = new System.Windows.Forms.Button();
+            this.SelectPDF2ExcelButton = new System.Windows.Forms.Button();
+            this.PDF2ExcelFileView = new System.Windows.Forms.ListView();
+            this.TabPage_06 = new System.Windows.Forms.TabPage();
+            this.OpenMeregePdfFile = new System.Windows.Forms.CheckBox();
+            this.MeregePdfFileStatusText = new System.Windows.Forms.Label();
+            this.MeregePdfFileButtonConvert = new System.Windows.Forms.Button();
+            this.MergePdfFileSelectButton = new System.Windows.Forms.Button();
+            this.MergePdfFileView = new System.Windows.Forms.ListView();
             this.TabPage_04 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.PageExportCheck = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.DpiItemList = new System.Windows.Forms.ComboBox();
@@ -73,30 +87,22 @@
             this.TargetTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SourceTextBox = new System.Windows.Forms.RichTextBox();
+            this.TabPage_08 = new System.Windows.Forms.TabPage();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.TabPage_06 = new System.Windows.Forms.TabPage();
-            this.TabPage_07 = new System.Windows.Forms.TabPage();
-            this.PDF2ExcelFileView = new System.Windows.Forms.ListView();
-            this.SelectPDF2ExcelButton = new System.Windows.Forms.Button();
-            this.ConvertPDF2Excel = new System.Windows.Forms.Button();
-            this.ConvertPDF2ExcelStatusText = new System.Windows.Forms.Label();
-            this.ExcelSheelMode = new System.Windows.Forms.CheckBox();
-            this.MergePdfFileView = new System.Windows.Forms.ListView();
-            this.MergePdfFileSelectButton = new System.Windows.Forms.Button();
-            this.MeregePdfFileButtonConvert = new System.Windows.Forms.Button();
-            this.MeregePdfFileStatusText = new System.Windows.Forms.Label();
-            this.OpenMeregePdfFile = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.ListViewRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.删除本项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.清空列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
             this.TabPage_03.SuspendLayout();
+            this.TabPage_07.SuspendLayout();
+            this.TabPage_06.SuspendLayout();
             this.TabPage_04.SuspendLayout();
             this.TabPage_05.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.TabPage_06.SuspendLayout();
-            this.TabPage_07.SuspendLayout();
+            this.ListViewRightMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTabPage
@@ -108,6 +114,7 @@
             this.MainTabPage.Controls.Add(this.TabPage_06);
             this.MainTabPage.Controls.Add(this.TabPage_04);
             this.MainTabPage.Controls.Add(this.TabPage_05);
+            this.MainTabPage.Controls.Add(this.TabPage_08);
             this.MainTabPage.Location = new System.Drawing.Point(3, 12);
             this.MainTabPage.Name = "MainTabPage";
             this.MainTabPage.SelectedIndex = 0;
@@ -165,7 +172,7 @@
             // 
             this.StatusText.AutoSize = true;
             this.StatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.StatusText.Location = new System.Drawing.Point(293, 424);
+            this.StatusText.Location = new System.Drawing.Point(246, 424);
             this.StatusText.Name = "StatusText";
             this.StatusText.Size = new System.Drawing.Size(161, 18);
             this.StatusText.TabIndex = 4;
@@ -200,6 +207,7 @@
             this.WordFileListView.TabIndex = 0;
             this.WordFileListView.UseCompatibleStateImageBehavior = false;
             this.WordFileListView.View = System.Windows.Forms.View.List;
+            this.WordFileListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.WordFileListView_MouseClick);
             // 
             // TabPage_02
             // 
@@ -220,7 +228,7 @@
             // 
             this.PdfStatusText.AutoSize = true;
             this.PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.PdfStatusText.Location = new System.Drawing.Point(293, 424);
+            this.PdfStatusText.Location = new System.Drawing.Point(246, 424);
             this.PdfStatusText.Name = "PdfStatusText";
             this.PdfStatusText.Size = new System.Drawing.Size(161, 18);
             this.PdfStatusText.TabIndex = 4;
@@ -264,6 +272,7 @@
             this.PdfFileListView.Size = new System.Drawing.Size(765, 326);
             this.PdfFileListView.TabIndex = 0;
             this.PdfFileListView.UseCompatibleStateImageBehavior = false;
+            this.PdfFileListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PdfFileListView_MouseClick);
             // 
             // TabPage_03
             // 
@@ -293,7 +302,7 @@
             // 
             this.Excel2PdfStatusText.AutoSize = true;
             this.Excel2PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.Excel2PdfStatusText.Location = new System.Drawing.Point(293, 424);
+            this.Excel2PdfStatusText.Location = new System.Drawing.Point(246, 424);
             this.Excel2PdfStatusText.Name = "Excel2PdfStatusText";
             this.Excel2PdfStatusText.Size = new System.Drawing.Size(161, 18);
             this.Excel2PdfStatusText.TabIndex = 4;
@@ -327,6 +336,135 @@
             this.ExcelFileListView.Size = new System.Drawing.Size(765, 326);
             this.ExcelFileListView.TabIndex = 1;
             this.ExcelFileListView.UseCompatibleStateImageBehavior = false;
+            this.ExcelFileListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ExcelFileListView_MouseClick);
+            // 
+            // TabPage_07
+            // 
+            this.TabPage_07.Controls.Add(this.ExcelSheelMode);
+            this.TabPage_07.Controls.Add(this.ConvertPDF2ExcelStatusText);
+            this.TabPage_07.Controls.Add(this.ConvertPDF2Excel);
+            this.TabPage_07.Controls.Add(this.SelectPDF2ExcelButton);
+            this.TabPage_07.Controls.Add(this.PDF2ExcelFileView);
+            this.TabPage_07.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_07.Name = "TabPage_07";
+            this.TabPage_07.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_07.TabIndex = 6;
+            this.TabPage_07.Text = "PDF转EXCEL";
+            this.TabPage_07.UseVisualStyleBackColor = true;
+            // 
+            // ExcelSheelMode
+            // 
+            this.ExcelSheelMode.AutoSize = true;
+            this.ExcelSheelMode.Location = new System.Drawing.Point(6, 347);
+            this.ExcelSheelMode.Name = "ExcelSheelMode";
+            this.ExcelSheelMode.Size = new System.Drawing.Size(259, 22);
+            this.ExcelSheelMode.TabIndex = 4;
+            this.ExcelSheelMode.Text = "所有页面合并在一个Sheet上";
+            this.ExcelSheelMode.UseVisualStyleBackColor = true;
+            // 
+            // ConvertPDF2ExcelStatusText
+            // 
+            this.ConvertPDF2ExcelStatusText.AutoSize = true;
+            this.ConvertPDF2ExcelStatusText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ConvertPDF2ExcelStatusText.Location = new System.Drawing.Point(246, 424);
+            this.ConvertPDF2ExcelStatusText.Name = "ConvertPDF2ExcelStatusText";
+            this.ConvertPDF2ExcelStatusText.Size = new System.Drawing.Size(161, 18);
+            this.ConvertPDF2ExcelStatusText.TabIndex = 3;
+            this.ConvertPDF2ExcelStatusText.Text = "正在等待处理中...";
+            // 
+            // ConvertPDF2Excel
+            // 
+            this.ConvertPDF2Excel.Location = new System.Drawing.Point(550, 406);
+            this.ConvertPDF2Excel.Name = "ConvertPDF2Excel";
+            this.ConvertPDF2Excel.Size = new System.Drawing.Size(221, 55);
+            this.ConvertPDF2Excel.TabIndex = 2;
+            this.ConvertPDF2Excel.Text = "开始处理";
+            this.ConvertPDF2Excel.UseVisualStyleBackColor = true;
+            this.ConvertPDF2Excel.Click += new System.EventHandler(this.ConvertPDF2Excel_Click);
+            // 
+            // SelectPDF2ExcelButton
+            // 
+            this.SelectPDF2ExcelButton.Location = new System.Drawing.Point(6, 406);
+            this.SelectPDF2ExcelButton.Name = "SelectPDF2ExcelButton";
+            this.SelectPDF2ExcelButton.Size = new System.Drawing.Size(221, 55);
+            this.SelectPDF2ExcelButton.TabIndex = 1;
+            this.SelectPDF2ExcelButton.Text = "选择文件";
+            this.SelectPDF2ExcelButton.UseVisualStyleBackColor = true;
+            this.SelectPDF2ExcelButton.Click += new System.EventHandler(this.SelectPDF2ExcelButton_Click);
+            // 
+            // PDF2ExcelFileView
+            // 
+            this.PDF2ExcelFileView.HideSelection = false;
+            this.PDF2ExcelFileView.Location = new System.Drawing.Point(6, 6);
+            this.PDF2ExcelFileView.Name = "PDF2ExcelFileView";
+            this.PDF2ExcelFileView.Size = new System.Drawing.Size(765, 326);
+            this.PDF2ExcelFileView.TabIndex = 0;
+            this.PDF2ExcelFileView.UseCompatibleStateImageBehavior = false;
+            this.PDF2ExcelFileView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PDF2ExcelFileView_MouseClick);
+            // 
+            // TabPage_06
+            // 
+            this.TabPage_06.Controls.Add(this.OpenMeregePdfFile);
+            this.TabPage_06.Controls.Add(this.MeregePdfFileStatusText);
+            this.TabPage_06.Controls.Add(this.MeregePdfFileButtonConvert);
+            this.TabPage_06.Controls.Add(this.MergePdfFileSelectButton);
+            this.TabPage_06.Controls.Add(this.MergePdfFileView);
+            this.TabPage_06.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_06.Name = "TabPage_06";
+            this.TabPage_06.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_06.TabIndex = 5;
+            this.TabPage_06.Text = "合并PDF";
+            this.TabPage_06.UseVisualStyleBackColor = true;
+            // 
+            // OpenMeregePdfFile
+            // 
+            this.OpenMeregePdfFile.AutoSize = true;
+            this.OpenMeregePdfFile.Location = new System.Drawing.Point(6, 347);
+            this.OpenMeregePdfFile.Name = "OpenMeregePdfFile";
+            this.OpenMeregePdfFile.Size = new System.Drawing.Size(250, 22);
+            this.OpenMeregePdfFile.TabIndex = 4;
+            this.OpenMeregePdfFile.Text = "处理完毕后打开合并的文件";
+            this.OpenMeregePdfFile.UseVisualStyleBackColor = true;
+            // 
+            // MeregePdfFileStatusText
+            // 
+            this.MeregePdfFileStatusText.AutoSize = true;
+            this.MeregePdfFileStatusText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.MeregePdfFileStatusText.Location = new System.Drawing.Point(246, 424);
+            this.MeregePdfFileStatusText.Name = "MeregePdfFileStatusText";
+            this.MeregePdfFileStatusText.Size = new System.Drawing.Size(161, 18);
+            this.MeregePdfFileStatusText.TabIndex = 3;
+            this.MeregePdfFileStatusText.Text = "正在等待处理中...";
+            // 
+            // MeregePdfFileButtonConvert
+            // 
+            this.MeregePdfFileButtonConvert.Location = new System.Drawing.Point(550, 406);
+            this.MeregePdfFileButtonConvert.Name = "MeregePdfFileButtonConvert";
+            this.MeregePdfFileButtonConvert.Size = new System.Drawing.Size(221, 55);
+            this.MeregePdfFileButtonConvert.TabIndex = 2;
+            this.MeregePdfFileButtonConvert.Text = "开始处理";
+            this.MeregePdfFileButtonConvert.UseVisualStyleBackColor = true;
+            this.MeregePdfFileButtonConvert.Click += new System.EventHandler(this.MeregePdfFileButtonConvert_Click);
+            // 
+            // MergePdfFileSelectButton
+            // 
+            this.MergePdfFileSelectButton.Location = new System.Drawing.Point(6, 406);
+            this.MergePdfFileSelectButton.Name = "MergePdfFileSelectButton";
+            this.MergePdfFileSelectButton.Size = new System.Drawing.Size(221, 55);
+            this.MergePdfFileSelectButton.TabIndex = 1;
+            this.MergePdfFileSelectButton.Text = "选择文件";
+            this.MergePdfFileSelectButton.UseVisualStyleBackColor = true;
+            this.MergePdfFileSelectButton.Click += new System.EventHandler(this.MergePdfFileSelectButton_Click);
+            // 
+            // MergePdfFileView
+            // 
+            this.MergePdfFileView.HideSelection = false;
+            this.MergePdfFileView.Location = new System.Drawing.Point(6, 6);
+            this.MergePdfFileView.Name = "MergePdfFileView";
+            this.MergePdfFileView.Size = new System.Drawing.Size(765, 326);
+            this.MergePdfFileView.TabIndex = 0;
+            this.MergePdfFileView.UseCompatibleStateImageBehavior = false;
+            this.MergePdfFileView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MergePdfFileView_MouseClick);
             // 
             // TabPage_04
             // 
@@ -347,6 +485,16 @@
             this.TabPage_04.TabIndex = 3;
             this.TabPage_04.Text = "文档转图片";
             this.TabPage_04.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Tomato;
+            this.label4.Location = new System.Drawing.Point(3, 379);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(260, 18);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "提示：灰度图片只支持word文档";
             // 
             // PageExportCheck
             // 
@@ -399,7 +547,7 @@
             // 
             this.ConvertWord2ImageStatus.AutoSize = true;
             this.ConvertWord2ImageStatus.ForeColor = System.Drawing.Color.ForestGreen;
-            this.ConvertWord2ImageStatus.Location = new System.Drawing.Point(293, 424);
+            this.ConvertWord2ImageStatus.Location = new System.Drawing.Point(246, 424);
             this.ConvertWord2ImageStatus.Name = "ConvertWord2ImageStatus";
             this.ConvertWord2ImageStatus.Size = new System.Drawing.Size(161, 18);
             this.ConvertWord2ImageStatus.TabIndex = 4;
@@ -442,6 +590,7 @@
             this.DocumentsListView.Size = new System.Drawing.Size(765, 326);
             this.DocumentsListView.TabIndex = 0;
             this.DocumentsListView.UseCompatibleStateImageBehavior = false;
+            this.DocumentsListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DocumentsListView_MouseClick);
             // 
             // TabPage_05
             // 
@@ -570,141 +719,38 @@
             this.SourceTextBox.Text = "";
             this.SourceTextBox.TextChanged += new System.EventHandler(this.SourceTextBox_TextChanged);
             // 
-            // TabPage_06
+            // TabPage_08
             // 
-            this.TabPage_06.Controls.Add(this.OpenMeregePdfFile);
-            this.TabPage_06.Controls.Add(this.MeregePdfFileStatusText);
-            this.TabPage_06.Controls.Add(this.MeregePdfFileButtonConvert);
-            this.TabPage_06.Controls.Add(this.MergePdfFileSelectButton);
-            this.TabPage_06.Controls.Add(this.MergePdfFileView);
-            this.TabPage_06.Location = new System.Drawing.Point(4, 28);
-            this.TabPage_06.Name = "TabPage_06";
-            this.TabPage_06.Size = new System.Drawing.Size(777, 475);
-            this.TabPage_06.TabIndex = 5;
-            this.TabPage_06.Text = "合并PDF";
-            this.TabPage_06.UseVisualStyleBackColor = true;
+            this.TabPage_08.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_08.Name = "TabPage_08";
+            this.TabPage_08.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_08.TabIndex = 7;
+            this.TabPage_08.Text = "TWAIN设备调试";
+            this.TabPage_08.UseVisualStyleBackColor = true;
             // 
-            // TabPage_07
+            // ListViewRightMenu
             // 
-            this.TabPage_07.Controls.Add(this.ExcelSheelMode);
-            this.TabPage_07.Controls.Add(this.ConvertPDF2ExcelStatusText);
-            this.TabPage_07.Controls.Add(this.ConvertPDF2Excel);
-            this.TabPage_07.Controls.Add(this.SelectPDF2ExcelButton);
-            this.TabPage_07.Controls.Add(this.PDF2ExcelFileView);
-            this.TabPage_07.Location = new System.Drawing.Point(4, 28);
-            this.TabPage_07.Name = "TabPage_07";
-            this.TabPage_07.Size = new System.Drawing.Size(777, 475);
-            this.TabPage_07.TabIndex = 6;
-            this.TabPage_07.Text = "PDF转EXCEL";
-            this.TabPage_07.UseVisualStyleBackColor = true;
+            this.ListViewRightMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.ListViewRightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.删除本项ToolStripMenuItem,
+            this.清空列表ToolStripMenuItem});
+            this.ListViewRightMenu.Name = "contextMenuStrip1";
+            this.ListViewRightMenu.Size = new System.Drawing.Size(153, 64);
+            this.ListViewRightMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ListViewRightMenu_Opening);
             // 
-            // PDF2ExcelFileView
+            // 删除本项ToolStripMenuItem
             // 
-            this.PDF2ExcelFileView.HideSelection = false;
-            this.PDF2ExcelFileView.Location = new System.Drawing.Point(6, 6);
-            this.PDF2ExcelFileView.Name = "PDF2ExcelFileView";
-            this.PDF2ExcelFileView.Size = new System.Drawing.Size(765, 326);
-            this.PDF2ExcelFileView.TabIndex = 0;
-            this.PDF2ExcelFileView.UseCompatibleStateImageBehavior = false;
+            this.删除本项ToolStripMenuItem.Name = "删除本项ToolStripMenuItem";
+            this.删除本项ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
+            this.删除本项ToolStripMenuItem.Text = "删除本项";
+            this.删除本项ToolStripMenuItem.Click += new System.EventHandler(this.删除本项ToolStripMenuItem_Click);
             // 
-            // SelectPDF2ExcelButton
+            // 清空列表ToolStripMenuItem
             // 
-            this.SelectPDF2ExcelButton.Location = new System.Drawing.Point(6, 406);
-            this.SelectPDF2ExcelButton.Name = "SelectPDF2ExcelButton";
-            this.SelectPDF2ExcelButton.Size = new System.Drawing.Size(221, 55);
-            this.SelectPDF2ExcelButton.TabIndex = 1;
-            this.SelectPDF2ExcelButton.Text = "选择文件";
-            this.SelectPDF2ExcelButton.UseVisualStyleBackColor = true;
-            this.SelectPDF2ExcelButton.Click += new System.EventHandler(this.SelectPDF2ExcelButton_Click);
-            // 
-            // ConvertPDF2Excel
-            // 
-            this.ConvertPDF2Excel.Location = new System.Drawing.Point(550, 406);
-            this.ConvertPDF2Excel.Name = "ConvertPDF2Excel";
-            this.ConvertPDF2Excel.Size = new System.Drawing.Size(221, 55);
-            this.ConvertPDF2Excel.TabIndex = 2;
-            this.ConvertPDF2Excel.Text = "开始处理";
-            this.ConvertPDF2Excel.UseVisualStyleBackColor = true;
-            this.ConvertPDF2Excel.Click += new System.EventHandler(this.ConvertPDF2Excel_Click);
-            // 
-            // ConvertPDF2ExcelStatusText
-            // 
-            this.ConvertPDF2ExcelStatusText.AutoSize = true;
-            this.ConvertPDF2ExcelStatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.ConvertPDF2ExcelStatusText.Location = new System.Drawing.Point(293, 424);
-            this.ConvertPDF2ExcelStatusText.Name = "ConvertPDF2ExcelStatusText";
-            this.ConvertPDF2ExcelStatusText.Size = new System.Drawing.Size(161, 18);
-            this.ConvertPDF2ExcelStatusText.TabIndex = 3;
-            this.ConvertPDF2ExcelStatusText.Text = "正在等待处理中...";
-            // 
-            // ExcelSheelMode
-            // 
-            this.ExcelSheelMode.AutoSize = true;
-            this.ExcelSheelMode.Location = new System.Drawing.Point(6, 347);
-            this.ExcelSheelMode.Name = "ExcelSheelMode";
-            this.ExcelSheelMode.Size = new System.Drawing.Size(259, 22);
-            this.ExcelSheelMode.TabIndex = 4;
-            this.ExcelSheelMode.Text = "所有页面合并在一个Sheet上";
-            this.ExcelSheelMode.UseVisualStyleBackColor = true;
-            // 
-            // MergePdfFileView
-            // 
-            this.MergePdfFileView.HideSelection = false;
-            this.MergePdfFileView.Location = new System.Drawing.Point(6, 6);
-            this.MergePdfFileView.Name = "MergePdfFileView";
-            this.MergePdfFileView.Size = new System.Drawing.Size(765, 326);
-            this.MergePdfFileView.TabIndex = 0;
-            this.MergePdfFileView.UseCompatibleStateImageBehavior = false;
-            // 
-            // MergePdfFileSelectButton
-            // 
-            this.MergePdfFileSelectButton.Location = new System.Drawing.Point(6, 406);
-            this.MergePdfFileSelectButton.Name = "MergePdfFileSelectButton";
-            this.MergePdfFileSelectButton.Size = new System.Drawing.Size(221, 55);
-            this.MergePdfFileSelectButton.TabIndex = 1;
-            this.MergePdfFileSelectButton.Text = "选择文件";
-            this.MergePdfFileSelectButton.UseVisualStyleBackColor = true;
-            this.MergePdfFileSelectButton.Click += new System.EventHandler(this.MergePdfFileSelectButton_Click);
-            // 
-            // MeregePdfFileButtonConvert
-            // 
-            this.MeregePdfFileButtonConvert.Location = new System.Drawing.Point(550, 406);
-            this.MeregePdfFileButtonConvert.Name = "MeregePdfFileButtonConvert";
-            this.MeregePdfFileButtonConvert.Size = new System.Drawing.Size(221, 55);
-            this.MeregePdfFileButtonConvert.TabIndex = 2;
-            this.MeregePdfFileButtonConvert.Text = "开始处理";
-            this.MeregePdfFileButtonConvert.UseVisualStyleBackColor = true;
-            this.MeregePdfFileButtonConvert.Click += new System.EventHandler(this.MeregePdfFileButtonConvert_Click);
-            // 
-            // MeregePdfFileStatusText
-            // 
-            this.MeregePdfFileStatusText.AutoSize = true;
-            this.MeregePdfFileStatusText.ForeColor = System.Drawing.Color.ForestGreen;
-            this.MeregePdfFileStatusText.Location = new System.Drawing.Point(293, 424);
-            this.MeregePdfFileStatusText.Name = "MeregePdfFileStatusText";
-            this.MeregePdfFileStatusText.Size = new System.Drawing.Size(161, 18);
-            this.MeregePdfFileStatusText.TabIndex = 3;
-            this.MeregePdfFileStatusText.Text = "正在等待处理中...";
-            // 
-            // OpenMeregePdfFile
-            // 
-            this.OpenMeregePdfFile.AutoSize = true;
-            this.OpenMeregePdfFile.Location = new System.Drawing.Point(6, 347);
-            this.OpenMeregePdfFile.Name = "OpenMeregePdfFile";
-            this.OpenMeregePdfFile.Size = new System.Drawing.Size(250, 22);
-            this.OpenMeregePdfFile.TabIndex = 4;
-            this.OpenMeregePdfFile.Text = "处理完毕后打开合并的文件";
-            this.OpenMeregePdfFile.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Tomato;
-            this.label4.Location = new System.Drawing.Point(3, 379);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(260, 18);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "提示：灰度图片只支持word文档";
+            this.清空列表ToolStripMenuItem.Name = "清空列表ToolStripMenuItem";
+            this.清空列表ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
+            this.清空列表ToolStripMenuItem.Text = "清空列表";
+            this.清空列表ToolStripMenuItem.Click += new System.EventHandler(this.清空列表ToolStripMenuItem_Click);
             // 
             // BodyForm
             // 
@@ -719,6 +765,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "文档工具";
             this.Load += new System.EventHandler(this.BodyForm_Load);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.BodyForm_DragEnter);
             this.MainTabPage.ResumeLayout(false);
             this.TabPage_01.ResumeLayout(false);
             this.TabPage_01.PerformLayout();
@@ -726,16 +773,17 @@
             this.TabPage_02.PerformLayout();
             this.TabPage_03.ResumeLayout(false);
             this.TabPage_03.PerformLayout();
+            this.TabPage_07.ResumeLayout(false);
+            this.TabPage_07.PerformLayout();
+            this.TabPage_06.ResumeLayout(false);
+            this.TabPage_06.PerformLayout();
             this.TabPage_04.ResumeLayout(false);
             this.TabPage_04.PerformLayout();
             this.TabPage_05.ResumeLayout(false);
             this.TabPage_05.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.TabPage_06.ResumeLayout(false);
-            this.TabPage_06.PerformLayout();
-            this.TabPage_07.ResumeLayout(false);
-            this.TabPage_07.PerformLayout();
+            this.ListViewRightMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -800,6 +848,10 @@
         internal System.Windows.Forms.ListView MergePdfFileView;
         private System.Windows.Forms.CheckBox OpenMeregePdfFile;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ContextMenuStrip ListViewRightMenu;
+        private System.Windows.Forms.ToolStripMenuItem 删除本项ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 清空列表ToolStripMenuItem;
+        private System.Windows.Forms.TabPage TabPage_08;
     }
 }
 

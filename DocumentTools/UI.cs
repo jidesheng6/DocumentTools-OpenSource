@@ -47,6 +47,37 @@ namespace DocumentTools
             });
 
         }
+        /// <summary>
+        /// 添加文件到listview中，主要是配合drag事件使用
+        /// </summary>
+        /// <param name="FileList"></param>
+        /// <param name="ListviewControl"></param>
+        /// <param name="FileFilters"></param>
+        public static void AddFilesToListviewWithNotDialog(string[] FileList,ListView ListviewControl,string[] FileFilters)
+        {
+            Task.Run(() => {
+                if (FileList.Length > 0)
+                {
+                    ListviewControl.BeginUpdate();
+                    foreach (string File in FileList)
+                    {
+                        foreach (string FileFilter in FileFilters)
+                        {
+                            if (Path.GetExtension(File) == FileFilter)
+                            {
+                                ListViewItem FileListListView = new ListViewItem();
+                                FileListListView.Text = File;
+                                FileListListView.SubItems.Add(Util.GetNowDateTime());
+                                ListviewControl.Items.Add(FileListListView);
+                                ListviewControl.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                            }
+                        }
+                    }
+                    ListviewControl.EndUpdate();
+                }
+            });
+
+        }
 
         /// <summary>
         /// 获取Listview控件中最后一列的文本项目内容
@@ -85,7 +116,8 @@ namespace DocumentTools
         /// <returns></returns>
         public static Task<List<string>> GetListViewFirstItemContent(ListView ListViewControl)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 List<string> FileNames = new List<string>();
                 try
                 {
@@ -108,6 +140,24 @@ namespace DocumentTools
 
 
         }
+        /// <summary>
+        /// 移除listvie中的单个项目或者全部项目
+        /// </summary>
+        /// <param name="ClearAllItems"></param>
+        /// <param name="ListViewControl"></param>
+        /// <param name="ItemsIndex"></param>
+        public static void RemoveListViewItem(bool ClearAllItems, ListView ListViewControl, int ItemsIndex = 0)
+        {
+            if (ClearAllItems)
+            {
+                ListViewControl.Items.Clear();
+            }
+            else
+            {
+                ListViewControl.Items.RemoveAt(ItemsIndex);
+            }
+        }
+
         public static Task<int> AddWordFiles()
         {
             return AddFilesToListView("WORD文档", "*.doc;*.docx", BodyForm.MainForm.WordFileListView);
@@ -125,7 +175,7 @@ namespace DocumentTools
 
         public static void AddWord2ImageFiles()
         {
-            AddFilesToListView("支持的文档","*.docx;*.doc;*.xls;*.xlsx;*.pdf",BodyForm.MainForm.DocumentsListView);
+            AddFilesToListView("支持的文档", "*.docx;*.doc;*.xls;*.xlsx;*.pdf", BodyForm.MainForm.DocumentsListView);
         }
 
         public static void AddMeregePdfFiles()
@@ -135,7 +185,7 @@ namespace DocumentTools
 
         public static void AddPdf2ExcelFiles()
         {
-            AddFilesToListView("PDF文档","*.pdf",BodyForm.MainForm.PDF2ExcelFileView);
+            AddFilesToListView("PDF文档", "*.pdf", BodyForm.MainForm.PDF2ExcelFileView);
         }
 
         /// <summary>
@@ -179,20 +229,20 @@ namespace DocumentTools
                                 break;
                             //excel转pdf
                             case ConvertFileType.Excel2Pdf:
-                                Util.ConvertExcel2Pdf(ListViewFirstColumnText, ConvertedFileName,BodyForm.MainForm.ExportEachSheet.Checked);
+                                Util.ConvertExcel2Pdf(ListViewFirstColumnText, ConvertedFileName, BodyForm.MainForm.ExportEachSheet.Checked);
                                 break;
                             //word转图片
                             case ConvertFileType.Word2Image:
-                                Util.ConvertWord2Image(ListViewFirstColumnText, ConvertedFileName, ExtensionString,BodyForm.MainForm.SetGrayCheckBox.Checked,BodyForm.MainForm.PageExportCheck.Checked,Convert.ToInt32(BodyForm.MainForm.DpiItemList.SelectedValue));
+                                Util.ConvertWord2Image(ListViewFirstColumnText, ConvertedFileName, ExtensionString, BodyForm.MainForm.SetGrayCheckBox.Checked, BodyForm.MainForm.PageExportCheck.Checked, Convert.ToInt32(BodyForm.MainForm.DpiItemList.SelectedValue));
                                 break;
                             //pdf转excel
                             case ConvertFileType.Pdf2Excel:
-                                Util.ConvertPdf2Excel(ListViewFirstColumnText, ConvertedFileName,BodyForm.MainForm.ExcelSheelMode.Checked);
+                                Util.ConvertPdf2Excel(ListViewFirstColumnText, ConvertedFileName, BodyForm.MainForm.ExcelSheelMode.Checked);
                                 break;
                             default: break;
                         }
                     }
-                    StatusLabelControl.Text = "处理完毕";
+                    StatusLabelControl.Text = "处理完毕，右键名称可移除文件";
 
                     //处理完毕后需要做的事情
                     switch (ConverType)
