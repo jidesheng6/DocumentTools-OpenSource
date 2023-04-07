@@ -17,6 +17,7 @@ namespace DocumentTools
 {
     internal class Util
     {
+        static int ScannImageIndex = 0;
         /// <summary>
         /// 显示选择文件框，获取选中的文件名称列表
         /// </summary>
@@ -214,12 +215,56 @@ namespace DocumentTools
         /// </summary>
         /// <param name="pdfFileNames">要合并的PDF文档列表</param>
         /// <param name="mergrePdfFileName">合并后保存的PDF文件名称</param>
-        public static void MergrePdfFIle(List<string> pdfFileNames, string mergrePdfFileName)
+        public static void MergrePdfFIle(List<string> pdfFileNames, string mergrePdfFileName, bool IsMergePicture,string PageMode)
         {
             Aspose.Hook.Manager.StartHook();
-            Aspose.Pdf.Facades.PdfFileEditor TempPdfEditor = new Aspose.Pdf.Facades.PdfFileEditor();
-            TempPdfEditor.Concatenate(pdfFileNames.ToArray(), mergrePdfFileName);
+            List<string> TempFileList = new List<string>();
+            Aspose.Words.Document TempPicturePdf = new Aspose.Words.Document();
+            Aspose.Words.DocumentBuilder TempPicturePdfBuilder = new Aspose.Words.DocumentBuilder(TempPicturePdf);
+            switch(PageMode)
+            {
+                case "A4_Hen":
+                    TempPicturePdfBuilder.PageSetup.PaperSize = Aspose.Words.PaperSize.A4;
+                    TempPicturePdfBuilder.PageSetup.Orientation = Aspose.Words.Orientation.Landscape;
+                    break;
+                case "A4_Shu":
+                    TempPicturePdfBuilder.PageSetup.PaperSize = Aspose.Words.PaperSize.A4;
+                    TempPicturePdfBuilder.PageSetup.Orientation = Aspose.Words.Orientation.Portrait;
+                    break;
+                case "A3_Hen":
+                    TempPicturePdfBuilder.PageSetup.PaperSize = Aspose.Words.PaperSize.A3;
+                    TempPicturePdfBuilder.PageSetup.Orientation = Aspose.Words.Orientation.Landscape;
+                    break;
+                case "A3_Shu":
+                    TempPicturePdfBuilder.PageSetup.PaperSize = Aspose.Words.PaperSize.A3;
+                    TempPicturePdfBuilder.PageSetup.Orientation = Aspose.Words.Orientation.Portrait;
+                    break;
+                default:break;
+            }
 
+            //如果是pdf格式则进行pdf合并，如果不是pdf则进行document插入图片合并转换为pdf
+                pdfFileNames.ForEach(FileName => { 
+                string FileExtension = Path.GetExtension(FileName);
+                if(FileExtension!=".pdf")
+                    {
+                        TempPicturePdfBuilder.InsertImage(FileName);
+                        TempPicturePdfBuilder.Writeln();
+
+                    }
+                else
+                    {
+                        TempFileList.Add(FileName);
+                    }
+                });
+                if(IsMergePicture)
+                {
+                    TempPicturePdf.Save(mergrePdfFileName);
+                }
+                else
+                {
+                    Aspose.Pdf.Facades.PdfFileEditor TempPdfEditor = new Aspose.Pdf.Facades.PdfFileEditor();
+                    TempPdfEditor.Concatenate(TempFileList.ToArray(), mergrePdfFileName);
+                }
         }
 
         /// <summary>
@@ -580,8 +625,6 @@ namespace DocumentTools
             return ReturnTextList;
 
         }
-
-
 
     }
 

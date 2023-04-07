@@ -180,7 +180,7 @@ namespace DocumentTools
 
         public static void AddMeregePdfFiles()
         {
-            AddFilesToListView("PDF文档", "*.pdf", BodyForm.MainForm.MergePdfFileView);
+            AddFilesToListView("支持的文件", "*.pdf;*.jpg;*.png;*.bmp;*.tif", BodyForm.MainForm.MergePdfFileView);
         }
 
         public static void AddPdf2ExcelFiles()

@@ -30,10 +30,10 @@ namespace DocumentTools
             this.PageExportCheck.Enabled = false;
 
             this.MergePdfButton.Enabled = false;
-            this.TabPage_08.Parent = null;
-            //Util.PlayMp3WithStream();
+            Util.PlayMp3WithStream();
 
         }
+
 
         private void InitListView()
         {
@@ -149,6 +149,21 @@ namespace DocumentTools
             this.DpiItemList.ValueMember = "DpiValue";
 
             this.DpiItemList.DropDownStyle = ComboBoxStyle.DropDownList;
+
+
+            DataTable PdfFormatPage = new DataTable();
+            PdfFormatPage.Columns.Add("PdfFormatDisplayValue");
+            PdfFormatPage.Columns.Add("PdfFormatValue");
+            PdfFormatPage.Rows.Add("A4横排", "A4_Hen");
+            PdfFormatPage.Rows.Add("A4竖排", "A4_Shu");
+            PdfFormatPage.Rows.Add("A3横排", "A3_Hen");
+            PdfFormatPage.Rows.Add("A3竖排", "A3_Shu");
+
+            this.MeregeFilePage.DataSource = PdfFormatPage;
+            this.MeregeFilePage.DisplayMember = "PdfFormatDisplayValue";
+            this.MeregeFilePage.ValueMember = "PdfFormatValue";
+
+            this.MeregeFilePage.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void ChooseDocButton_Click(object sender, EventArgs e)
@@ -212,7 +227,7 @@ namespace DocumentTools
                 string SaveMergePdfFileName = Util.ShowSaveFileDialog("PDF文件|*.pdf", "设置要保存的PDF文件名称");
                 if (SaveMergePdfFileName != string.Empty)
                 {
-                    Util.MergrePdfFIle(WaitMergePdfFileNames.Result, SaveMergePdfFileName);
+                    Util.MergrePdfFIle(WaitMergePdfFileNames.Result, SaveMergePdfFileName, PictureMergeMode.Checked,MeregeFilePage.SelectedValue.ToString());
                     MessageBox.Show("合并完毕", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
@@ -328,7 +343,7 @@ namespace DocumentTools
                         {
                             string MeregeDirectory = System.IO.Path.GetDirectoryName(MeregePdfFileName);
                             this.MeregePdfFileStatusText.Text = "正在合并中...";
-                            Util.MergrePdfFIle(MeregePdfFiles.Result, MeregePdfFileName);
+                            Util.MergrePdfFIle(MeregePdfFiles.Result, MeregePdfFileName, PictureMergeMode.Checked,MeregeFilePage.SelectedValue.ToString());
                             this.MeregePdfFileStatusText.Text = "合并完毕，右键名称可移除文件";
                             if (OpenMeregePdfFile.Checked)
                             {
@@ -529,10 +544,15 @@ namespace DocumentTools
                     UI.AddFilesToListviewWithNotDialog(DropFiles, this.PDF2ExcelFileView, new string[] { ".pdf" });
                     break;
                 case "MergePdfFileView":
-                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.MergePdfFileView, new string[] { ".pdf"});
+                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.MergePdfFileView, new string[] { ".pdf",".jpg",".png",".bmp",".tif"});
                     break;
                 default: break;
             }
+        }
+
+        private void DownloadFrameWorkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472");
         }
     }
 

@@ -58,6 +58,9 @@
             this.SelectPDF2ExcelButton = new System.Windows.Forms.Button();
             this.PDF2ExcelFileView = new System.Windows.Forms.ListView();
             this.TabPage_06 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.MeregeFilePage = new System.Windows.Forms.ComboBox();
+            this.PictureMergeMode = new System.Windows.Forms.CheckBox();
             this.OpenMeregePdfFile = new System.Windows.Forms.CheckBox();
             this.MeregePdfFileStatusText = new System.Windows.Forms.Label();
             this.MeregePdfFileButtonConvert = new System.Windows.Forms.Button();
@@ -88,10 +91,21 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SourceTextBox = new System.Windows.Forms.RichTextBox();
             this.TabPage_08 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.DownloadFrameWorkLabel = new System.Windows.Forms.LinkLabel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.ListViewRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除本项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.清空列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
@@ -102,7 +116,10 @@
             this.TabPage_05.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.TabPage_08.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.ListViewRightMenu.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTabPage
@@ -404,6 +421,9 @@
             // 
             // TabPage_06
             // 
+            this.TabPage_06.Controls.Add(this.label5);
+            this.TabPage_06.Controls.Add(this.MeregeFilePage);
+            this.TabPage_06.Controls.Add(this.PictureMergeMode);
             this.TabPage_06.Controls.Add(this.OpenMeregePdfFile);
             this.TabPage_06.Controls.Add(this.MeregePdfFileStatusText);
             this.TabPage_06.Controls.Add(this.MeregePdfFileButtonConvert);
@@ -415,6 +435,33 @@
             this.TabPage_06.TabIndex = 5;
             this.TabPage_06.Text = "合并PDF";
             this.TabPage_06.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(427, 346);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(215, 18);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "PDF排版样式（图片合并）";
+            // 
+            // MeregeFilePage
+            // 
+            this.MeregeFilePage.FormattingEnabled = true;
+            this.MeregeFilePage.Location = new System.Drawing.Point(648, 343);
+            this.MeregeFilePage.Name = "MeregeFilePage";
+            this.MeregeFilePage.Size = new System.Drawing.Size(121, 26);
+            this.MeregeFilePage.TabIndex = 6;
+            // 
+            // PictureMergeMode
+            // 
+            this.PictureMergeMode.AutoSize = true;
+            this.PictureMergeMode.Location = new System.Drawing.Point(262, 347);
+            this.PictureMergeMode.Name = "PictureMergeMode";
+            this.PictureMergeMode.Size = new System.Drawing.Size(142, 22);
+            this.PictureMergeMode.TabIndex = 5;
+            this.PictureMergeMode.Text = "图片合并模式";
+            this.PictureMergeMode.UseVisualStyleBackColor = true;
             // 
             // OpenMeregePdfFile
             // 
@@ -721,12 +768,67 @@
             // 
             // TabPage_08
             // 
+            this.TabPage_08.Controls.Add(this.label12);
+            this.TabPage_08.Controls.Add(this.groupBox4);
+            this.TabPage_08.Controls.Add(this.groupBox3);
             this.TabPage_08.Location = new System.Drawing.Point(4, 28);
             this.TabPage_08.Name = "TabPage_08";
             this.TabPage_08.Size = new System.Drawing.Size(777, 475);
             this.TabPage_08.TabIndex = 7;
-            this.TabPage_08.Text = "TWAIN设备调试";
+            this.TabPage_08.Text = "关于软件";
             this.TabPage_08.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.DownloadFrameWorkLabel);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(5, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(769, 181);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "开发信息";
+            // 
+            // DownloadFrameWorkLabel
+            // 
+            this.DownloadFrameWorkLabel.AutoSize = true;
+            this.DownloadFrameWorkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.DownloadFrameWorkLabel.Location = new System.Drawing.Point(292, 123);
+            this.DownloadFrameWorkLabel.Name = "DownloadFrameWorkLabel";
+            this.DownloadFrameWorkLabel.Size = new System.Drawing.Size(476, 18);
+            this.DownloadFrameWorkLabel.TabIndex = 3;
+            this.DownloadFrameWorkLabel.TabStop = true;
+            this.DownloadFrameWorkLabel.Text = "点击下载.NetFrameWork 4.7.1 框架（建议Win7用户下载）";
+            this.DownloadFrameWorkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DownloadFrameWorkLabel_LinkClicked);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 123);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(269, 18);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "开发框架：.NetFrameWork 4.7.1";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 78);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(269, 18);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "开发工具：Visual Studio社区版";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 35);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(116, 18);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "开发语言：C#";
             // 
             // ListViewRightMenu
             // 
@@ -751,6 +853,65 @@
             this.清空列表ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
             this.清空列表ToolStripMenuItem.Text = "清空列表";
             this.清空列表ToolStripMenuItem.Click += new System.EventHandler(this.清空列表ToolStripMenuItem_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Location = new System.Drawing.Point(5, 190);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(769, 230);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "软件说明";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(0, 35);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(764, 18);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "· 支持的操作系统：Windows 7 、Windows10、Windows11或更高（附带.NetFrameWork 4.7.1）";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(0, 140);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(251, 18);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "· 不需要本机安装Office软件";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(0, 200);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(251, 18);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "· 完全免费，但禁止售卖盈利";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(0, 86);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(197, 18);
+            this.label13.TabIndex = 4;
+            this.label13.Text = "· 完全离线，无需联网";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Tomato;
+            this.label12.Location = new System.Drawing.Point(11, 439);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(494, 18);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "* 希望工具可以帮你提升效率，而不是让你干了更多的事情。";
             // 
             // BodyForm
             // 
@@ -783,7 +944,13 @@
             this.TabPage_05.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.TabPage_08.ResumeLayout(false);
+            this.TabPage_08.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ListViewRightMenu.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -852,6 +1019,20 @@
         private System.Windows.Forms.ToolStripMenuItem 删除本项ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 清空列表ToolStripMenuItem;
         private System.Windows.Forms.TabPage TabPage_08;
+        private System.Windows.Forms.CheckBox PictureMergeMode;
+        private System.Windows.Forms.ComboBox MeregeFilePage;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.LinkLabel DownloadFrameWorkLabel;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
     }
 }
 
