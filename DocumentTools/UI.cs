@@ -16,6 +16,8 @@ namespace DocumentTools
         Excel2Pdf,
         Word2Image,
         Pdf2Excel,
+        WordReplace,
+        ExcelReplace
     }
     internal class UI
     {
@@ -53,9 +55,10 @@ namespace DocumentTools
         /// <param name="FileList"></param>
         /// <param name="ListviewControl"></param>
         /// <param name="FileFilters"></param>
-        public static void AddFilesToListviewWithNotDialog(string[] FileList,ListView ListviewControl,string[] FileFilters)
+        public static void AddFilesToListviewWithNotDialog(string[] FileList, ListView ListviewControl, string[] FileFilters)
         {
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 if (FileList.Length > 0)
                 {
                     ListviewControl.BeginUpdate();
@@ -188,6 +191,18 @@ namespace DocumentTools
             AddFilesToListView("PDF文档", "*.pdf", BodyForm.MainForm.PDF2ExcelFileView);
         }
 
+        public static void AddWordRelaceFiles()
+        {
+            AddFilesToListView("WORD文档", "*.docx;*.doc", BodyForm.MainForm.ReplaceWordFileList);
+        }
+
+        public static void AddExcelRelaceFiles()
+        {
+            AddFilesToListView("EXCEL文档", "*.xls;*.xlsx", BodyForm.MainForm.ReplaceExcelFileView);
+        }
+
+
+
         /// <summary>
         /// 转换文件通用方法
         /// </summary>
@@ -212,7 +227,7 @@ namespace DocumentTools
                         string ConvertedFileName = Path.Combine(SelectSavePathstring, FileNameWithOutExtension + ExtensionString);
                         ListViewControl.Items[TempIndex].SubItems.Add(ConvertedFileName);
                         ListViewControl.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                        StatusLabelControl.Text = $"正在处理{TempIndex + 1}个文件...";
+                        StatusLabelControl.Text = $"正在处理{TempIndex + 1}个文件";
 
                         //根据不同类型调用不同的函数
                         switch (ConverType)
@@ -239,11 +254,20 @@ namespace DocumentTools
                             case ConvertFileType.Pdf2Excel:
                                 Util.ConvertPdf2Excel(ListViewFirstColumnText, ConvertedFileName, BodyForm.MainForm.ExcelSheelMode.Checked);
                                 break;
+                            //批量替换word内容
+                            case ConvertFileType.WordReplace:
+                                if (BodyForm.MainForm.WordReplaceFindTextBox.Text != string.Empty)
+                                {
+                                    Util.RelaceDocumentContent(ListViewFirstColumnText, ConvertedFileName, "WORD", BodyForm.MainForm.WordReplaceFindTextBox.Text, BodyForm.MainForm.WordReplaceTextBox.Text, BodyForm.MainForm.IgnoreFootContent.Checked, BodyForm.MainForm.IgnoreCase.Checked);
+                                }
+                                break;
+                            //批量替换Excel内容
+                            case ConvertFileType.ExcelReplace:
+                                Util.RelaceDocumentContent(ListViewFirstColumnText, ConvertedFileName, "EXCEL", BodyForm.MainForm.ExcelFindTextBox.Text, BodyForm.MainForm.ExcelReplaceBox.Text, false, BodyForm.MainForm.ExcelNoIgnoreCase.Checked, BodyForm.MainForm.RemoveRows.Checked, Convert.ToInt32(BodyForm.MainForm.ExcelStartRow.Text), Convert.ToInt32(BodyForm.MainForm.ExcelEndRow.Text), BodyForm.MainForm.UseRegex.Checked);
+                                break;
                             default: break;
                         }
                     }
-                    StatusLabelControl.Text = "处理完毕，右键名称可移除文件";
-
                     //处理完毕后需要做的事情
                     switch (ConverType)
                     {

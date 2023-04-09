@@ -1,7 +1,10 @@
-﻿using System;
+﻿using NTwain;
+using NTwain.Data;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +17,13 @@ namespace DocumentTools
     {
         public static BodyForm MainForm;
         private ListView TempListview;
+        private TwainSession twainSession;
+        private DataSource dataSource;
+        private int ImageIndex = 0;
+        private int TempImageCount = 0;
+        private int TotalTempImageCount = 0;
+        private double ScanSeconds = 0;
+
 
         public BodyForm()
         {
@@ -25,12 +35,19 @@ namespace DocumentTools
         {
             InitListView();
             InitComboxValue();
+            InitTwain();
             this.AllowDrop = true;
             this.PageExportCheck.Checked = true;
             this.PageExportCheck.Enabled = false;
 
             this.MergePdfButton.Enabled = false;
-            Util.PlayMp3WithStream();
+
+            this.PreviewPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            this.ScanPictureSavePathBox.Enabled = false;
+
+
+            //Util.PlayMp3WithStream();
 
         }
 
@@ -109,6 +126,31 @@ namespace DocumentTools
             this.MergePdfFileView.DragEnter += ListViewDragEnter;
             this.MergePdfFileView.DragDrop += ListviewDragDrop;
 
+
+            //ReplaceWordFileList
+            this.ReplaceWordFileList.View = View.Details;
+            this.ReplaceWordFileList.FullRowSelect = true;
+            this.ReplaceWordFileList.AllowDrop = true;
+            this.ReplaceWordFileList.Columns.Add("文件名称", 300);
+            this.ReplaceWordFileList.Columns.Add("添加时间", 300);
+            this.ReplaceWordFileList.Columns.Add("转换后文件名称", 300);
+            this.ReplaceWordFileList.Name = "ReplaceWordFileList";
+
+            this.ReplaceWordFileList.DragEnter += ListViewDragEnter;
+            this.ReplaceWordFileList.DragDrop += ListviewDragDrop;
+
+            //ReplaceExcelFileView
+            this.ReplaceExcelFileView.View = View.Details;
+            this.ReplaceExcelFileView.FullRowSelect = true;
+            this.ReplaceExcelFileView.AllowDrop = true;
+            this.ReplaceExcelFileView.Columns.Add("文件名称", 300);
+            this.ReplaceExcelFileView.Columns.Add("添加时间", 300);
+            this.ReplaceExcelFileView.Columns.Add("转换后文件名称", 300);
+            this.ReplaceExcelFileView.Name = "ReplaceExcelFileView";
+
+            this.ReplaceExcelFileView.DragEnter += ListViewDragEnter;
+            this.ReplaceExcelFileView.DragDrop += ListviewDragDrop;
+
         }
 
         private void InitComboxValue()
@@ -164,6 +206,9 @@ namespace DocumentTools
             this.MeregeFilePage.ValueMember = "PdfFormatValue";
 
             this.MeregeFilePage.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            this.TwainColorMode.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.TwainDpi.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void ChooseDocButton_Click(object sender, EventArgs e)
@@ -227,7 +272,7 @@ namespace DocumentTools
                 string SaveMergePdfFileName = Util.ShowSaveFileDialog("PDF文件|*.pdf", "设置要保存的PDF文件名称");
                 if (SaveMergePdfFileName != string.Empty)
                 {
-                    Util.MergrePdfFIle(WaitMergePdfFileNames.Result, SaveMergePdfFileName, PictureMergeMode.Checked,MeregeFilePage.SelectedValue.ToString());
+                    Util.MergrePdfFIle(WaitMergePdfFileNames.Result, SaveMergePdfFileName, PictureMergeMode.Checked, MeregeFilePage.SelectedValue.ToString());
                     MessageBox.Show("合并完毕", "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
             }
@@ -343,7 +388,7 @@ namespace DocumentTools
                         {
                             string MeregeDirectory = System.IO.Path.GetDirectoryName(MeregePdfFileName);
                             this.MeregePdfFileStatusText.Text = "正在合并中...";
-                            Util.MergrePdfFIle(MeregePdfFiles.Result, MeregePdfFileName, PictureMergeMode.Checked,MeregeFilePage.SelectedValue.ToString());
+                            Util.MergrePdfFIle(MeregePdfFiles.Result, MeregePdfFileName, PictureMergeMode.Checked, MeregeFilePage.SelectedValue.ToString());
                             this.MeregePdfFileStatusText.Text = "合并完毕，右键名称可移除文件";
                             if (OpenMeregePdfFile.Checked)
                             {
@@ -409,16 +454,33 @@ namespace DocumentTools
                     case "MergePdfFileView":
                         UI.RemoveListViewItem(false, MergePdfFileView, MergePdfFileView.FocusedItem.Index);
                         break;
+                    case "ReplaceWordFileList":
+                        UI.RemoveListViewItem(false, ReplaceWordFileList, ReplaceWordFileList.FocusedItem.Index);
+                        break;
+                    case "ReplaceExcelFileView":
+                        UI.RemoveListViewItem(false, ReplaceExcelFileView, ReplaceExcelFileView.FocusedItem.Index);
+                        break;
                     default: break;
                 }
             }
         }
 
+        /// <summary>
+        /// 右键菜单被打开的时候处理事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewRightMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //右键菜单被打开的时候，获取当前所在控件，作为listview给后续判断使用
             TempListview = ListViewRightMenu.SourceControl as ListView;
         }
+
+        /// <summary>
+        /// 各个listview的清空列表操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void 清空列表ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -444,12 +506,19 @@ namespace DocumentTools
                     case "MergePdfFileView":
                         UI.RemoveListViewItem(true, MergePdfFileView);
                         break;
+                    case "ReplaceWordFileList":
+                        UI.RemoveListViewItem(true, ReplaceWordFileList);
+                        break;
+                    case "ReplaceExcelFileView":
+                        UI.RemoveListViewItem(true, ReplaceExcelFileView);
+                        break;
                     default: break;
                 }
             }
 
         }
 
+        #region 各个控件触发鼠标单击事件处理函数
         private void PdfFileListView_MouseClick(object sender, MouseEventArgs e)
         {
             //右键项目才显示菜单
@@ -495,23 +564,33 @@ namespace DocumentTools
             }
         }
 
-        private void SelectSourceButton_Click(object sender, EventArgs e)
+        private void ReplaceWordFileList_MouseClick(object sender, MouseEventArgs e)
         {
-            
+            //右键项目才显示菜单
+            if (e.Button == MouseButtons.Right)
+            {
+                this.ListViewRightMenu.Show(this.ReplaceWordFileList, e.Location);
+            }
         }
 
-        private void SetScannerSetting_Click(object sender, EventArgs e)
+        private void ReplaceExcelFileView_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.ListViewRightMenu.Show(this.ReplaceExcelFileView, e.Location);
+            }
         }
 
-        private void BodyForm_DragEnter(object sender, DragEventArgs e)
-        {
-           
-        }
+        #endregion
 
-        private void ListViewDragEnter(object sender,DragEventArgs e)
+        /// <summary>
+        /// listview控件被拖入文件时的反馈
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListViewDragEnter(object sender, DragEventArgs e)
         {
-            
+
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 e.Effect = DragDropEffects.Copy;
@@ -522,15 +601,20 @@ namespace DocumentTools
             }
         }
 
-        private void ListviewDragDrop(object sender,DragEventArgs e)
+        /// <summary>
+        /// 各个listview拖放文件进入时处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListviewDragDrop(object sender, DragEventArgs e)
         {
             ListView DragedListview = sender as ListView;
-            string[] DropFiles = e.Data.GetData(DataFormats.FileDrop,false) as string[];
-            switch(DragedListview.Name)
+            string[] DropFiles = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+            switch (DragedListview.Name)
             {
                 case "WordFileListView":
-                    UI.AddFilesToListviewWithNotDialog(DropFiles,this.WordFileListView,new string[] { ".doc",".docx"});
-                break;
+                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.WordFileListView, new string[] { ".doc", ".docx" });
+                    break;
                 case "PdfFileListView":
                     UI.AddFilesToListviewWithNotDialog(DropFiles, this.PdfFileListView, new string[] { ".pdf" });
                     break;
@@ -538,13 +622,19 @@ namespace DocumentTools
                     UI.AddFilesToListviewWithNotDialog(DropFiles, this.ExcelFileListView, new string[] { ".xls", ".xlsx" });
                     break;
                 case "DocumentsListView":
-                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.DocumentsListView, new string[] { ".doc", ".docx",".pdf",".xls",".xlsx" });
+                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.DocumentsListView, new string[] { ".doc", ".docx", ".pdf", ".xls", ".xlsx" });
                     break;
                 case "PDF2ExcelFileView":
                     UI.AddFilesToListviewWithNotDialog(DropFiles, this.PDF2ExcelFileView, new string[] { ".pdf" });
                     break;
                 case "MergePdfFileView":
-                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.MergePdfFileView, new string[] { ".pdf",".jpg",".png",".bmp",".tif"});
+                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.MergePdfFileView, new string[] { ".pdf", ".jpg", ".png", ".bmp", ".tif" });
+                    break;
+                case "ReplaceWordFileList":
+                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.ReplaceWordFileList, new string[] { ".doc", ".docx" });
+                    break;
+                case "ReplaceExcelFileView":
+                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.ReplaceExcelFileView, new string[] { ".xls", ".xlsx" });
                     break;
                 default: break;
             }
@@ -553,6 +643,267 @@ namespace DocumentTools
         private void DownloadFrameWorkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net472");
+        }
+
+        #region Twain设备的初始化和扫描事件订阅过程代码
+        private void InitTwain()
+        {
+            /**
+             * 初始化Twain设备
+             * Twain设备的调用比较特殊，一般分为下面三步：
+             * 初始化Session、对Session进行Open、订阅SourceDisabled事件，在datasource使用完毕后进行Close操作
+             * 这三步严格执行，不会触发任何异常，Session一定要保持开启
+             * datasource可进行选择，或者使用默认DSM最后一次选中的作为datasource
+             * datasource要Open后再进行Enable操作，也就是扫描或者调出扫描仪自身驱动的操作
+             * datasource使用完毕后，订阅了SourceDisabled事件，就会自动进行Close
+             * datasource不进行Close，在其他地方调用datasource会出现内存块错误，如果session被提前关闭，datasource将变为null
+             * **/
+            NTwain.PlatformInfo.Current.PreferNewDSM = false;
+            TWIdentity tWIdentity = TWIdentity.CreateFromAssembly(DataGroups.Image, Assembly.GetExecutingAssembly());
+            twainSession = new TwainSession(tWIdentity);
+            twainSession.Open();
+            twainSession.DataTransferred += Twain_Scanning;
+            twainSession.SourceDisabled += (twainSender, twainArgs) =>
+            {
+                Debug.WriteLine("SourceDisabled Event");
+                if (ScanSeconds > 0)
+                {
+                    this.ScanSpendTime.Text = $"本次扫描时间：{ScanSeconds}秒";
+                }
+                dataSource.Close();
+            };
+        }
+
+        private void SelectTwainDevice_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            dataSource = twainSession.ShowSourceSelector();
+            if(dataSource != null)
+            {
+                if (dataSource.Open() == ReturnCode.Success)
+                {
+                    if (dataSource.Capabilities.ICapPixelType.IsSupported)
+                    {
+                        TwainColorMode.DataSource = dataSource.Capabilities.ICapPixelType.GetValues().ToList();
+                        TwainColorMode.SelectedItem = dataSource.Capabilities.ICapPixelType.GetCurrent();
+
+                    }
+                    if (dataSource.Capabilities.ICapXResolution.IsSupported || dataSource.Capabilities.ICapYResolution.IsSupported)
+                    {
+                        TwainDpi.DataSource = dataSource.Capabilities.ICapXResolution.GetValues().ToList();
+                        TwainDpi.SelectedItem = dataSource.Capabilities.ICapXResolution.GetCurrent();
+                    }
+                    if (dataSource.Capabilities.CapSerialNumber.CanGet)
+                    {
+                        ScanSerialNumber.Text = $"扫描仪序列号：{dataSource.Capabilities.CapSerialNumber.GetValues().FirstOrDefault()}";
+                    }
+                    //Debug.WriteLine($"是否支持警告声：{dataSource.Capabilities.CapAlarms.IsSupported}");
+                    //Debug.WriteLine($"是否支持减少设备数据量：{dataSource.Capabilities.ICapAutomaticCropUsesFrame.IsSupported}");
+                    //Debug.WriteLine($"是否支持歪斜矫正：{dataSource.Capabilities.ICapAutomaticDeskew.IsSupported}");
+                    //Debug.WriteLine($"是否支持指定图像数量采集：{dataSource.Capabilities.CapAutomaticCapture.IsSupported}");
+                    //Debug.WriteLine($"是否支持设置计量单位：{dataSource.Capabilities.ICapUnits.IsSupported}");
+                    //Debug.WriteLine($"是否支持亮度设置：{dataSource.Capabilities.ICapBrightness.IsSupported}");
+                    //Debug.WriteLine($"是否支持提高ADF速度: {dataSource.Capabilities.CapFeederPrep.IsSupported}");
+                    //Debug.WriteLine($"是否支持设置扫描图片格式：{dataSource.Capabilities.ICapImageFileFormat.IsSupported}");
+                    //Debug.WriteLine($"是否支持设置X轴分辨率：{dataSource.Capabilities.ICapXResolution.IsSupported}");
+                    //Debug.WriteLine($"是否支持设置Y轴分辨率：{dataSource.Capabilities.ICapYResolution.IsSupported}");
+                    //Debug.WriteLine($"是否支持设置跳过空白页：{dataSource.Capabilities.ICapAutoDiscardBlankPages.IsSupported}");
+                    //Debug.WriteLine($"是否存在序列号：{dataSource.Capabilities.CapSerialNumber.IsSupported}");
+                    //Debug.WriteLine($"是否支持自动亮度设置：{dataSource.Capabilities.ICapAutoBright.IsSupported}");
+                    //Debug.WriteLine($"是否支持设置颜色模式：{dataSource.Capabilities.ICapPixelType.IsSupported}");
+                    //Debug.WriteLine($"是否支持设置双面扫描：{dataSource.Capabilities.CapDuplex.IsSupported}");
+                    dataSource.Close();
+                }
+
+            }
+        }
+
+        private void SetTwainDevice_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (dataSource is null)
+            {
+                dataSource = twainSession.DefaultSource;
+            }
+
+            if (dataSource.Open() == ReturnCode.Success)
+            {
+                dataSource.Enable(SourceEnableMode.ShowUIOnly, false, this.Handle);
+            }
+        }
+
+        private void StartScanButton_Click(object sender, EventArgs e)
+        {
+            TempImageCount = 0;
+            ScanSeconds = 0;
+            if (dataSource is null)
+            {
+
+                dataSource = twainSession.DefaultSource;
+            }
+
+
+
+
+            if (dataSource.Open() == ReturnCode.Success)
+            {
+
+                #region 扫描仪参数设置
+
+                if (dataSource.Capabilities.ICapPixelType.CanSet)
+                {
+                    dataSource.Capabilities.ICapPixelType.SetValue((PixelType)TwainColorMode.SelectedItem);
+                }
+                if (dataSource.Capabilities.ICapXResolution.CanSet && dataSource.Capabilities.ICapYResolution.CanSet)
+                {
+                    dataSource.Capabilities.ICapXResolution.SetValue((TWFix32)TwainDpi.SelectedItem);
+                    dataSource.Capabilities.ICapYResolution.SetValue((TWFix32)TwainDpi.SelectedItem);
+                }
+                if(DoubleScanBox.Checked && dataSource.Capabilities.CapDuplex.IsSupported)
+                {
+                    dataSource.Capabilities.CapDuplexEnabled.SetValue(BoolType.True);
+                }
+
+                #endregion
+
+                dataSource.Enable(SourceEnableMode.ShowUI, false, this.Handle);
+            }
+
+
+            if (this.ScanPictureSavePathBox.Text != string.Empty)
+            {
+                ImageIndex = Directory.GetFiles(this.ScanPictureSavePathBox.Text).Length;
+            }
+
+        }
+        private void Twain_Scanning(object sender, DataTransferredEventArgs e)
+        {
+
+            using (Image TempScannedImage = Image.FromStream(e.GetNativeImageStream()))
+            {
+                if (this.ScanPictureSavePathBox.Text != string.Empty)
+                {
+                    Stopwatch sw = new Stopwatch();//监视器开始
+                    sw.Start();
+                    ++TempImageCount;//每次扫描的时候进入纸张数量，扫描完毕后需要在开始扫描按钮重置该值为0
+                    ++TotalTempImageCount;//程序运行期间，扫描纸张的总数量，和上面的不同之处在于，点击开始扫描以后不进行重置值
+                    string SaveImageName = Path.Combine(ScanPictureSavePathBox.Text, $"ScanImage_{++ImageIndex}.jpg");//Imageindex为全局属性，值为目录内的文件数量，防止下次扫描原图片被覆盖
+                    TempScannedImage.Save(SaveImageName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    this.PreviewPictureName.Text = "图片名称：" + Path.GetFileName(SaveImageName);
+
+                    Bitmap TempPictureImage = new Bitmap(SaveImageName);
+                    this.PreviewPictureBox.Image = TempPictureImage;
+
+                    this.NowScanNumber.Text = "本次扫描数量：" + TempImageCount.ToString();
+                    this.ScannTotalNumber.Text = "扫描总数量：" + TotalTempImageCount.ToString();
+                    this.SavedPathFileCount.Text = $"扫描路径内文件数量：{Directory.GetFiles(this.ScanPictureSavePathBox.Text).Length}";
+                    sw.Stop();
+                    ScanSeconds += sw.Elapsed.TotalSeconds;//一个扫描过程中花费的时间值，值将会在开始扫描按钮中重置为0
+                    TempPictureImage.Dispose();
+                }
+            }
+
+        }
+
+        private void SelectScanPath_Click(object sender, EventArgs e)
+        {
+            IEnumerable<string> IDirectoryString = Util.ShwoSelectDialog(false, true, "", "");
+            string DirectoryString = IDirectoryString.FirstOrDefault();
+            if (DirectoryString != default)
+            {
+                this.ScanPictureSavePathBox.Text = DirectoryString;
+                this.SavedPathFileCount.Text = $"扫描路径内文件数量：{Directory.GetFiles(DirectoryString).Length}";
+            }
+        }
+
+        private void MemoryTimer_Tick(object sender, EventArgs e)
+        {
+            this.MemoryStatusLabel.Text = Util.GetProcessUsedMemory();
+        }
+
+        private void RemoveAllFiles_Click(object sender, EventArgs e)
+        {
+            if (ScanPictureSavePathBox.Text != string.Empty)
+            {
+                string[] Files = Directory.GetFiles(ScanPictureSavePathBox.Text);
+                if (Files.Length > 0)
+                {
+                    foreach (string file in Files)
+                    {
+                        File.Delete(file);
+                    }
+                }
+                this.SavedPathFileCount.Text = $"扫描路径内文件数量：{Directory.GetFiles(this.ScanPictureSavePathBox.Text).Length}";
+            }
+        }
+
+        private void ResetTotalScanNumber_Click(object sender, EventArgs e)
+        {
+            this.TotalTempImageCount = 0;
+            this.ScannTotalNumber.Text = "扫描总数量：0";
+        }
+
+        #endregion
+
+        private void SelectReplaceWordFilesButton_Click(object sender, EventArgs e)
+        {
+            UI.AddWordRelaceFiles();
+        }
+
+        private void ReplaceWordContentButton_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    UI.ConvertStart(ReplaceWordFileList, ReplaceWordContentStatusText, ConvertFileType.WordReplace, ".docx");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            });
+
+        }
+
+        private void TurialRegex_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://deerchao.cn/tutorials/regex/regex-1.htm");
+        }
+
+        private void OnlineRegextTool_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://c.runoob.com/front-end/854/");
+        }
+
+        private void SelectRelaceExcelButton_Click(object sender, EventArgs e)
+        {
+            UI.AddExcelRelaceFiles();
+        }
+
+        private void ReplaceExcelContentButton_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    UI.ConvertStart(ReplaceExcelFileView, ReplaceExcelStatusText, ConvertFileType.ExcelReplace, ".xlsx");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            });
+        }
+
+        private void ExcelRegexReadMe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://deerchao.cn/tutorials/regex/regex-1.htm");
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://c.runoob.com/front-end/854/");
         }
     }
 

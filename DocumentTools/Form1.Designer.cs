@@ -78,6 +78,36 @@
             this.ConvertWord2ImageButton = new System.Windows.Forms.Button();
             this.ConvertImageList = new System.Windows.Forms.ComboBox();
             this.DocumentsListView = new System.Windows.Forms.ListView();
+            this.TabPage_10 = new System.Windows.Forms.TabPage();
+            this.TurialRegex = new System.Windows.Forms.LinkLabel();
+            this.OnlineRegextTool = new System.Windows.Forms.LinkLabel();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.WordReplaceTextBox = new System.Windows.Forms.TextBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.WordReplaceFindTextBox = new System.Windows.Forms.TextBox();
+            this.IgnoreFootContent = new System.Windows.Forms.CheckBox();
+            this.IgnoreCase = new System.Windows.Forms.CheckBox();
+            this.ReplaceWordContentStatusText = new System.Windows.Forms.Label();
+            this.ReplaceWordContentButton = new System.Windows.Forms.Button();
+            this.SelectReplaceWordFilesButton = new System.Windows.Forms.Button();
+            this.ReplaceWordFileList = new System.Windows.Forms.ListView();
+            this.TabPage_11 = new System.Windows.Forms.TabPage();
+            this.UseRegex = new System.Windows.Forms.CheckBox();
+            this.ExcelNoIgnoreCase = new System.Windows.Forms.CheckBox();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.ExcelStartRow = new System.Windows.Forms.TextBox();
+            this.ExcelEndRow = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.RemoveRows = new System.Windows.Forms.CheckBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.ExcelReplaceBox = new System.Windows.Forms.TextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.ExcelFindTextBox = new System.Windows.Forms.TextBox();
+            this.ReplaceExcelStatusText = new System.Windows.Forms.Label();
+            this.ReplaceExcelContentButton = new System.Windows.Forms.Button();
+            this.SelectRelaceExcelButton = new System.Windows.Forms.Button();
+            this.ReplaceExcelFileView = new System.Windows.Forms.ListView();
             this.TabPage_05 = new System.Windows.Forms.TabPage();
             this.NameStorkeChcek = new System.Windows.Forms.CheckBox();
             this.MutilLineMode = new System.Windows.Forms.CheckBox();
@@ -90,7 +120,40 @@
             this.TargetTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SourceTextBox = new System.Windows.Forms.RichTextBox();
+            this.TabPage_09 = new System.Windows.Forms.TabPage();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.MemoryStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.ResetTotalScanNumber = new System.Windows.Forms.Button();
+            this.RemoveAllFiles = new System.Windows.Forms.Button();
+            this.SavedPathFileCount = new System.Windows.Forms.Label();
+            this.ScanSpendTime = new System.Windows.Forms.Label();
+            this.NowScanNumber = new System.Windows.Forms.Label();
+            this.ScannTotalNumber = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.PreviewPictureName = new System.Windows.Forms.Label();
+            this.PreviewPictureBox = new System.Windows.Forms.PictureBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.DoubleScanBox = new System.Windows.Forms.CheckBox();
+            this.ScanSerialNumber = new System.Windows.Forms.Label();
+            this.TwainDpi = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.TwainColorMode = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.SelectScanPath = new System.Windows.Forms.Button();
+            this.StartScanButton = new System.Windows.Forms.Button();
+            this.ScanPictureSavePathBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.SetTwainDevice = new System.Windows.Forms.LinkLabel();
+            this.SelectTwainDevice = new System.Windows.Forms.LinkLabel();
             this.TabPage_08 = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.DownloadFrameWorkLabel = new System.Windows.Forms.LinkLabel();
             this.label8 = new System.Windows.Forms.Label();
@@ -100,12 +163,11 @@
             this.ListViewRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除本项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.清空列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.MemoryTimer = new System.Windows.Forms.Timer(this.components);
+            this.ProcessPage_W2P = new System.Windows.Forms.Label();
+            this.ProcessPage_P2W = new System.Windows.Forms.Label();
+            this.ExcelRegexReadMe = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
@@ -113,13 +175,27 @@
             this.TabPage_07.SuspendLayout();
             this.TabPage_06.SuspendLayout();
             this.TabPage_04.SuspendLayout();
+            this.TabPage_10.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.TabPage_11.SuspendLayout();
+            this.groupBox13.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             this.TabPage_05.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.TabPage_09.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.TabPage_08.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.ListViewRightMenu.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTabPage
@@ -130,7 +206,10 @@
             this.MainTabPage.Controls.Add(this.TabPage_07);
             this.MainTabPage.Controls.Add(this.TabPage_06);
             this.MainTabPage.Controls.Add(this.TabPage_04);
+            this.MainTabPage.Controls.Add(this.TabPage_10);
+            this.MainTabPage.Controls.Add(this.TabPage_11);
             this.MainTabPage.Controls.Add(this.TabPage_05);
+            this.MainTabPage.Controls.Add(this.TabPage_09);
             this.MainTabPage.Controls.Add(this.TabPage_08);
             this.MainTabPage.Location = new System.Drawing.Point(3, 12);
             this.MainTabPage.Name = "MainTabPage";
@@ -140,6 +219,7 @@
             // 
             // TabPage_01
             // 
+            this.TabPage_01.Controls.Add(this.ProcessPage_W2P);
             this.TabPage_01.Controls.Add(this.MergePdfButton);
             this.TabPage_01.Controls.Add(this.RemoveTempDocx);
             this.TabPage_01.Controls.Add(this.OpenPdfOptions);
@@ -191,9 +271,9 @@
             this.StatusText.ForeColor = System.Drawing.Color.ForestGreen;
             this.StatusText.Location = new System.Drawing.Point(246, 424);
             this.StatusText.Name = "StatusText";
-            this.StatusText.Size = new System.Drawing.Size(161, 18);
+            this.StatusText.Size = new System.Drawing.Size(143, 18);
             this.StatusText.TabIndex = 4;
-            this.StatusText.Text = "正在等待处理中...";
+            this.StatusText.Text = "正在处理X个文件";
             // 
             // ConvertButton
             // 
@@ -228,6 +308,7 @@
             // 
             // TabPage_02
             // 
+            this.TabPage_02.Controls.Add(this.ProcessPage_P2W);
             this.TabPage_02.Controls.Add(this.PdfStatusText);
             this.TabPage_02.Controls.Add(this.label1);
             this.TabPage_02.Controls.Add(this.Convert2DocButton);
@@ -247,9 +328,9 @@
             this.PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
             this.PdfStatusText.Location = new System.Drawing.Point(246, 424);
             this.PdfStatusText.Name = "PdfStatusText";
-            this.PdfStatusText.Size = new System.Drawing.Size(161, 18);
+            this.PdfStatusText.Size = new System.Drawing.Size(143, 18);
             this.PdfStatusText.TabIndex = 4;
-            this.PdfStatusText.Text = "正在等待处理中...";
+            this.PdfStatusText.Text = "正在处理X个文件";
             // 
             // label1
             // 
@@ -321,9 +402,9 @@
             this.Excel2PdfStatusText.ForeColor = System.Drawing.Color.ForestGreen;
             this.Excel2PdfStatusText.Location = new System.Drawing.Point(246, 424);
             this.Excel2PdfStatusText.Name = "Excel2PdfStatusText";
-            this.Excel2PdfStatusText.Size = new System.Drawing.Size(161, 18);
+            this.Excel2PdfStatusText.Size = new System.Drawing.Size(143, 18);
             this.Excel2PdfStatusText.TabIndex = 4;
-            this.Excel2PdfStatusText.Text = "正在等待处理中...";
+            this.Excel2PdfStatusText.Text = "正在处理X个文件";
             // 
             // ConvertExcel2PdfButton
             // 
@@ -385,9 +466,9 @@
             this.ConvertPDF2ExcelStatusText.ForeColor = System.Drawing.Color.ForestGreen;
             this.ConvertPDF2ExcelStatusText.Location = new System.Drawing.Point(246, 424);
             this.ConvertPDF2ExcelStatusText.Name = "ConvertPDF2ExcelStatusText";
-            this.ConvertPDF2ExcelStatusText.Size = new System.Drawing.Size(161, 18);
+            this.ConvertPDF2ExcelStatusText.Size = new System.Drawing.Size(143, 18);
             this.ConvertPDF2ExcelStatusText.TabIndex = 3;
-            this.ConvertPDF2ExcelStatusText.Text = "正在等待处理中...";
+            this.ConvertPDF2ExcelStatusText.Text = "正在处理X个文件";
             // 
             // ConvertPDF2Excel
             // 
@@ -479,9 +560,9 @@
             this.MeregePdfFileStatusText.ForeColor = System.Drawing.Color.ForestGreen;
             this.MeregePdfFileStatusText.Location = new System.Drawing.Point(246, 424);
             this.MeregePdfFileStatusText.Name = "MeregePdfFileStatusText";
-            this.MeregePdfFileStatusText.Size = new System.Drawing.Size(161, 18);
+            this.MeregePdfFileStatusText.Size = new System.Drawing.Size(143, 18);
             this.MeregePdfFileStatusText.TabIndex = 3;
-            this.MeregePdfFileStatusText.Text = "正在等待处理中...";
+            this.MeregePdfFileStatusText.Text = "正在处理X个文件";
             // 
             // MeregePdfFileButtonConvert
             // 
@@ -596,9 +677,9 @@
             this.ConvertWord2ImageStatus.ForeColor = System.Drawing.Color.ForestGreen;
             this.ConvertWord2ImageStatus.Location = new System.Drawing.Point(246, 424);
             this.ConvertWord2ImageStatus.Name = "ConvertWord2ImageStatus";
-            this.ConvertWord2ImageStatus.Size = new System.Drawing.Size(161, 18);
+            this.ConvertWord2ImageStatus.Size = new System.Drawing.Size(143, 18);
             this.ConvertWord2ImageStatus.TabIndex = 4;
-            this.ConvertWord2ImageStatus.Text = "正在等待处理中...";
+            this.ConvertWord2ImageStatus.Text = "正在处理X个文件";
             // 
             // SetGrayCheckBox
             // 
@@ -638,6 +719,314 @@
             this.DocumentsListView.TabIndex = 0;
             this.DocumentsListView.UseCompatibleStateImageBehavior = false;
             this.DocumentsListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DocumentsListView_MouseClick);
+            // 
+            // TabPage_10
+            // 
+            this.TabPage_10.Controls.Add(this.TurialRegex);
+            this.TabPage_10.Controls.Add(this.OnlineRegextTool);
+            this.TabPage_10.Controls.Add(this.groupBox10);
+            this.TabPage_10.Controls.Add(this.groupBox9);
+            this.TabPage_10.Controls.Add(this.IgnoreFootContent);
+            this.TabPage_10.Controls.Add(this.IgnoreCase);
+            this.TabPage_10.Controls.Add(this.ReplaceWordContentStatusText);
+            this.TabPage_10.Controls.Add(this.ReplaceWordContentButton);
+            this.TabPage_10.Controls.Add(this.SelectReplaceWordFilesButton);
+            this.TabPage_10.Controls.Add(this.ReplaceWordFileList);
+            this.TabPage_10.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_10.Name = "TabPage_10";
+            this.TabPage_10.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_10.TabIndex = 9;
+            this.TabPage_10.Text = "WORD内容批量替换";
+            this.TabPage_10.UseVisualStyleBackColor = true;
+            // 
+            // TurialRegex
+            // 
+            this.TurialRegex.AutoSize = true;
+            this.TurialRegex.Location = new System.Drawing.Point(502, 359);
+            this.TurialRegex.Name = "TurialRegex";
+            this.TurialRegex.Size = new System.Drawing.Size(134, 18);
+            this.TurialRegex.TabIndex = 10;
+            this.TurialRegex.TabStop = true;
+            this.TurialRegex.Text = "正则表达式教程";
+            this.TurialRegex.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.TurialRegex_LinkClicked);
+            // 
+            // OnlineRegextTool
+            // 
+            this.OnlineRegextTool.AutoSize = true;
+            this.OnlineRegextTool.Location = new System.Drawing.Point(642, 359);
+            this.OnlineRegextTool.Name = "OnlineRegextTool";
+            this.OnlineRegextTool.Size = new System.Drawing.Size(116, 18);
+            this.OnlineRegextTool.TabIndex = 9;
+            this.OnlineRegextTool.TabStop = true;
+            this.OnlineRegextTool.Text = "在线正则工具";
+            this.OnlineRegextTool.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnlineRegextTool_LinkClicked);
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.WordReplaceTextBox);
+            this.groupBox10.Location = new System.Drawing.Point(247, 319);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(211, 70);
+            this.groupBox10.TabIndex = 8;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "替换内容";
+            // 
+            // WordReplaceTextBox
+            // 
+            this.WordReplaceTextBox.Location = new System.Drawing.Point(6, 30);
+            this.WordReplaceTextBox.Name = "WordReplaceTextBox";
+            this.WordReplaceTextBox.Size = new System.Drawing.Size(199, 28);
+            this.WordReplaceTextBox.TabIndex = 0;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.WordReplaceFindTextBox);
+            this.groupBox9.Location = new System.Drawing.Point(14, 319);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(211, 70);
+            this.groupBox9.TabIndex = 7;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "查找内容";
+            // 
+            // WordReplaceFindTextBox
+            // 
+            this.WordReplaceFindTextBox.Location = new System.Drawing.Point(6, 30);
+            this.WordReplaceFindTextBox.Name = "WordReplaceFindTextBox";
+            this.WordReplaceFindTextBox.Size = new System.Drawing.Size(199, 28);
+            this.WordReplaceFindTextBox.TabIndex = 0;
+            // 
+            // IgnoreFootContent
+            // 
+            this.IgnoreFootContent.AutoSize = true;
+            this.IgnoreFootContent.Location = new System.Drawing.Point(497, 319);
+            this.IgnoreFootContent.Name = "IgnoreFootContent";
+            this.IgnoreFootContent.Size = new System.Drawing.Size(142, 22);
+            this.IgnoreFootContent.TabIndex = 6;
+            this.IgnoreFootContent.Text = "忽略脚注文本";
+            this.IgnoreFootContent.UseVisualStyleBackColor = true;
+            // 
+            // IgnoreCase
+            // 
+            this.IgnoreCase.AutoSize = true;
+            this.IgnoreCase.Location = new System.Drawing.Point(645, 319);
+            this.IgnoreCase.Name = "IgnoreCase";
+            this.IgnoreCase.Size = new System.Drawing.Size(124, 22);
+            this.IgnoreCase.TabIndex = 5;
+            this.IgnoreCase.Text = "区分大小写";
+            this.IgnoreCase.UseVisualStyleBackColor = true;
+            // 
+            // ReplaceWordContentStatusText
+            // 
+            this.ReplaceWordContentStatusText.AutoSize = true;
+            this.ReplaceWordContentStatusText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ReplaceWordContentStatusText.Location = new System.Drawing.Point(246, 424);
+            this.ReplaceWordContentStatusText.Name = "ReplaceWordContentStatusText";
+            this.ReplaceWordContentStatusText.Size = new System.Drawing.Size(143, 18);
+            this.ReplaceWordContentStatusText.TabIndex = 3;
+            this.ReplaceWordContentStatusText.Text = "正在处理X个文件";
+            // 
+            // ReplaceWordContentButton
+            // 
+            this.ReplaceWordContentButton.Location = new System.Drawing.Point(548, 406);
+            this.ReplaceWordContentButton.Name = "ReplaceWordContentButton";
+            this.ReplaceWordContentButton.Size = new System.Drawing.Size(221, 55);
+            this.ReplaceWordContentButton.TabIndex = 2;
+            this.ReplaceWordContentButton.Text = "开始处理";
+            this.ReplaceWordContentButton.UseVisualStyleBackColor = true;
+            this.ReplaceWordContentButton.Click += new System.EventHandler(this.ReplaceWordContentButton_Click);
+            // 
+            // SelectReplaceWordFilesButton
+            // 
+            this.SelectReplaceWordFilesButton.Location = new System.Drawing.Point(14, 406);
+            this.SelectReplaceWordFilesButton.Name = "SelectReplaceWordFilesButton";
+            this.SelectReplaceWordFilesButton.Size = new System.Drawing.Size(221, 55);
+            this.SelectReplaceWordFilesButton.TabIndex = 1;
+            this.SelectReplaceWordFilesButton.Text = "选择文件";
+            this.SelectReplaceWordFilesButton.UseVisualStyleBackColor = true;
+            this.SelectReplaceWordFilesButton.Click += new System.EventHandler(this.SelectReplaceWordFilesButton_Click);
+            // 
+            // ReplaceWordFileList
+            // 
+            this.ReplaceWordFileList.HideSelection = false;
+            this.ReplaceWordFileList.Location = new System.Drawing.Point(5, 3);
+            this.ReplaceWordFileList.Name = "ReplaceWordFileList";
+            this.ReplaceWordFileList.Size = new System.Drawing.Size(764, 310);
+            this.ReplaceWordFileList.TabIndex = 0;
+            this.ReplaceWordFileList.UseCompatibleStateImageBehavior = false;
+            this.ReplaceWordFileList.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ReplaceWordFileList_MouseClick);
+            // 
+            // TabPage_11
+            // 
+            this.TabPage_11.BackColor = System.Drawing.Color.Transparent;
+            this.TabPage_11.Controls.Add(this.linkLabel1);
+            this.TabPage_11.Controls.Add(this.ExcelRegexReadMe);
+            this.TabPage_11.Controls.Add(this.UseRegex);
+            this.TabPage_11.Controls.Add(this.ExcelNoIgnoreCase);
+            this.TabPage_11.Controls.Add(this.groupBox13);
+            this.TabPage_11.Controls.Add(this.groupBox12);
+            this.TabPage_11.Controls.Add(this.groupBox11);
+            this.TabPage_11.Controls.Add(this.ReplaceExcelStatusText);
+            this.TabPage_11.Controls.Add(this.ReplaceExcelContentButton);
+            this.TabPage_11.Controls.Add(this.SelectRelaceExcelButton);
+            this.TabPage_11.Controls.Add(this.ReplaceExcelFileView);
+            this.TabPage_11.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_11.Name = "TabPage_11";
+            this.TabPage_11.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_11.TabIndex = 10;
+            this.TabPage_11.Text = "EXCEL内容批量替换";
+            this.TabPage_11.UseVisualStyleBackColor = true;
+            // 
+            // UseRegex
+            // 
+            this.UseRegex.AutoSize = true;
+            this.UseRegex.Location = new System.Drawing.Point(141, 370);
+            this.UseRegex.Name = "UseRegex";
+            this.UseRegex.Size = new System.Drawing.Size(160, 22);
+            this.UseRegex.TabIndex = 7;
+            this.UseRegex.Text = "使用正则表达式";
+            this.UseRegex.UseVisualStyleBackColor = true;
+            // 
+            // ExcelNoIgnoreCase
+            // 
+            this.ExcelNoIgnoreCase.AutoSize = true;
+            this.ExcelNoIgnoreCase.Location = new System.Drawing.Point(11, 370);
+            this.ExcelNoIgnoreCase.Name = "ExcelNoIgnoreCase";
+            this.ExcelNoIgnoreCase.Size = new System.Drawing.Size(124, 22);
+            this.ExcelNoIgnoreCase.TabIndex = 6;
+            this.ExcelNoIgnoreCase.Text = "区分大小写";
+            this.ExcelNoIgnoreCase.UseVisualStyleBackColor = true;
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.ExcelStartRow);
+            this.groupBox13.Controls.Add(this.ExcelEndRow);
+            this.groupBox13.Controls.Add(this.label19);
+            this.groupBox13.Controls.Add(this.label18);
+            this.groupBox13.Controls.Add(this.RemoveRows);
+            this.groupBox13.Location = new System.Drawing.Point(417, 281);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(352, 83);
+            this.groupBox13.TabIndex = 6;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "清空行数据";
+            // 
+            // ExcelStartRow
+            // 
+            this.ExcelStartRow.Location = new System.Drawing.Point(151, 32);
+            this.ExcelStartRow.Name = "ExcelStartRow";
+            this.ExcelStartRow.Size = new System.Drawing.Size(80, 28);
+            this.ExcelStartRow.TabIndex = 5;
+            this.ExcelStartRow.Text = "-1";
+            // 
+            // ExcelEndRow
+            // 
+            this.ExcelEndRow.Location = new System.Drawing.Point(265, 33);
+            this.ExcelEndRow.Name = "ExcelEndRow";
+            this.ExcelEndRow.Size = new System.Drawing.Size(80, 28);
+            this.ExcelEndRow.TabIndex = 4;
+            this.ExcelEndRow.Text = "-1";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(234, 38);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(26, 18);
+            this.label19.TabIndex = 3;
+            this.label19.Text = "到";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(119, 38);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(26, 18);
+            this.label18.TabIndex = 1;
+            this.label18.Text = "从";
+            // 
+            // RemoveRows
+            // 
+            this.RemoveRows.AutoSize = true;
+            this.RemoveRows.Location = new System.Drawing.Point(6, 38);
+            this.RemoveRows.Name = "RemoveRows";
+            this.RemoveRows.Size = new System.Drawing.Size(88, 22);
+            this.RemoveRows.TabIndex = 0;
+            this.RemoveRows.Text = "删除行";
+            this.RemoveRows.UseVisualStyleBackColor = true;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.ExcelReplaceBox);
+            this.groupBox12.Location = new System.Drawing.Point(211, 281);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(200, 83);
+            this.groupBox12.TabIndex = 5;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "替换内容";
+            // 
+            // ExcelReplaceBox
+            // 
+            this.ExcelReplaceBox.Location = new System.Drawing.Point(6, 36);
+            this.ExcelReplaceBox.Name = "ExcelReplaceBox";
+            this.ExcelReplaceBox.Size = new System.Drawing.Size(188, 28);
+            this.ExcelReplaceBox.TabIndex = 0;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.ExcelFindTextBox);
+            this.groupBox11.Location = new System.Drawing.Point(5, 281);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(200, 83);
+            this.groupBox11.TabIndex = 4;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "查找内容";
+            // 
+            // ExcelFindTextBox
+            // 
+            this.ExcelFindTextBox.Location = new System.Drawing.Point(6, 36);
+            this.ExcelFindTextBox.Name = "ExcelFindTextBox";
+            this.ExcelFindTextBox.Size = new System.Drawing.Size(188, 28);
+            this.ExcelFindTextBox.TabIndex = 0;
+            // 
+            // ReplaceExcelStatusText
+            // 
+            this.ReplaceExcelStatusText.AutoSize = true;
+            this.ReplaceExcelStatusText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ReplaceExcelStatusText.Location = new System.Drawing.Point(246, 424);
+            this.ReplaceExcelStatusText.Name = "ReplaceExcelStatusText";
+            this.ReplaceExcelStatusText.Size = new System.Drawing.Size(143, 18);
+            this.ReplaceExcelStatusText.TabIndex = 3;
+            this.ReplaceExcelStatusText.Text = "正在处理X个文件";
+            // 
+            // ReplaceExcelContentButton
+            // 
+            this.ReplaceExcelContentButton.Location = new System.Drawing.Point(548, 412);
+            this.ReplaceExcelContentButton.Name = "ReplaceExcelContentButton";
+            this.ReplaceExcelContentButton.Size = new System.Drawing.Size(221, 55);
+            this.ReplaceExcelContentButton.TabIndex = 2;
+            this.ReplaceExcelContentButton.Text = "开始处理";
+            this.ReplaceExcelContentButton.UseVisualStyleBackColor = true;
+            this.ReplaceExcelContentButton.Click += new System.EventHandler(this.ReplaceExcelContentButton_Click);
+            // 
+            // SelectRelaceExcelButton
+            // 
+            this.SelectRelaceExcelButton.Location = new System.Drawing.Point(5, 412);
+            this.SelectRelaceExcelButton.Name = "SelectRelaceExcelButton";
+            this.SelectRelaceExcelButton.Size = new System.Drawing.Size(221, 55);
+            this.SelectRelaceExcelButton.TabIndex = 1;
+            this.SelectRelaceExcelButton.Text = "选择文件";
+            this.SelectRelaceExcelButton.UseVisualStyleBackColor = true;
+            this.SelectRelaceExcelButton.Click += new System.EventHandler(this.SelectRelaceExcelButton_Click);
+            // 
+            // ReplaceExcelFileView
+            // 
+            this.ReplaceExcelFileView.HideSelection = false;
+            this.ReplaceExcelFileView.Location = new System.Drawing.Point(6, 6);
+            this.ReplaceExcelFileView.Name = "ReplaceExcelFileView";
+            this.ReplaceExcelFileView.Size = new System.Drawing.Size(764, 272);
+            this.ReplaceExcelFileView.TabIndex = 0;
+            this.ReplaceExcelFileView.UseCompatibleStateImageBehavior = false;
+            this.ReplaceExcelFileView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ReplaceExcelFileView_MouseClick);
             // 
             // TabPage_05
             // 
@@ -766,6 +1155,278 @@
             this.SourceTextBox.Text = "";
             this.SourceTextBox.TextChanged += new System.EventHandler(this.SourceTextBox_TextChanged);
             // 
+            // TabPage_09
+            // 
+            this.TabPage_09.Controls.Add(this.statusStrip1);
+            this.TabPage_09.Controls.Add(this.groupBox8);
+            this.TabPage_09.Controls.Add(this.groupBox7);
+            this.TabPage_09.Controls.Add(this.groupBox6);
+            this.TabPage_09.Controls.Add(this.groupBox5);
+            this.TabPage_09.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_09.Name = "TabPage_09";
+            this.TabPage_09.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_09.TabIndex = 8;
+            this.TabPage_09.Text = "Twain调试";
+            this.TabPage_09.UseVisualStyleBackColor = true;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MemoryStatusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 444);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(777, 31);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // MemoryStatusLabel
+            // 
+            this.MemoryStatusLabel.Name = "MemoryStatusLabel";
+            this.MemoryStatusLabel.Size = new System.Drawing.Size(82, 24);
+            this.MemoryStatusLabel.Text = "内存信息";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.ResetTotalScanNumber);
+            this.groupBox8.Controls.Add(this.RemoveAllFiles);
+            this.groupBox8.Controls.Add(this.SavedPathFileCount);
+            this.groupBox8.Controls.Add(this.ScanSpendTime);
+            this.groupBox8.Controls.Add(this.NowScanNumber);
+            this.groupBox8.Controls.Add(this.ScannTotalNumber);
+            this.groupBox8.Location = new System.Drawing.Point(278, 175);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(491, 266);
+            this.groupBox8.TabIndex = 4;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "数据信息";
+            // 
+            // ResetTotalScanNumber
+            // 
+            this.ResetTotalScanNumber.Location = new System.Drawing.Point(285, 209);
+            this.ResetTotalScanNumber.Name = "ResetTotalScanNumber";
+            this.ResetTotalScanNumber.Size = new System.Drawing.Size(200, 40);
+            this.ResetTotalScanNumber.TabIndex = 5;
+            this.ResetTotalScanNumber.Text = "重置扫描总数量";
+            this.ResetTotalScanNumber.UseVisualStyleBackColor = true;
+            this.ResetTotalScanNumber.Click += new System.EventHandler(this.ResetTotalScanNumber_Click);
+            // 
+            // RemoveAllFiles
+            // 
+            this.RemoveAllFiles.Location = new System.Drawing.Point(9, 209);
+            this.RemoveAllFiles.Name = "RemoveAllFiles";
+            this.RemoveAllFiles.Size = new System.Drawing.Size(185, 40);
+            this.RemoveAllFiles.TabIndex = 4;
+            this.RemoveAllFiles.Text = "清空路径全部文件";
+            this.RemoveAllFiles.UseVisualStyleBackColor = true;
+            this.RemoveAllFiles.Click += new System.EventHandler(this.RemoveAllFiles_Click);
+            // 
+            // SavedPathFileCount
+            // 
+            this.SavedPathFileCount.AutoSize = true;
+            this.SavedPathFileCount.Location = new System.Drawing.Point(6, 176);
+            this.SavedPathFileCount.Name = "SavedPathFileCount";
+            this.SavedPathFileCount.Size = new System.Drawing.Size(188, 18);
+            this.SavedPathFileCount.TabIndex = 3;
+            this.SavedPathFileCount.Text = "扫描路径内文件数量：";
+            // 
+            // ScanSpendTime
+            // 
+            this.ScanSpendTime.AutoSize = true;
+            this.ScanSpendTime.Location = new System.Drawing.Point(6, 131);
+            this.ScanSpendTime.Name = "ScanSpendTime";
+            this.ScanSpendTime.Size = new System.Drawing.Size(134, 18);
+            this.ScanSpendTime.TabIndex = 2;
+            this.ScanSpendTime.Text = "本次扫描时间：";
+            // 
+            // NowScanNumber
+            // 
+            this.NowScanNumber.AutoSize = true;
+            this.NowScanNumber.Location = new System.Drawing.Point(6, 87);
+            this.NowScanNumber.Name = "NowScanNumber";
+            this.NowScanNumber.Size = new System.Drawing.Size(98, 18);
+            this.NowScanNumber.TabIndex = 1;
+            this.NowScanNumber.Text = "本次数量：";
+            // 
+            // ScannTotalNumber
+            // 
+            this.ScannTotalNumber.AutoSize = true;
+            this.ScannTotalNumber.Location = new System.Drawing.Point(6, 44);
+            this.ScannTotalNumber.Name = "ScannTotalNumber";
+            this.ScannTotalNumber.Size = new System.Drawing.Size(116, 18);
+            this.ScannTotalNumber.TabIndex = 0;
+            this.ScannTotalNumber.Text = "扫描总数量：";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.PreviewPictureName);
+            this.groupBox7.Controls.Add(this.PreviewPictureBox);
+            this.groupBox7.Location = new System.Drawing.Point(8, 175);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(264, 266);
+            this.groupBox7.TabIndex = 3;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "扫描图片预览";
+            // 
+            // PreviewPictureName
+            // 
+            this.PreviewPictureName.AutoSize = true;
+            this.PreviewPictureName.Location = new System.Drawing.Point(6, 31);
+            this.PreviewPictureName.Name = "PreviewPictureName";
+            this.PreviewPictureName.Size = new System.Drawing.Size(125, 18);
+            this.PreviewPictureName.TabIndex = 3;
+            this.PreviewPictureName.Text = "等待扫描中...";
+            // 
+            // PreviewPictureBox
+            // 
+            this.PreviewPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PreviewPictureBox.Location = new System.Drawing.Point(6, 59);
+            this.PreviewPictureBox.Name = "PreviewPictureBox";
+            this.PreviewPictureBox.Size = new System.Drawing.Size(252, 201);
+            this.PreviewPictureBox.TabIndex = 2;
+            this.PreviewPictureBox.TabStop = false;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.DoubleScanBox);
+            this.groupBox6.Controls.Add(this.ScanSerialNumber);
+            this.groupBox6.Controls.Add(this.TwainDpi);
+            this.groupBox6.Controls.Add(this.label16);
+            this.groupBox6.Controls.Add(this.TwainColorMode);
+            this.groupBox6.Controls.Add(this.label15);
+            this.groupBox6.Controls.Add(this.SelectScanPath);
+            this.groupBox6.Controls.Add(this.StartScanButton);
+            this.groupBox6.Controls.Add(this.ScanPictureSavePathBox);
+            this.groupBox6.Controls.Add(this.label14);
+            this.groupBox6.Location = new System.Drawing.Point(124, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(645, 166);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "扫描配置";
+            // 
+            // DoubleScanBox
+            // 
+            this.DoubleScanBox.AutoSize = true;
+            this.DoubleScanBox.Location = new System.Drawing.Point(9, 115);
+            this.DoubleScanBox.Name = "DoubleScanBox";
+            this.DoubleScanBox.Size = new System.Drawing.Size(106, 22);
+            this.DoubleScanBox.TabIndex = 9;
+            this.DoubleScanBox.Text = "双面扫描";
+            this.DoubleScanBox.UseVisualStyleBackColor = true;
+            // 
+            // ScanSerialNumber
+            // 
+            this.ScanSerialNumber.AutoSize = true;
+            this.ScanSerialNumber.Location = new System.Drawing.Point(286, 134);
+            this.ScanSerialNumber.Name = "ScanSerialNumber";
+            this.ScanSerialNumber.Size = new System.Drawing.Size(134, 18);
+            this.ScanSerialNumber.TabIndex = 8;
+            this.ScanSerialNumber.Text = "扫描仪序列号：";
+            // 
+            // TwainDpi
+            // 
+            this.TwainDpi.FormattingEnabled = true;
+            this.TwainDpi.Location = new System.Drawing.Point(358, 72);
+            this.TwainDpi.Name = "TwainDpi";
+            this.TwainDpi.Size = new System.Drawing.Size(156, 26);
+            this.TwainDpi.TabIndex = 7;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(286, 75);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(62, 18);
+            this.label16.TabIndex = 6;
+            this.label16.Text = "分辨率";
+            // 
+            // TwainColorMode
+            // 
+            this.TwainColorMode.FormattingEnabled = true;
+            this.TwainColorMode.Location = new System.Drawing.Point(92, 70);
+            this.TwainColorMode.Name = "TwainColorMode";
+            this.TwainColorMode.Size = new System.Drawing.Size(166, 26);
+            this.TwainColorMode.TabIndex = 5;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 78);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(80, 18);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "颜色模式";
+            // 
+            // SelectScanPath
+            // 
+            this.SelectScanPath.Location = new System.Drawing.Point(520, 28);
+            this.SelectScanPath.Name = "SelectScanPath";
+            this.SelectScanPath.Size = new System.Drawing.Size(123, 32);
+            this.SelectScanPath.TabIndex = 3;
+            this.SelectScanPath.Text = "设置路径";
+            this.SelectScanPath.UseVisualStyleBackColor = true;
+            this.SelectScanPath.Click += new System.EventHandler(this.SelectScanPath_Click);
+            // 
+            // StartScanButton
+            // 
+            this.StartScanButton.Location = new System.Drawing.Point(520, 78);
+            this.StartScanButton.Name = "StartScanButton";
+            this.StartScanButton.Size = new System.Drawing.Size(119, 32);
+            this.StartScanButton.TabIndex = 2;
+            this.StartScanButton.Text = "开始扫描";
+            this.StartScanButton.UseVisualStyleBackColor = true;
+            this.StartScanButton.Click += new System.EventHandler(this.StartScanButton_Click);
+            // 
+            // ScanPictureSavePathBox
+            // 
+            this.ScanPictureSavePathBox.Location = new System.Drawing.Point(129, 28);
+            this.ScanPictureSavePathBox.Name = "ScanPictureSavePathBox";
+            this.ScanPictureSavePathBox.Size = new System.Drawing.Size(385, 28);
+            this.ScanPictureSavePathBox.TabIndex = 1;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 36);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(116, 18);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "扫描图片路径";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.SetTwainDevice);
+            this.groupBox5.Controls.Add(this.SelectTwainDevice);
+            this.groupBox5.Location = new System.Drawing.Point(3, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(115, 161);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "TWAIN设置";
+            // 
+            // SetTwainDevice
+            // 
+            this.SetTwainDevice.AutoSize = true;
+            this.SetTwainDevice.Location = new System.Drawing.Point(6, 92);
+            this.SetTwainDevice.Name = "SetTwainDevice";
+            this.SetTwainDevice.Size = new System.Drawing.Size(98, 18);
+            this.SetTwainDevice.TabIndex = 1;
+            this.SetTwainDevice.TabStop = true;
+            this.SetTwainDevice.Text = "扫描仪设置";
+            this.SetTwainDevice.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SetTwainDevice_LinkClicked);
+            // 
+            // SelectTwainDevice
+            // 
+            this.SelectTwainDevice.AutoSize = true;
+            this.SelectTwainDevice.Location = new System.Drawing.Point(6, 42);
+            this.SelectTwainDevice.Name = "SelectTwainDevice";
+            this.SelectTwainDevice.Size = new System.Drawing.Size(98, 18);
+            this.SelectTwainDevice.TabIndex = 0;
+            this.SelectTwainDevice.TabStop = true;
+            this.SelectTwainDevice.Text = "选择扫描仪";
+            this.SelectTwainDevice.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SelectTwainDevice_LinkClicked);
+            // 
             // TabPage_08
             // 
             this.TabPage_08.Controls.Add(this.label12);
@@ -777,6 +1438,66 @@
             this.TabPage_08.TabIndex = 7;
             this.TabPage_08.Text = "关于软件";
             this.TabPage_08.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Tomato;
+            this.label12.Location = new System.Drawing.Point(11, 439);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(755, 18);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "* * * * * * * * * * * * * * * * * * * * * * * * * * * ** * * * * * * * * * * * * " +
+    "* ";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Location = new System.Drawing.Point(5, 190);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(769, 230);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "软件说明";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(0, 86);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(197, 18);
+            this.label13.TabIndex = 4;
+            this.label13.Text = "· 完全离线，无需联网";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(0, 200);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(251, 18);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "· 完全免费，但禁止售卖盈利";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(0, 140);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(251, 18);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "· 不需要本机安装Office软件";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(0, 35);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(764, 18);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "· 支持的操作系统：Windows 7 、Windows10、Windows11或更高（附带.NetFrameWork 4.7.1）";
             // 
             // groupBox3
             // 
@@ -854,64 +1575,53 @@
             this.清空列表ToolStripMenuItem.Text = "清空列表";
             this.清空列表ToolStripMenuItem.Click += new System.EventHandler(this.清空列表ToolStripMenuItem_Click);
             // 
-            // groupBox4
+            // MemoryTimer
             // 
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Controls.Add(this.label9);
-            this.groupBox4.Location = new System.Drawing.Point(5, 190);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(769, 230);
-            this.groupBox4.TabIndex = 1;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "软件说明";
+            this.MemoryTimer.Enabled = true;
+            this.MemoryTimer.Interval = 1000;
+            this.MemoryTimer.Tick += new System.EventHandler(this.MemoryTimer_Tick);
             // 
-            // label9
+            // ProcessPage_W2P
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(0, 35);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(764, 18);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "· 支持的操作系统：Windows 7 、Windows10、Windows11或更高（附带.NetFrameWork 4.7.1）";
+            this.ProcessPage_W2P.AutoSize = true;
+            this.ProcessPage_W2P.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ProcessPage_W2P.Location = new System.Drawing.Point(386, 424);
+            this.ProcessPage_W2P.Name = "ProcessPage_W2P";
+            this.ProcessPage_W2P.Size = new System.Drawing.Size(89, 18);
+            this.ProcessPage_W2P.TabIndex = 7;
+            this.ProcessPage_W2P.Text = "已保存X页";
             // 
-            // label10
+            // ProcessPage_P2W
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(0, 140);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(251, 18);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "· 不需要本机安装Office软件";
+            this.ProcessPage_P2W.AutoSize = true;
+            this.ProcessPage_P2W.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ProcessPage_P2W.Location = new System.Drawing.Point(386, 424);
+            this.ProcessPage_P2W.Name = "ProcessPage_P2W";
+            this.ProcessPage_P2W.Size = new System.Drawing.Size(89, 18);
+            this.ProcessPage_P2W.TabIndex = 5;
+            this.ProcessPage_P2W.Text = "已保存X页";
             // 
-            // label11
+            // ExcelRegexReadMe
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(0, 200);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(251, 18);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "· 完全免费，但禁止售卖盈利";
+            this.ExcelRegexReadMe.AutoSize = true;
+            this.ExcelRegexReadMe.Location = new System.Drawing.Point(414, 374);
+            this.ExcelRegexReadMe.Name = "ExcelRegexReadMe";
+            this.ExcelRegexReadMe.Size = new System.Drawing.Size(134, 18);
+            this.ExcelRegexReadMe.TabIndex = 8;
+            this.ExcelRegexReadMe.TabStop = true;
+            this.ExcelRegexReadMe.Text = "正则表达式教程";
+            this.ExcelRegexReadMe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ExcelRegexReadMe_LinkClicked);
             // 
-            // label13
+            // linkLabel1
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(0, 86);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(197, 18);
-            this.label13.TabIndex = 4;
-            this.label13.Text = "· 完全离线，无需联网";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.Tomato;
-            this.label12.Location = new System.Drawing.Point(11, 439);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(494, 18);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "* 希望工具可以帮你提升效率，而不是让你干了更多的事情。";
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(646, 374);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(116, 18);
+            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "在线正则工具";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // BodyForm
             // 
@@ -926,7 +1636,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "文档工具";
             this.Load += new System.EventHandler(this.BodyForm_Load);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.BodyForm_DragEnter);
             this.MainTabPage.ResumeLayout(false);
             this.TabPage_01.ResumeLayout(false);
             this.TabPage_01.PerformLayout();
@@ -940,17 +1649,44 @@
             this.TabPage_06.PerformLayout();
             this.TabPage_04.ResumeLayout(false);
             this.TabPage_04.PerformLayout();
+            this.TabPage_10.ResumeLayout(false);
+            this.TabPage_10.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.TabPage_11.ResumeLayout(false);
+            this.TabPage_11.PerformLayout();
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
             this.TabPage_05.ResumeLayout(false);
             this.TabPage_05.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.TabPage_09.ResumeLayout(false);
+            this.TabPage_09.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.TabPage_08.ResumeLayout(false);
             this.TabPage_08.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ListViewRightMenu.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1033,6 +1769,68 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TabPage TabPage_09;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.LinkLabel SelectTwainDevice;
+        private System.Windows.Forms.LinkLabel SetTwainDevice;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox ScanPictureSavePathBox;
+        private System.Windows.Forms.Button StartScanButton;
+        private System.Windows.Forms.Button SelectScanPath;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.PictureBox PreviewPictureBox;
+        private System.Windows.Forms.Label PreviewPictureName;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label ScannTotalNumber;
+        private System.Windows.Forms.Label NowScanNumber;
+        private System.Windows.Forms.Timer MemoryTimer;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel MemoryStatusLabel;
+        private System.Windows.Forms.Label ScanSpendTime;
+        private System.Windows.Forms.Label SavedPathFileCount;
+        private System.Windows.Forms.Button RemoveAllFiles;
+        private System.Windows.Forms.Button ResetTotalScanNumber;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox TwainColorMode;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox TwainDpi;
+        private System.Windows.Forms.Label ScanSerialNumber;
+        private System.Windows.Forms.CheckBox DoubleScanBox;
+        private System.Windows.Forms.TabPage TabPage_10;
+        private System.Windows.Forms.TabPage TabPage_11;
+        private System.Windows.Forms.Button SelectReplaceWordFilesButton;
+        private System.Windows.Forms.Button ReplaceWordContentButton;
+        private System.Windows.Forms.Label ReplaceWordContentStatusText;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.GroupBox groupBox10;
+        internal System.Windows.Forms.ListView ReplaceWordFileList;
+        internal System.Windows.Forms.TextBox WordReplaceFindTextBox;
+        internal System.Windows.Forms.TextBox WordReplaceTextBox;
+        internal System.Windows.Forms.CheckBox IgnoreFootContent;
+        internal System.Windows.Forms.CheckBox IgnoreCase;
+        private System.Windows.Forms.LinkLabel OnlineRegextTool;
+        private System.Windows.Forms.LinkLabel TurialRegex;
+        private System.Windows.Forms.Button SelectRelaceExcelButton;
+        private System.Windows.Forms.Button ReplaceExcelContentButton;
+        private System.Windows.Forms.Label ReplaceExcelStatusText;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        internal System.Windows.Forms.ListView ReplaceExcelFileView;
+        internal System.Windows.Forms.CheckBox ExcelNoIgnoreCase;
+        internal System.Windows.Forms.TextBox ExcelFindTextBox;
+        internal System.Windows.Forms.TextBox ExcelReplaceBox;
+        internal System.Windows.Forms.CheckBox RemoveRows;
+        internal System.Windows.Forms.TextBox ExcelStartRow;
+        internal System.Windows.Forms.TextBox ExcelEndRow;
+        internal System.Windows.Forms.CheckBox UseRegex;
+        internal System.Windows.Forms.Label ProcessPage_W2P;
+        internal System.Windows.Forms.Label ProcessPage_P2W;
+        private System.Windows.Forms.LinkLabel ExcelRegexReadMe;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

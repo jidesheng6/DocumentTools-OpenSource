@@ -1,5 +1,6 @@
 ﻿using Aspose.Cells;
 using Aspose.Cells.Rendering;
+using Microsoft.VisualBasic.Devices;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using NAudio.Wave;
 using System;
@@ -17,7 +18,6 @@ namespace DocumentTools
 {
     internal class Util
     {
-        static int ScannImageIndex = 0;
         /// <summary>
         /// 显示选择文件框，获取选中的文件名称列表
         /// </summary>
@@ -165,6 +165,7 @@ namespace DocumentTools
             SaveDocxName = System.IO.Path.Combine(tempSaveDocxPath, DocumentName + ".docx");
 
 
+            TempPdfaveOption.PageSavingCallback = new SavingPdfCallBack();
             //TempDocument.CompatibilityOptions.AutoSpaceLikeWord95 = true;
             //TempDocument.CompatibilityOptions.WrapTrailSpaces = true;
             //TempDocument.CompatibilityOptions.NoSpaceRaiseLower = true;
@@ -204,10 +205,36 @@ namespace DocumentTools
                 RecognizeBullets = true,
             };
 
-            Aspose.Pdf.Document TempPdfFileDocument = new Aspose.Pdf.Document(pdfFileName);
+            TempDocxSaveOption.CustomProgressHandler = new Aspose.Pdf.UnifiedSaveOptions.ConversionProgressEventHandler(WritePdf2WordDebugInfo);
 
-            TempPdfFileDocument.Save(SavePdfName, TempDocxSaveOption);
+            using (Aspose.Pdf.Document TempPdfFileDocument = new Aspose.Pdf.Document(pdfFileName))
+            {
 
+                TempPdfFileDocument.Save(SavePdfName, TempDocxSaveOption);
+            }
+        }
+        /// <summary>
+        /// 调试pdf2word的功能输出信息
+        /// </summary>
+        /// <param name="info"></param>
+        public static void WritePdf2WordDebugInfo(Aspose.Pdf.DocSaveOptions.ProgressEventHandlerInfo info)
+        {
+            switch (info.EventType)
+            {
+                case Aspose.Pdf.ProgressEventType.TotalProgress:
+                    Debug.WriteLine($"Pdf2Word_Process：{info.Value}");
+                    break;
+                case Aspose.Pdf.ProgressEventType.SourcePageAnalysed:
+                    Debug.WriteLine($"Pdf2Word_AnalsyPage：{info.Value}");
+                    break;
+                case Aspose.Pdf.ProgressEventType.ResultPageCreated:
+                    Debug.WriteLine($"Pdf2Word_PageCreate：{info.Value}");
+                    break;
+                case Aspose.Pdf.ProgressEventType.ResultPageSaved:
+                    BodyForm.MainForm.ProcessPage_P2W.Text = $"已保存{info.Value}页";
+                    break;
+                default: break;
+            }
         }
 
         /// <summary>
@@ -215,13 +242,13 @@ namespace DocumentTools
         /// </summary>
         /// <param name="pdfFileNames">要合并的PDF文档列表</param>
         /// <param name="mergrePdfFileName">合并后保存的PDF文件名称</param>
-        public static void MergrePdfFIle(List<string> pdfFileNames, string mergrePdfFileName, bool IsMergePicture,string PageMode)
+        public static void MergrePdfFIle(List<string> pdfFileNames, string mergrePdfFileName, bool IsMergePicture, string PageMode)
         {
             Aspose.Hook.Manager.StartHook();
             List<string> TempFileList = new List<string>();
             Aspose.Words.Document TempPicturePdf = new Aspose.Words.Document();
             Aspose.Words.DocumentBuilder TempPicturePdfBuilder = new Aspose.Words.DocumentBuilder(TempPicturePdf);
-            switch(PageMode)
+            switch (PageMode)
             {
                 case "A4_Hen":
                     TempPicturePdfBuilder.PageSetup.PaperSize = Aspose.Words.PaperSize.A4;
@@ -239,32 +266,33 @@ namespace DocumentTools
                     TempPicturePdfBuilder.PageSetup.PaperSize = Aspose.Words.PaperSize.A3;
                     TempPicturePdfBuilder.PageSetup.Orientation = Aspose.Words.Orientation.Portrait;
                     break;
-                default:break;
+                default: break;
             }
 
             //如果是pdf格式则进行pdf合并，如果不是pdf则进行document插入图片合并转换为pdf
-                pdfFileNames.ForEach(FileName => { 
+            pdfFileNames.ForEach(FileName =>
+            {
                 string FileExtension = Path.GetExtension(FileName);
-                if(FileExtension!=".pdf")
-                    {
-                        TempPicturePdfBuilder.InsertImage(FileName);
-                        TempPicturePdfBuilder.Writeln();
+                if (FileExtension != ".pdf")
+                {
+                    TempPicturePdfBuilder.InsertImage(FileName);
+                    TempPicturePdfBuilder.Writeln();
 
-                    }
-                else
-                    {
-                        TempFileList.Add(FileName);
-                    }
-                });
-                if(IsMergePicture)
-                {
-                    TempPicturePdf.Save(mergrePdfFileName);
                 }
                 else
                 {
-                    Aspose.Pdf.Facades.PdfFileEditor TempPdfEditor = new Aspose.Pdf.Facades.PdfFileEditor();
-                    TempPdfEditor.Concatenate(TempFileList.ToArray(), mergrePdfFileName);
+                    TempFileList.Add(FileName);
                 }
+            });
+            if (IsMergePicture)
+            {
+                TempPicturePdf.Save(mergrePdfFileName);
+            }
+            else
+            {
+                Aspose.Pdf.Facades.PdfFileEditor TempPdfEditor = new Aspose.Pdf.Facades.PdfFileEditor();
+                TempPdfEditor.Concatenate(TempFileList.ToArray(), mergrePdfFileName);
+            }
         }
 
         /// <summary>
@@ -276,35 +304,35 @@ namespace DocumentTools
         {
             Aspose.Hook.Manager.StartHook();
 
-
-            Aspose.Cells.Workbook TempExcelDocument = new Aspose.Cells.Workbook(ExcelFileName);
-
-            if (ExportEachSheet)
+            using (Aspose.Cells.Workbook TempExcelDocument = new Aspose.Cells.Workbook(ExcelFileName))
             {
-                PdfSaveOptions SavePdfOptions = new PdfSaveOptions()
+                if (ExportEachSheet)
                 {
-                    OnePagePerSheet = true,
-                    CalculateFormula = true,
-                };
-
-                //将Excel中的每一个Sheet保存为单个PDF文件
-                for (int i = 0; i < TempExcelDocument.Worksheets.Count; i++)
-                {
-                    TempExcelDocument.Worksheets[i].IsVisible = true;
-                    for (int j = 0; j < TempExcelDocument.Worksheets.Count; j++)
+                    Aspose.Cells.PdfSaveOptions SavePdfOptions = new Aspose.Cells.PdfSaveOptions()
                     {
-                        if (j != i)
+                        OnePagePerSheet = true,
+                        CalculateFormula = true,
+                    };
+
+                    //将Excel中的每一个Sheet保存为单个PDF文件
+                    for (int i = 0; i < TempExcelDocument.Worksheets.Count; i++)
+                    {
+                        TempExcelDocument.Worksheets[i].IsVisible = true;
+                        for (int j = 0; j < TempExcelDocument.Worksheets.Count; j++)
                         {
-                            TempExcelDocument.Worksheets[j].IsVisible = false;
+                            if (j != i)
+                            {
+                                TempExcelDocument.Worksheets[j].IsVisible = false;
+                            }
                         }
+                        string TempSavedPdfileWithSheetName = SavePdfFileName.Replace(".pdf", $"_{TempExcelDocument.Worksheets[i].Name}.pdf");
+                        TempExcelDocument.Save(TempSavedPdfileWithSheetName, SavePdfOptions);
                     }
-                    string TempSavedPdfileWithSheetName = SavePdfFileName.Replace(".pdf", $"_{TempExcelDocument.Worksheets[i].Name}.pdf");
-                    TempExcelDocument.Save(TempSavedPdfileWithSheetName, SavePdfOptions);
                 }
-            }
-            else
-            {
-                TempExcelDocument.Save(SavePdfFileName, Aspose.Cells.SaveFormat.Pdf);
+                else
+                {
+                    TempExcelDocument.Save(SavePdfFileName, Aspose.Cells.SaveFormat.Pdf);
+                }
             }
         }
 
@@ -317,22 +345,25 @@ namespace DocumentTools
         {
             Aspose.Hook.Manager.StartHook();
 
-            Aspose.Pdf.Document TempPdfDocuemnt = new Aspose.Pdf.Document(PdfFileName);
-            Aspose.Pdf.ExcelSaveOptions TempExcelSaveOption = new Aspose.Pdf.ExcelSaveOptions()
+            using (Aspose.Pdf.Document TempPdfDocuemnt = new Aspose.Pdf.Document(PdfFileName))
             {
-                Format = Aspose.Pdf.ExcelSaveOptions.ExcelFormat.XLSX,
-                ExtractOcrSublayerOnly = true,
-            };
-            if (MergeAllPages)
-            {
-                TempExcelSaveOption.MinimizeTheNumberOfWorksheets = true;
-            }
-            else
-            {
-                TempExcelSaveOption.MinimizeTheNumberOfWorksheets = false;
-            }
 
-            TempPdfDocuemnt.Save(SaveExcelFileName, TempExcelSaveOption);
+                Aspose.Pdf.ExcelSaveOptions TempExcelSaveOption = new Aspose.Pdf.ExcelSaveOptions()
+                {
+                    Format = Aspose.Pdf.ExcelSaveOptions.ExcelFormat.XLSX,
+                    ExtractOcrSublayerOnly = true,
+                };
+                if (MergeAllPages)
+                {
+                    TempExcelSaveOption.MinimizeTheNumberOfWorksheets = true;
+                }
+                else
+                {
+                    TempExcelSaveOption.MinimizeTheNumberOfWorksheets = false;
+                }
+
+                TempPdfDocuemnt.Save(SaveExcelFileName, TempExcelSaveOption);
+            }
         }
 
 
@@ -485,6 +516,75 @@ namespace DocumentTools
         }
 
         /// <summary>
+        /// 替换文档的内容
+        /// </summary>
+        /// <param name="DocumentsFileName">文件名称</param>
+        /// <param name="SavedDoucmentFileName">保存名称</param>
+        /// <param name="RelaceDocumentType">文档类型</param>
+        /// <param name="InputRegexRule">正则表达式规则</param>
+        /// <param name="ReplaceContent">要替换的内容</param>
+        /// <param name="IgnoreFootText">是否忽略脚注内容</param>
+        /// <param name="IgnoreCase">是否忽略大小写</param>
+        public static void RelaceDocumentContent(string DocumentsFileName, string SavedDoucmentFileName, string RelaceDocumentType, string InputRegexRule, string ReplaceContent, bool IgnoreFootText, bool NoIgnoreCase, bool RemoveRowMode = false, int ExcelStartRow = -1, int ExcelEndRow = -1, bool UseRegex = false)
+        {
+            Aspose.Hook.Manager.StartHook();
+
+            Regex DocuemntRegex = new Regex(InputRegexRule);
+            if (RelaceDocumentType == "WORD")
+            {
+                Aspose.Words.Loading.LoadOptions DocuemntLoadOption = new Aspose.Words.Loading.LoadOptions()
+                {
+                    ConvertMetafilesToPng = true,
+                    MswVersion = Aspose.Words.Settings.MsWordVersion.Word2010,
+                };
+                Aspose.Words.Saving.OoxmlSaveOptions DocumentSaveOption = new Aspose.Words.Saving.OoxmlSaveOptions()
+                {
+                    SaveFormat = Aspose.Words.SaveFormat.Docx,
+                };
+
+                Aspose.Words.Replacing.FindReplaceOptions TempWordFindReplaceOption = new Aspose.Words.Replacing.FindReplaceOptions();
+
+                Aspose.Words.Document TempWordDocument = new Aspose.Words.Document(DocumentsFileName, DocuemntLoadOption);
+                TempWordFindReplaceOption.IgnoreFootnotes = IgnoreFootText;
+                TempWordFindReplaceOption.MatchCase = NoIgnoreCase;
+                TempWordFindReplaceOption.UseSubstitutions = true;
+                TempWordDocument.Range.Replace(DocuemntRegex, ReplaceContent, TempWordFindReplaceOption);
+                TempWordDocument.Save(SavedDoucmentFileName, DocumentSaveOption);
+            }
+            else
+            {
+                Aspose.Cells.Workbook TempExcelDocument = new Aspose.Cells.Workbook(DocumentsFileName);
+                Aspose.Cells.ReplaceOptions TempExcelReplaceOptions = new Aspose.Cells.ReplaceOptions();
+                Aspose.Cells.XlsSaveOptions TempXlsSaveOption = new XlsSaveOptions();
+                TempExcelReplaceOptions.CaseSensitive = NoIgnoreCase;
+                TempExcelReplaceOptions.RegexKey = UseRegex;
+                if (InputRegexRule != string.Empty)
+                {
+                    TempExcelDocument.Replace(InputRegexRule, ReplaceContent, TempExcelReplaceOptions);
+                }
+                //不为默认值才进行行数据操作
+                if (ExcelStartRow > -1 && ExcelEndRow > -1)
+                {
+                    foreach (Worksheet TempSheet in TempExcelDocument.Worksheets)
+                    {
+                        Aspose.Cells.Cells TempCells = TempSheet.Cells;
+                        if (RemoveRowMode)
+                        {
+                            TempCells.DeleteRows(ExcelStartRow - 1, ExcelEndRow - 1);//删除行，excel行号从1开始，但是代码里面从0，所以输入什么数据都要-1，确保区间正确
+                        }
+                        else
+                        {
+                            TempCells.ClearRange(ExcelStartRow - 1, 0, ExcelEndRow - 1, 255);//清空行内数据，但是保留行高
+                        }
+                    }
+                }
+                TempExcelDocument.CalculateFormula();
+                TempExcelDocument.Save(SavedDoucmentFileName, TempXlsSaveOption);
+            }
+        }
+
+
+        /// <summary>
         /// 通过正则表达式移除指定的字符
         /// </summary>
         /// <param name="SpecialCharacters"></param>
@@ -626,6 +726,45 @@ namespace DocumentTools
 
         }
 
+        /// <summary>
+        /// 获取程序使用掉的内存，单位MB
+        /// </summary>
+        /// <returns></returns>
+        public static string GetProcessUsedMemory()
+        {
+            ComputerInfo computerInfo = new ComputerInfo();
+            double MachineTotalMemory = Byte2GB((long)computerInfo.TotalPhysicalMemory);
+            double MachineFreeMemory = Byte2GB((long)computerInfo.AvailablePhysicalMemory);
+            double ProcessUsedMemory = Process.GetCurrentProcess().PrivateMemorySize64 / 1024.0 / 1024.0;
+
+            return $"程序占用内存：{ProcessUsedMemory.ToString("f2")}MB|本机可用内存：{MachineFreeMemory.ToString("f2")}GB|本机总内存：{MachineTotalMemory.ToString("f2")}GB";
+        }
+
+        /// <summary>
+        /// 将字节转为GB
+        /// </summary>
+        /// <param name="byteNumber"></param>
+        /// <returns></returns>
+        private static double Byte2GB(long byteNumber)
+        {
+
+            return byteNumber / Math.Pow(1024.0, 3);
+        }
     }
+    internal class SavingPdfCallBack : Aspose.Words.Saving.IPageSavingCallback
+    {
+        public SavingPdfCallBack()
+        {
+
+        }
+
+
+        public void PageSaving(Aspose.Words.Saving.PageSavingArgs args)
+        {
+
+            BodyForm.MainForm.ProcessPage_W2P.Text = $"已保存{args.PageIndex + 1}页";
+        }
+    }
+
 
 }
