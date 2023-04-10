@@ -23,6 +23,7 @@ namespace DocumentTools
         private int TempImageCount = 0;
         private int TotalTempImageCount = 0;
         private double ScanSeconds = 0;
+        private Bitmap PictureBoxPreviewImage;
 
 
         public BodyForm()
@@ -750,12 +751,18 @@ namespace DocumentTools
 
                 if (dataSource.Capabilities.ICapPixelType.CanSet)
                 {
-                    dataSource.Capabilities.ICapPixelType.SetValue((PixelType)TwainColorMode.SelectedItem);
+                    if (TwainColorMode.Items.Count>0)
+                    {
+                        dataSource.Capabilities.ICapPixelType.SetValue((NTwain.Data.PixelType)TwainColorMode.SelectedItem);
+                    }
                 }
                 if (dataSource.Capabilities.ICapXResolution.CanSet && dataSource.Capabilities.ICapYResolution.CanSet)
                 {
-                    dataSource.Capabilities.ICapXResolution.SetValue((TWFix32)TwainDpi.SelectedItem);
-                    dataSource.Capabilities.ICapYResolution.SetValue((TWFix32)TwainDpi.SelectedItem);
+                    if(TwainDpi.Items.Count>0)
+                    {
+                        dataSource.Capabilities.ICapXResolution.SetValue((TWFix32)TwainDpi.SelectedItem);
+                        dataSource.Capabilities.ICapYResolution.SetValue((TWFix32)TwainDpi.SelectedItem);
+                    }
                 }
                 if(DoubleScanBox.Checked && dataSource.Capabilities.CapDuplex.IsSupported)
                 {
@@ -789,15 +796,16 @@ namespace DocumentTools
                     TempScannedImage.Save(SaveImageName, System.Drawing.Imaging.ImageFormat.Jpeg);
                     this.PreviewPictureName.Text = "图片名称：" + Path.GetFileName(SaveImageName);
 
-                    Bitmap TempPictureImage = new Bitmap(SaveImageName);
-                    this.PreviewPictureBox.Image = TempPictureImage;
+                    PictureBoxPreviewImage = new Bitmap(SaveImageName);
+                    this.PreviewPictureBox.Image = PictureBoxPreviewImage;
 
                     this.NowScanNumber.Text = "本次扫描数量：" + TempImageCount.ToString();
                     this.ScannTotalNumber.Text = "扫描总数量：" + TotalTempImageCount.ToString();
                     this.SavedPathFileCount.Text = $"扫描路径内文件数量：{Directory.GetFiles(this.ScanPictureSavePathBox.Text).Length}";
                     sw.Stop();
                     ScanSeconds += sw.Elapsed.TotalSeconds;//一个扫描过程中花费的时间值，值将会在开始扫描按钮中重置为0
-                    TempPictureImage.Dispose();
+                    PictureBoxPreviewImage.Dispose();
+
                 }
             }
 
@@ -826,12 +834,17 @@ namespace DocumentTools
                 string[] Files = Directory.GetFiles(ScanPictureSavePathBox.Text);
                 if (Files.Length > 0)
                 {
+                    if(PictureBoxPreviewImage !=null)
+                    {
+                        PictureBoxPreviewImage = null;
+                        this.PreviewPictureBox.Image = null;
+                    }
                     foreach (string file in Files)
                     {
                         File.Delete(file);
+                        this.SavedPathFileCount.Text = $"扫描路径内文件数量：{Directory.GetFiles(this.ScanPictureSavePathBox.Text).Length}";
                     }
                 }
-                this.SavedPathFileCount.Text = $"扫描路径内文件数量：{Directory.GetFiles(this.ScanPictureSavePathBox.Text).Length}";
             }
         }
 

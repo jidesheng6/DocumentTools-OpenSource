@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BodyForm));
             this.MainTabPage = new System.Windows.Forms.TabControl();
             this.TabPage_01 = new System.Windows.Forms.TabPage();
+            this.ProcessPage_W2P = new System.Windows.Forms.Label();
             this.MergePdfButton = new System.Windows.Forms.Button();
             this.RemoveTempDocx = new System.Windows.Forms.CheckBox();
             this.OpenPdfOptions = new System.Windows.Forms.CheckBox();
@@ -40,6 +41,7 @@
             this.ChooseDocButton = new System.Windows.Forms.Button();
             this.WordFileListView = new System.Windows.Forms.ListView();
             this.TabPage_02 = new System.Windows.Forms.TabPage();
+            this.ProcessPage_P2W = new System.Windows.Forms.Label();
             this.PdfStatusText = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.Convert2DocButton = new System.Windows.Forms.Button();
@@ -92,6 +94,8 @@
             this.SelectReplaceWordFilesButton = new System.Windows.Forms.Button();
             this.ReplaceWordFileList = new System.Windows.Forms.ListView();
             this.TabPage_11 = new System.Windows.Forms.TabPage();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.ExcelRegexReadMe = new System.Windows.Forms.LinkLabel();
             this.UseRegex = new System.Windows.Forms.CheckBox();
             this.ExcelNoIgnoreCase = new System.Windows.Forms.CheckBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
@@ -164,10 +168,6 @@
             this.删除本项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.清空列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MemoryTimer = new System.Windows.Forms.Timer(this.components);
-            this.ProcessPage_W2P = new System.Windows.Forms.Label();
-            this.ProcessPage_P2W = new System.Windows.Forms.Label();
-            this.ExcelRegexReadMe = new System.Windows.Forms.LinkLabel();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
@@ -234,6 +234,16 @@
             this.TabPage_01.TabIndex = 0;
             this.TabPage_01.Text = "WORD转PDF";
             this.TabPage_01.UseVisualStyleBackColor = true;
+            // 
+            // ProcessPage_W2P
+            // 
+            this.ProcessPage_W2P.AutoSize = true;
+            this.ProcessPage_W2P.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ProcessPage_W2P.Location = new System.Drawing.Point(386, 424);
+            this.ProcessPage_W2P.Name = "ProcessPage_W2P";
+            this.ProcessPage_W2P.Size = new System.Drawing.Size(89, 18);
+            this.ProcessPage_W2P.TabIndex = 7;
+            this.ProcessPage_W2P.Text = "已保存X页";
             // 
             // MergePdfButton
             // 
@@ -321,6 +331,16 @@
             this.TabPage_02.TabIndex = 1;
             this.TabPage_02.Text = "PDF转WORD";
             this.TabPage_02.UseVisualStyleBackColor = true;
+            // 
+            // ProcessPage_P2W
+            // 
+            this.ProcessPage_P2W.AutoSize = true;
+            this.ProcessPage_P2W.ForeColor = System.Drawing.Color.ForestGreen;
+            this.ProcessPage_P2W.Location = new System.Drawing.Point(386, 424);
+            this.ProcessPage_P2W.Name = "ProcessPage_P2W";
+            this.ProcessPage_P2W.Size = new System.Drawing.Size(89, 18);
+            this.ProcessPage_P2W.TabIndex = 5;
+            this.ProcessPage_P2W.Text = "已保存X页";
             // 
             // PdfStatusText
             // 
@@ -875,6 +895,28 @@
             this.TabPage_11.TabIndex = 10;
             this.TabPage_11.Text = "EXCEL内容批量替换";
             this.TabPage_11.UseVisualStyleBackColor = true;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(646, 374);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(116, 18);
+            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "在线正则工具";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // ExcelRegexReadMe
+            // 
+            this.ExcelRegexReadMe.AutoSize = true;
+            this.ExcelRegexReadMe.Location = new System.Drawing.Point(414, 374);
+            this.ExcelRegexReadMe.Name = "ExcelRegexReadMe";
+            this.ExcelRegexReadMe.Size = new System.Drawing.Size(134, 18);
+            this.ExcelRegexReadMe.TabIndex = 8;
+            this.ExcelRegexReadMe.TabStop = true;
+            this.ExcelRegexReadMe.Text = "正则表达式教程";
+            this.ExcelRegexReadMe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ExcelRegexReadMe_LinkClicked);
             // 
             // UseRegex
             // 
@@ -1580,48 +1622,6 @@
             this.MemoryTimer.Enabled = true;
             this.MemoryTimer.Interval = 1000;
             this.MemoryTimer.Tick += new System.EventHandler(this.MemoryTimer_Tick);
-            // 
-            // ProcessPage_W2P
-            // 
-            this.ProcessPage_W2P.AutoSize = true;
-            this.ProcessPage_W2P.ForeColor = System.Drawing.Color.ForestGreen;
-            this.ProcessPage_W2P.Location = new System.Drawing.Point(386, 424);
-            this.ProcessPage_W2P.Name = "ProcessPage_W2P";
-            this.ProcessPage_W2P.Size = new System.Drawing.Size(89, 18);
-            this.ProcessPage_W2P.TabIndex = 7;
-            this.ProcessPage_W2P.Text = "已保存X页";
-            // 
-            // ProcessPage_P2W
-            // 
-            this.ProcessPage_P2W.AutoSize = true;
-            this.ProcessPage_P2W.ForeColor = System.Drawing.Color.ForestGreen;
-            this.ProcessPage_P2W.Location = new System.Drawing.Point(386, 424);
-            this.ProcessPage_P2W.Name = "ProcessPage_P2W";
-            this.ProcessPage_P2W.Size = new System.Drawing.Size(89, 18);
-            this.ProcessPage_P2W.TabIndex = 5;
-            this.ProcessPage_P2W.Text = "已保存X页";
-            // 
-            // ExcelRegexReadMe
-            // 
-            this.ExcelRegexReadMe.AutoSize = true;
-            this.ExcelRegexReadMe.Location = new System.Drawing.Point(414, 374);
-            this.ExcelRegexReadMe.Name = "ExcelRegexReadMe";
-            this.ExcelRegexReadMe.Size = new System.Drawing.Size(134, 18);
-            this.ExcelRegexReadMe.TabIndex = 8;
-            this.ExcelRegexReadMe.TabStop = true;
-            this.ExcelRegexReadMe.Text = "正则表达式教程";
-            this.ExcelRegexReadMe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ExcelRegexReadMe_LinkClicked);
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(646, 374);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(116, 18);
-            this.linkLabel1.TabIndex = 9;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "在线正则工具";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // BodyForm
             // 
