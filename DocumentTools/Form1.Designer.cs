@@ -138,6 +138,9 @@
             this.PreviewPictureName = new System.Windows.Forms.Label();
             this.PreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.TwainPaperSizeBox = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.SkipBlankPage = new System.Windows.Forms.CheckBox();
             this.DoubleScanBox = new System.Windows.Forms.CheckBox();
             this.ScanSerialNumber = new System.Windows.Forms.Label();
             this.TwainDpi = new System.Windows.Forms.ComboBox();
@@ -163,11 +166,22 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.TabPage_12 = new System.Windows.Forms.TabPage();
+            this.DecodeDataMatixStatusText = new System.Windows.Forms.Label();
+            this.DecodeDataMarix = new System.Windows.Forms.Button();
+            this.SelectDataMatrixWord = new System.Windows.Forms.Button();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.DecodeDataMatrixView = new System.Windows.Forms.TreeView();
+            this.DecodeMatrixWordListView = new System.Windows.Forms.ListView();
             this.SaveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.ListViewRightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除本项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.清空列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MemoryTimer = new System.Windows.Forms.Timer(this.components);
+            this.TreeViewContentMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.展开折叠本节点全部ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.展开折叠全部节点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainTabPage.SuspendLayout();
             this.TabPage_01.SuspendLayout();
             this.TabPage_02.SuspendLayout();
@@ -195,7 +209,10 @@
             this.TabPage_08.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.TabPage_12.SuspendLayout();
+            this.groupBox14.SuspendLayout();
             this.ListViewRightMenu.SuspendLayout();
+            this.TreeViewContentMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTabPage
@@ -208,6 +225,7 @@
             this.MainTabPage.Controls.Add(this.TabPage_04);
             this.MainTabPage.Controls.Add(this.TabPage_10);
             this.MainTabPage.Controls.Add(this.TabPage_11);
+            this.MainTabPage.Controls.Add(this.TabPage_12);
             this.MainTabPage.Controls.Add(this.TabPage_05);
             this.MainTabPage.Controls.Add(this.TabPage_09);
             this.MainTabPage.Controls.Add(this.TabPage_08);
@@ -1330,6 +1348,9 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.TwainPaperSizeBox);
+            this.groupBox6.Controls.Add(this.label17);
+            this.groupBox6.Controls.Add(this.SkipBlankPage);
             this.groupBox6.Controls.Add(this.DoubleScanBox);
             this.groupBox6.Controls.Add(this.ScanSerialNumber);
             this.groupBox6.Controls.Add(this.TwainDpi);
@@ -1347,6 +1368,33 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "扫描配置";
             // 
+            // TwainPaperSizeBox
+            // 
+            this.TwainPaperSizeBox.FormattingEnabled = true;
+            this.TwainPaperSizeBox.Location = new System.Drawing.Point(358, 111);
+            this.TwainPaperSizeBox.Name = "TwainPaperSizeBox";
+            this.TwainPaperSizeBox.Size = new System.Drawing.Size(156, 26);
+            this.TwainPaperSizeBox.TabIndex = 12;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(268, 114);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(80, 18);
+            this.label17.TabIndex = 11;
+            this.label17.Text = "纸张尺寸";
+            // 
+            // SkipBlankPage
+            // 
+            this.SkipBlankPage.AutoSize = true;
+            this.SkipBlankPage.Location = new System.Drawing.Point(134, 114);
+            this.SkipBlankPage.Name = "SkipBlankPage";
+            this.SkipBlankPage.Size = new System.Drawing.Size(124, 22);
+            this.SkipBlankPage.TabIndex = 10;
+            this.SkipBlankPage.Text = "跳过空白页";
+            this.SkipBlankPage.UseVisualStyleBackColor = true;
+            // 
             // DoubleScanBox
             // 
             this.DoubleScanBox.AutoSize = true;
@@ -1360,7 +1408,7 @@
             // ScanSerialNumber
             // 
             this.ScanSerialNumber.AutoSize = true;
-            this.ScanSerialNumber.Location = new System.Drawing.Point(286, 134);
+            this.ScanSerialNumber.Location = new System.Drawing.Point(268, 145);
             this.ScanSerialNumber.Name = "ScanSerialNumber";
             this.ScanSerialNumber.Size = new System.Drawing.Size(134, 18);
             this.ScanSerialNumber.TabIndex = 8;
@@ -1412,7 +1460,7 @@
             // 
             // StartScanButton
             // 
-            this.StartScanButton.Location = new System.Drawing.Point(520, 78);
+            this.StartScanButton.Location = new System.Drawing.Point(520, 69);
             this.StartScanButton.Name = "StartScanButton";
             this.StartScanButton.Size = new System.Drawing.Size(119, 32);
             this.StartScanButton.TabIndex = 2;
@@ -1593,6 +1641,79 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "开发语言：C#";
             // 
+            // TabPage_12
+            // 
+            this.TabPage_12.Controls.Add(this.DecodeDataMatixStatusText);
+            this.TabPage_12.Controls.Add(this.DecodeDataMarix);
+            this.TabPage_12.Controls.Add(this.SelectDataMatrixWord);
+            this.TabPage_12.Controls.Add(this.groupBox14);
+            this.TabPage_12.Controls.Add(this.DecodeMatrixWordListView);
+            this.TabPage_12.Location = new System.Drawing.Point(4, 28);
+            this.TabPage_12.Name = "TabPage_12";
+            this.TabPage_12.Size = new System.Drawing.Size(777, 475);
+            this.TabPage_12.TabIndex = 11;
+            this.TabPage_12.Text = "测评/选举/推荐二维码校验";
+            this.TabPage_12.UseVisualStyleBackColor = true;
+            this.TabPage_12.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabPage_12_MouseDown);
+            // 
+            // DecodeDataMatixStatusText
+            // 
+            this.DecodeDataMatixStatusText.AutoSize = true;
+            this.DecodeDataMatixStatusText.ForeColor = System.Drawing.Color.ForestGreen;
+            this.DecodeDataMatixStatusText.Location = new System.Drawing.Point(319, 431);
+            this.DecodeDataMatixStatusText.Name = "DecodeDataMatixStatusText";
+            this.DecodeDataMatixStatusText.Size = new System.Drawing.Size(98, 18);
+            this.DecodeDataMatixStatusText.TabIndex = 4;
+            this.DecodeDataMatixStatusText.Text = "等待处理中";
+            // 
+            // DecodeDataMarix
+            // 
+            this.DecodeDataMarix.Location = new System.Drawing.Point(547, 413);
+            this.DecodeDataMarix.Name = "DecodeDataMarix";
+            this.DecodeDataMarix.Size = new System.Drawing.Size(221, 55);
+            this.DecodeDataMarix.TabIndex = 3;
+            this.DecodeDataMarix.Text = "开始处理";
+            this.DecodeDataMarix.UseVisualStyleBackColor = true;
+            this.DecodeDataMarix.Click += new System.EventHandler(this.DecodeDataMarix_Click);
+            // 
+            // SelectDataMatrixWord
+            // 
+            this.SelectDataMatrixWord.Location = new System.Drawing.Point(16, 413);
+            this.SelectDataMatrixWord.Name = "SelectDataMatrixWord";
+            this.SelectDataMatrixWord.Size = new System.Drawing.Size(221, 55);
+            this.SelectDataMatrixWord.TabIndex = 2;
+            this.SelectDataMatrixWord.Text = "选择文件";
+            this.SelectDataMatrixWord.UseVisualStyleBackColor = true;
+            this.SelectDataMatrixWord.Click += new System.EventHandler(this.SelectDataMatrixWord_Click);
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.DecodeDataMatrixView);
+            this.groupBox14.Location = new System.Drawing.Point(10, 182);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(764, 225);
+            this.groupBox14.TabIndex = 1;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "解析信息";
+            // 
+            // DecodeDataMatrixView
+            // 
+            this.DecodeDataMatrixView.Location = new System.Drawing.Point(6, 27);
+            this.DecodeDataMatrixView.Name = "DecodeDataMatrixView";
+            this.DecodeDataMatrixView.Size = new System.Drawing.Size(752, 192);
+            this.DecodeDataMatrixView.TabIndex = 0;
+            this.DecodeDataMatrixView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DecodeDataMatrixView_MouseClick);
+            // 
+            // DecodeMatrixWordListView
+            // 
+            this.DecodeMatrixWordListView.HideSelection = false;
+            this.DecodeMatrixWordListView.Location = new System.Drawing.Point(9, 6);
+            this.DecodeMatrixWordListView.Name = "DecodeMatrixWordListView";
+            this.DecodeMatrixWordListView.Size = new System.Drawing.Size(764, 173);
+            this.DecodeMatrixWordListView.TabIndex = 0;
+            this.DecodeMatrixWordListView.UseCompatibleStateImageBehavior = false;
+            this.DecodeMatrixWordListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DecodeMatrixWordListView_MouseClick);
+            // 
             // ListViewRightMenu
             // 
             this.ListViewRightMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -1622,6 +1743,37 @@
             this.MemoryTimer.Enabled = true;
             this.MemoryTimer.Interval = 1000;
             this.MemoryTimer.Tick += new System.EventHandler(this.MemoryTimer_Tick);
+            // 
+            // TreeViewContentMenu
+            // 
+            this.TreeViewContentMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.TreeViewContentMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.展开折叠本节点全部ToolStripMenuItem,
+            this.展开折叠全部节点ToolStripMenuItem,
+            this.打开文件ToolStripMenuItem});
+            this.TreeViewContentMenu.Name = "TreeViewContentMenu";
+            this.TreeViewContentMenu.Size = new System.Drawing.Size(287, 94);
+            // 
+            // 展开折叠本节点全部ToolStripMenuItem
+            // 
+            this.展开折叠本节点全部ToolStripMenuItem.Name = "展开折叠本节点全部ToolStripMenuItem";
+            this.展开折叠本节点全部ToolStripMenuItem.Size = new System.Drawing.Size(286, 30);
+            this.展开折叠本节点全部ToolStripMenuItem.Text = "展开/折叠本节点全部内容";
+            this.展开折叠本节点全部ToolStripMenuItem.Click += new System.EventHandler(this.展开折叠本节点全部ToolStripMenuItem_Click);
+            // 
+            // 展开折叠全部节点ToolStripMenuItem
+            // 
+            this.展开折叠全部节点ToolStripMenuItem.Name = "展开折叠全部节点ToolStripMenuItem";
+            this.展开折叠全部节点ToolStripMenuItem.Size = new System.Drawing.Size(286, 30);
+            this.展开折叠全部节点ToolStripMenuItem.Text = "展开/折叠全部节点";
+            this.展开折叠全部节点ToolStripMenuItem.Click += new System.EventHandler(this.展开折叠全部节点ToolStripMenuItem_Click);
+            // 
+            // 打开文件ToolStripMenuItem
+            // 
+            this.打开文件ToolStripMenuItem.Name = "打开文件ToolStripMenuItem";
+            this.打开文件ToolStripMenuItem.Size = new System.Drawing.Size(286, 30);
+            this.打开文件ToolStripMenuItem.Text = "打开文件";
+            this.打开文件ToolStripMenuItem.Click += new System.EventHandler(this.打开文件ToolStripMenuItem_Click);
             // 
             // BodyForm
             // 
@@ -1686,7 +1838,11 @@
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.TabPage_12.ResumeLayout(false);
+            this.TabPage_12.PerformLayout();
+            this.groupBox14.ResumeLayout(false);
             this.ListViewRightMenu.ResumeLayout(false);
+            this.TreeViewContentMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1831,6 +1987,20 @@
         internal System.Windows.Forms.Label ProcessPage_P2W;
         private System.Windows.Forms.LinkLabel ExcelRegexReadMe;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.TabPage TabPage_12;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.CheckBox SkipBlankPage;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ComboBox TwainPaperSizeBox;
+        private System.Windows.Forms.Button SelectDataMatrixWord;
+        private System.Windows.Forms.Button DecodeDataMarix;
+        private System.Windows.Forms.Label DecodeDataMatixStatusText;
+        internal System.Windows.Forms.ListView DecodeMatrixWordListView;
+        private System.Windows.Forms.ContextMenuStrip TreeViewContentMenu;
+        private System.Windows.Forms.ToolStripMenuItem 展开折叠本节点全部ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 展开折叠全部节点ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 打开文件ToolStripMenuItem;
+        private System.Windows.Forms.TreeView DecodeDataMatrixView;
     }
 }
 

@@ -46,6 +46,9 @@ namespace DocumentTools
             this.PreviewPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
             this.ScanPictureSavePathBox.Enabled = false;
+            this.DecodeDataMatrixView.ShowLines = true;
+            this.DecodeDataMatrixView.ShowRootLines = true;
+            this.DecodeDataMatrixView.FullRowSelect = true;
 
 
             //Util.PlayMp3WithStream();
@@ -152,6 +155,17 @@ namespace DocumentTools
             this.ReplaceExcelFileView.DragEnter += ListViewDragEnter;
             this.ReplaceExcelFileView.DragDrop += ListviewDragDrop;
 
+            //DecodeMatrixWordListView
+            this.DecodeMatrixWordListView.View = View.Details;
+            this.DecodeMatrixWordListView.FullRowSelect = true;
+            this.DecodeMatrixWordListView.AllowDrop = true;
+            this.DecodeMatrixWordListView.Columns.Add("文件名称", 300);
+            this.DecodeMatrixWordListView.Columns.Add("添加时间", 300);
+            this.DecodeMatrixWordListView.Columns.Add("转换后文件名称", 300);
+            this.DecodeMatrixWordListView.Name = "DecodeMatrixWordListView";
+
+            this.DecodeMatrixWordListView.DragEnter += ListViewDragEnter;
+            this.DecodeMatrixWordListView.DragDrop += ListviewDragDrop;
         }
 
         private void InitComboxValue()
@@ -210,6 +224,7 @@ namespace DocumentTools
 
             this.TwainColorMode.DropDownStyle = ComboBoxStyle.DropDownList;
             this.TwainDpi.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.TwainPaperSizeBox.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void ChooseDocButton_Click(object sender, EventArgs e)
@@ -461,6 +476,9 @@ namespace DocumentTools
                     case "ReplaceExcelFileView":
                         UI.RemoveListViewItem(false, ReplaceExcelFileView, ReplaceExcelFileView.FocusedItem.Index);
                         break;
+                    case "DecodeMatrixWordListView":
+                        UI.RemoveListViewItem(false, DecodeMatrixWordListView, DecodeMatrixWordListView.FocusedItem.Index);
+                        break;
                     default: break;
                 }
             }
@@ -512,6 +530,9 @@ namespace DocumentTools
                         break;
                     case "ReplaceExcelFileView":
                         UI.RemoveListViewItem(true, ReplaceExcelFileView);
+                        break;
+                    case "DecodeMatrixWordListView":
+                        UI.RemoveListViewItem(true, DecodeMatrixWordListView);
                         break;
                     default: break;
                 }
@@ -637,6 +658,9 @@ namespace DocumentTools
                 case "ReplaceExcelFileView":
                     UI.AddFilesToListviewWithNotDialog(DropFiles, this.ReplaceExcelFileView, new string[] { ".xls", ".xlsx" });
                     break;
+                case "DecodeMatrixWordListView":
+                    UI.AddFilesToListviewWithNotDialog(DropFiles, this.DecodeMatrixWordListView, new string[] { ".doc", ".docx" });
+                    break;
                 default: break;
             }
         }
@@ -693,6 +717,14 @@ namespace DocumentTools
                         TwainDpi.DataSource = dataSource.Capabilities.ICapXResolution.GetValues().ToList();
                         TwainDpi.SelectedItem = dataSource.Capabilities.ICapXResolution.GetCurrent();
                     }
+                    if (dataSource.Capabilities.ICapSupportedSizes.IsSupported)
+                    {
+                        TwainPaperSizeBox.DataSource = dataSource.Capabilities.ICapSupportedSizes.GetValues().ToList();
+                        TwainPaperSizeBox.SelectedItem = dataSource.Capabilities.ICapSupportedSizes.GetCurrent();
+
+                    }
+                    dataSource.Capabilities.CapSupportedCaps.GetValues().ToList().ForEach(x => Debug.WriteLine(x));
+
                     if (dataSource.Capabilities.CapSerialNumber.CanGet)
                     {
                         ScanSerialNumber.Text = $"扫描仪序列号：{dataSource.Capabilities.CapSerialNumber.GetValues().FirstOrDefault()}";
@@ -767,6 +799,17 @@ namespace DocumentTools
                 if(DoubleScanBox.Checked && dataSource.Capabilities.CapDuplex.IsSupported)
                 {
                     dataSource.Capabilities.CapDuplexEnabled.SetValue(BoolType.True);
+                }
+                if(SkipBlankPage.Checked && dataSource.Capabilities.ICapAutoDiscardBlankPages.IsSupported)
+                {
+                    dataSource.Capabilities.ICapAutoDiscardBlankPages.SetValue(BlankPage.Auto);
+                }
+                if(dataSource.Capabilities.ICapSupportedSizes.CanSet)
+                {
+                    if(TwainPaperSizeBox.Items.Count>0)
+                    {
+                        dataSource.Capabilities.ICapSupportedSizes.SetValue((SupportedSize)TwainPaperSizeBox.SelectedItem);
+                    }
                 }
 
                 #endregion
@@ -917,6 +960,85 @@ namespace DocumentTools
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://c.runoob.com/front-end/854/");
+        }
+
+        private void TabPage_12_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void DecodeDataMarix_Click(object sender, EventArgs e)
+        {
+            int DecodeCount = 0;
+            DecodeDataMatrixView.Nodes.Clear();
+            Task.Run(() => {
+                UI.GetListViewFirstItemContent(this.DecodeMatrixWordListView).Result.ForEach(FileName =>
+                {
+                    ++DecodeCount;
+                    DecodeDataMatixStatusText.Text = $"正在解析第{DecodeCount}个文件";
+                    Util.ReadDocumentDataMatrix(FileName,DecodeDataMatrixView);
+                });
+                DecodeDataMatixStatusText.Text = $"处理完毕";
+            });
+
+
+        }
+
+        private void SelectDataMatrixWord_Click(object sender, EventArgs e)
+        {
+            UI.AddDataMattixWordFiles();
+        }
+
+        private void 展开折叠本节点全部ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TreeNode CurrentSelectNode = this.DecodeDataMatrixView.SelectedNode;
+            if(CurrentSelectNode.IsExpanded)
+            {
+                CurrentSelectNode.Collapse();
+            }
+            else
+            {
+                CurrentSelectNode.ExpandAll();
+            }
+        }
+
+        private void DecodeDataMatrixView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button==MouseButtons.Right)
+            {
+                this.TreeViewContentMenu.Show(this.DecodeDataMatrixView,e.Location);
+            }
+        }
+
+        private void 展开折叠全部节点ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           foreach(TreeNode TempNode in DecodeDataMatrixView.Nodes)
+            {
+                if(TempNode.IsExpanded)
+                {
+                    TempNode.Collapse();
+                }
+                else
+                {
+                    TempNode.ExpandAll();
+                }
+            }
+        }
+
+        private void 打开文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (File.Exists(this.DecodeDataMatrixView.SelectedNode.Text)) Process.Start(this.DecodeDataMatrixView.SelectedNode.Text);
+
+        }
+
+        private void DecodeMatrixWordListView_MouseClick(object sender, MouseEventArgs e)
+        {
+            //右键项目才显示菜单
+            if (e.Button == MouseButtons.Right)
+            {
+                this.ListViewRightMenu.Show(this.DecodeMatrixWordListView, e.Location);
+            }
         }
     }
 

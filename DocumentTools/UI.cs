@@ -201,6 +201,11 @@ namespace DocumentTools
             AddFilesToListView("EXCEL文档", "*.xls;*.xlsx", BodyForm.MainForm.ReplaceExcelFileView);
         }
 
+        public static void AddDataMattixWordFiles()
+        {
+            AddFilesToListView("WORD文档", "*.doc;*.docx", BodyForm.MainForm.DecodeMatrixWordListView);
+        }
+
 
 
         /// <summary>

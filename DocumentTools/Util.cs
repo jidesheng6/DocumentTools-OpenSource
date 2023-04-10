@@ -1,4 +1,5 @@
-﻿using Aspose.Cells;
+﻿using Aspose.BarCode.BarCodeRecognition;
+using Aspose.Cells;
 using Aspose.Cells.Rendering;
 using Microsoft.VisualBasic.Devices;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -6,6 +7,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -13,6 +15,7 @@ using System.Resources;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace DocumentTools
 {
@@ -585,6 +588,88 @@ namespace DocumentTools
 
 
         /// <summary>
+        /// 读取文件中的DataMatrix，交给treeview处理，功能写的差不多了，随便写写了
+        /// </summary>
+        /// <param name="DocumentFileName">文档名称</param>
+        /// <param name="TempTreeView">控件</param>
+        public static void ReadDocumentDataMatrix(string DocumentFileName,TreeView TempTreeView)
+        {
+            Aspose.Hook.Manager.StartHook();
+            TreeNode TempTreeNode = new TreeNode();
+            TreeNode TempDocumentNameRootNode =  TempTreeNode.Nodes.Add(DocumentFileName);//添加文件节点信息
+            Aspose.Words.Document TempDocuemnt = new Aspose.Words.Document(DocumentFileName);
+            for (int PageIndex=0;PageIndex<TempDocuemnt.PageCount;PageIndex++)
+            {
+                TreeNode PageIndexNode = TempDocumentNameRootNode.Nodes.Add($"第{PageIndex+1}页");//在文件节点信息基础上添加页面信息
+                PageIndexNode.ForeColor = System.Drawing.Color.ForestGreen;
+                Aspose.Words.Saving.ImageSaveOptions TempImageSaveOption = new Aspose.Words.Saving.ImageSaveOptions(Aspose.Words.SaveFormat.Png);
+                TempImageSaveOption.PageSet = new Aspose.Words.Saving.PageSet(PageIndex);
+                TempImageSaveOption.Resolution = 300;
+                using (MemoryStream TempMemoryStream = new MemoryStream())
+                {
+                    TempDocuemnt.Save(TempMemoryStream,TempImageSaveOption);
+                    TempMemoryStream.Position = 0;
+
+                    using (BarCodeReader TempCodeReader = new BarCodeReader(TempMemoryStream, DecodeType.DataMatrix))
+                    {
+                        foreach (BarCodeResult TempResult in TempCodeReader.ReadBarCodes())
+                        {
+                            string TempText = TempResult.CodeText;
+                            string TableType = string.Empty;
+                            string CurrentDataMatrixNumber = string.Empty;
+                            string SignleNumber = string.Empty;
+                            System.Drawing.Color TipsColor = System.Drawing.Color.White;
+                            TreeNode TableTypeNode, PageMatrixNumberNode, SignleNumberNode;
+                            if (TempText == "A01")
+                            {
+                                TableType = "测评";
+                            }
+                            else if (TempText == "B")
+                            {
+                                TableType = "选举/推荐";
+                            }
+                            else if (TempText.StartsWith("T"))
+                            {
+                                CurrentDataMatrixNumber = TempText.Replace("T", "");
+                            }
+                            else
+                            {
+                                SignleNumber = TempText;
+                            }
+                            //页面信息基础上添加更深层信息
+                            if (TableType != string.Empty)
+                            {
+                                TableTypeNode = PageIndexNode.Nodes.Add("表格类型");
+
+                                TableTypeNode.Nodes.Add(TableType).ForeColor = System.Drawing.Color.Red;
+                            }
+                            if (CurrentDataMatrixNumber != string.Empty)
+                            {
+                                PageMatrixNumberNode = PageIndexNode.Nodes.Add("页面编码");
+                                PageMatrixNumberNode.Nodes.Add(CurrentDataMatrixNumber).ForeColor = System.Drawing.Color.Red;
+                            }
+                            if (SignleNumber != string.Empty)
+                            {
+                                SignleNumberNode = PageIndexNode.Nodes.Add("单人码编码");
+                                SignleNumberNode.Nodes.Add(SignleNumber).ForeColor = System.Drawing.Color.Red;
+                            }
+
+
+                            /**
+                             * 测评单位码 A01 测评页码 T11
+                             * 选举单位码 B   选举页码 T11
+                             * 推荐单位吗 B   推荐页码 T10
+                             * **/
+                        }
+                    }
+                }
+            }
+            TempTreeView.Invoke(new Action(() => { TempTreeView.Nodes.Add(TempDocumentNameRootNode); }));
+
+        }
+
+
+        /// <summary>
         /// 通过正则表达式移除指定的字符
         /// </summary>
         /// <param name="SpecialCharacters"></param>
@@ -765,6 +850,7 @@ namespace DocumentTools
             BodyForm.MainForm.ProcessPage_W2P.Text = $"已保存{args.PageIndex + 1}页";
         }
     }
+
 
 
 }
