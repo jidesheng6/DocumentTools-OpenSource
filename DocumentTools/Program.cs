@@ -16,8 +16,6 @@ namespace DocumentTools
         static void Main()
         {
             //SetProcessDPIAware();
-            Aspose.Hook.HookManager.StartHook();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new BodyForm());
